@@ -227,7 +227,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-24 00:18:46" itemprop="dateModified" datetime="2022-04-24T00:18:46+08:00">2022-04-24</time>
+      <time title="修改时间：2022-04-24 01:05:43" itemprop="dateModified" datetime="2022-04-24T01:05:43+08:00">2022-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -240,6 +240,20 @@
     </span>
 
   
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    <a title="关于ESP8266控制舵机注意事项" href="/2022/04/23/%E5%85%B3%E4%BA%8EESP8266%E6%8E%A7%E5%88%B6%E8%88%B5%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/#SOHUCS" itemprop="discussionUrl">
+      <span id="sourceId::6e15c6f9a249cd8ea1f50f7cc768bfa1" class="cy_cmt_count" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 </div>
 
         </div>
@@ -251,12 +265,12 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="供电问题"><a href="#供电问题" class="headerlink" title="供电问题"></a>供电问题</h1><p>​    如果说做一个寝室开关灯的话，舵机挂在墙上，开发板供电就需要充电宝，而充电宝往往很大很重，不是很方便，所以我们需要一个独立供电。</p>
 <p>​    比如我自己手上的这块8266 Node MCU板子，厂家标明电源只能在4v——9v（不能超过9v），所以我们需要一块在这区间的小电池，比如：</p>
-<img src="/images/关于ESP8266控制舵机注意事项/7U_]_E5YNJ9BYU4]0VOK8KW-16507285638612.png" style="zoom:75%;" />
+<img src="/images/关于ESP8266控制舵机注意事项/7U_]_E5YNJ9BYU4]0VOK8KW-16507285638612.png" style="zoom:75%;">
 
 <p> 用两根导线连接起来（开发板VIN引脚连正极，G或者GED表示接地连接负极）。</p>
 <p> 但是一些板子的供电没有那么大，只能3.3v，如果我们强行用大于3.3v的电压供电，那么就会烧坏板子（<strong>我已经烧坏了很多板子了，当初就是不懂不能过压供电</strong>），这时候我们就需要变压了。</p>
 <p>我们可以需要购买DC-DC（几块钱）或者LDO（几块钱）稳压器来将大于3.3v的电压降到3.3v，达到保护板子的效果。</p>
-<img src="/images/关于ESP8266控制舵机注意事项/sadas.png" style="zoom:50%;" />
+<img src="/images/关于ESP8266控制舵机注意事项/sadas.png" style="zoom:50%;">
 
 
       
@@ -333,6 +347,20 @@
     </span>
 
   
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    <a title="升级玩法" href="/2022/04/23/%E5%8D%87%E7%BA%A7%E7%8E%A9%E6%B3%95/#SOHUCS" itemprop="discussionUrl">
+      <span id="sourceId::cc4c2baa8530633099394df014b67453" class="cy_cmt_count" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 </div>
 
         </div>
@@ -350,7 +378,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;¨config¨&#123;¨headerColor¨¨transparent¨¨headerStyle¨¨dark¨¨background¨&#123;¨img¨¨assets/img/headerbg.jpg¨¨isFull¨«&#125;&#125;¨dashboard¨|&#123;¨type¨¨btn¨¨ico¨¨fad fa-lightbulb-on¨¨mode¨Ê¨t0¨¨启动¨¨t1¨¨文本<span class="number">2</span>¨¨bg¨Ì¨cols¨Í¨rows¨Í¨key¨¨test¨´x´Ë´y´Ì¨speech¨|÷¨cus¨¨on¨¨lstyle¨Ë¨clr¨¨#<span class="number">076</span>EEF¨&#125;&#123;ßAßBßC¨fad fa-lightbulb¨ßEÉßF¨停下¨ßHßIßJÌßKÍßLÍßMßN´x´Ë´y´ÑßO|÷ßRËßSßT&#125;&#123;ßA¨deb¨ßEÉßJÉßKÑßLÌßM¨debug¨´x´É´y´¤D&#125;÷¨actions¨|¦¨cmd¨¦¨<span class="keyword">switch</span>¨‡¨text¨‡ßQ¨打开?name¨¨off¨¨关闭?name¨—÷¨triggers¨|&#123;¨source¨ßa¨source_zh¨¨开关状态¨¨state¨|ßQßd÷¨state_zh¨|¨打开¨¨关闭¨÷&#125;÷¨rt¨|÷&#125;</span><br></pre></td></tr></table></figure>
 
 <p>点击更新配置。返回就会出现如下图：</p>
-<img src="/images/升级玩法/IMG_6285-16507262125074.PNG" style="zoom:25%;" />
+<img src="/images/升级玩法/IMG_6285-16507262125074.PNG" style="zoom:25%;">
 
 <p>2.PC端：下载设备端SDK-&gt;Arduino(c++) </p>
 <p><a target="_blank" rel="noopener" href="https://www.diandeng.tech/dev">https://www.diandeng.tech/dev</a>: </p>
@@ -366,7 +394,7 @@
 <p>舵机旋转的角度可以自己调。</p>
 <p>上传后点击IDE右上角的串口监视器</p>
 <p>如果打印出来如下</p>
-<img src="/images/升级玩法/QQ图片20220423231525.png" style="zoom: 80%;" />
+<img src="/images/升级玩法/QQ图片20220423231525.png" style="zoom: 80%;">
 
 <p>恭喜你中奖了，板子坏了，开发板是易损品，买到坏的很正常，我已经坏了很多个了。</p>
 <p>打印出来什么什么connected说明WiFi连接成功了，可以打开自己的热点信息看看多了一个连接</p>
@@ -447,6 +475,20 @@
     </span>
 
   
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    <a title="伺服电机的使用" href="/2022/04/23/%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%9A%84%E4%BD%BF%E7%94%A8/#SOHUCS" itemprop="discussionUrl">
+      <span id="sourceId::7ac64c130fec823fbb7ffc4709cf7594" class="cy_cmt_count" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 </div>
 
         </div>
@@ -457,10 +499,10 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="sg90"><a href="#sg90" class="headerlink" title="sg90"></a>sg90</h1><p>sg90（10块钱左右）是常用的伺服电机，也叫舵机，他内部是动力来源由一个直流电机，也就是马达，由于马达转速过高，所以需要几个齿轮来降低其转速，同时增大扭力，sg90是塑料齿轮。长这样</p>
-<img src="/images/伺服电机的使用/1-16507189279363.jpg" style="zoom: 33%;" />
+<img src="/images/伺服电机的使用/1-16507189279363.jpg" style="zoom: 33%;">
 
 <p>他是升级版叫MG90s（比sg90贵个一两块）,构造是一样的，只是塑料齿轮换成了金属齿轮，增大了扭力。长这样</p>
-<img src="/images/伺服电机的使用/2.webp" style="zoom:33%;" />
+<img src="/images/伺服电机的使用/2.webp" style="zoom:33%;">
 
 <h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><p>由图可见舵机有3跟引线，红、黄、土色。</p>
 <p>红色代表是电压输入端，5v;</p>
@@ -481,7 +523,7 @@
 </blockquote>
 <p>选择端口后先编译（一个√按钮）再上传（一个-&gt;）到开发板。</p>
 <h2 id="连线"><a href="#连线" class="headerlink" title="连线"></a>连线</h2><p>以ESP8266为例子：</p>
-<img src="/images/伺服电机的使用/hhh.png" style="zoom: 67%;" />
+<img src="/images/伺服电机的使用/hhh.png" style="zoom: 67%;">
 
 <p>连接成功后，你会发现舵机开始循环旋转了。</p>
 
@@ -558,6 +600,8 @@
 
 
 
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyw2sr3N1","appkey":"46abd16e099f1103aae99886481de612"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
 
 </body>
 </html>
