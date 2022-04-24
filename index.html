@@ -227,7 +227,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-24 01:05:43" itemprop="dateModified" datetime="2022-04-24T01:05:43+08:00">2022-04-24</time>
+      <time title="修改时间：2022-04-24 15:03:08" itemprop="dateModified" datetime="2022-04-24T15:03:08+08:00">2022-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -264,15 +264,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="供电问题"><a href="#供电问题" class="headerlink" title="供电问题"></a>供电问题</h1><p>​    如果说做一个寝室开关灯的话，舵机挂在墙上，开发板供电就需要充电宝，而充电宝往往很大很重，不是很方便，所以我们需要一个独立供电。</p>
-<p>​    比如我自己手上的这块8266 Node MCU板子，厂家标明电源只能在4v——9v（不能超过9v），所以我们需要一块在这区间的小电池，比如：</p>
-<img src="/images/关于ESP8266控制舵机注意事项/7U_]_E5YNJ9BYU4]0VOK8KW-16507285638612.png" style="zoom:75%;">
-
-<p> 用两根导线连接起来（开发板VIN引脚连正极，G或者GED表示接地连接负极）。</p>
-<p> 但是一些板子的供电没有那么大，只能3.3v，如果我们强行用大于3.3v的电压供电，那么就会烧坏板子（<strong>我已经烧坏了很多板子了，当初就是不懂不能过压供电</strong>），这时候我们就需要变压了。</p>
-<p>我们可以需要购买DC-DC（几块钱）或者LDO（几块钱）稳压器来将大于3.3v的电压降到3.3v，达到保护板子的效果。</p>
-<img src="/images/关于ESP8266控制舵机注意事项/sadas.png" style="zoom:50%;">
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/23/%E5%85%B3%E4%BA%8EESP8266%E6%8E%A7%E5%88%B6%E8%88%B5%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -334,7 +333,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-24 00:08:12" itemprop="dateModified" datetime="2022-04-24T00:08:12+08:00">2022-04-24</time>
+      <time title="修改时间：2022-04-24 15:03:41" itemprop="dateModified" datetime="2022-04-24T15:03:41+08:00">2022-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -373,34 +372,14 @@
           <h1 id="ESP8266接入WiFi"><a href="#ESP8266接入WiFi" class="headerlink" title="ESP8266接入WiFi"></a>ESP8266接入WiFi</h1><p>  我们通过PC端直接上传程序可以控制舵机，但是只要不拔数据线，他就要一直循环转动，不方便。</p>
 <p>所以通过WiFi控制ESP8266开发板进而控制舵机，可以实现很多玩法。</p>
 <p>  进入正题：</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>1.手机上下载   点灯科技（点灯.blinker），打开，注册登录，依次   添加设备-&gt;独立设备-&gt;网络接入，然后得到一串Key，等会儿要用。</p>
-<p>点击已经添加的设备（新的设备），点击右上角设置（…按钮），点击界面配置，输入</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;¨config¨&#123;¨headerColor¨¨transparent¨¨headerStyle¨¨dark¨¨background¨&#123;¨img¨¨assets/img/headerbg.jpg¨¨isFull¨«&#125;&#125;¨dashboard¨|&#123;¨type¨¨btn¨¨ico¨¨fad fa-lightbulb-on¨¨mode¨Ê¨t0¨¨启动¨¨t1¨¨文本<span class="number">2</span>¨¨bg¨Ì¨cols¨Í¨rows¨Í¨key¨¨test¨´x´Ë´y´Ì¨speech¨|÷¨cus¨¨on¨¨lstyle¨Ë¨clr¨¨#<span class="number">076</span>EEF¨&#125;&#123;ßAßBßC¨fad fa-lightbulb¨ßEÉßF¨停下¨ßHßIßJÌßKÍßLÍßMßN´x´Ë´y´ÑßO|÷ßRËßSßT&#125;&#123;ßA¨deb¨ßEÉßJÉßKÑßLÌßM¨debug¨´x´É´y´¤D&#125;÷¨actions¨|¦¨cmd¨¦¨<span class="keyword">switch</span>¨‡¨text¨‡ßQ¨打开?name¨¨off¨¨关闭?name¨—÷¨triggers¨|&#123;¨source¨ßa¨source_zh¨¨开关状态¨¨state¨|ßQßd÷¨state_zh¨|¨打开¨¨关闭¨÷&#125;÷¨rt¨|÷&#125;</span><br></pre></td></tr></table></figure>
-
-<p>点击更新配置。返回就会出现如下图：</p>
-<img src="/images/升级玩法/IMG_6285-16507262125074.PNG" style="zoom:25%;">
-
-<p>2.PC端：下载设备端SDK-&gt;Arduino(c++) </p>
-<p><a target="_blank" rel="noopener" href="https://www.diandeng.tech/dev">https://www.diandeng.tech/dev</a>: </p>
-<p>3.下载后，将起解压到我的电脑-&gt;文档-&gt;Arduino\libraries\里面（前提是安装了Arduino IDE）。</p>
-<ol start="4">
-<li></li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://cloud.codess-nas.top:5213/s/2Ocn?path=/">https://cloud.codess-nas.top:5213/s/2Ocn?path=%2F</a>: </p>
-<p>下载里面的8266_package……..exe.下载完成直接双击就可以了。（如果之前下载过就不用下载了）</p>
-<p>5.打开Arduino IDE菜单 &gt; 文件 &gt;首选项，在 <strong>附加开发板管理器网址</strong> 输入框中，填入以下网址：<br><a target="_blank" rel="noopener" href="https://www.arduino.cn/package_esp8266com_index.json">https://www.arduino.cn/package_esp8266com_index.json</a></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BLINKER_WIFI</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BLINKER_MIOT_LIGHT</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Blinker.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Servo.h&gt;</span></span></span><br><span class="line">Servo myservo;<span class="comment">//定义舵机</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> auth[] = <span class="string">&quot;bcf7844f4f71&quot;</span>;  <span class="comment">//步骤1申请的Key</span></span><br><span class="line"><span class="type">char</span> ssid[] = <span class="string">&quot;qwertyuiop&quot;</span>;      <span class="comment">//你们自己的wifi名称，别填这个，注意要把wifi改成2.4ghz的,5ghz的不彳亍</span></span><br><span class="line"><span class="type">char</span> pswd[] = <span class="string">&quot;123456789&quot;</span>;     <span class="comment">//你们自己的wifi密码，别填这个</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 新建组件对象</span></span><br><span class="line"><span class="function">BlinkerButton <span class="title">Button1</span><span class="params">(<span class="string">&quot;test&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">miotPowerState</span><span class="params">(<span class="type">const</span> String &amp; state)</span><span class="comment">//电源类操作</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BLINKER_LOG</span>(<span class="string">&quot;need set power state: &quot;</span>, state);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (state == BLINKER_CMD_ON) &#123;</span><br><span class="line">      </span><br><span class="line">        myservo.<span class="built_in">write</span>(<span class="number">110</span>);<span class="comment">//收到“on”的指令后舵机旋转110度</span></span><br><span class="line">        BlinkerMIOT.<span class="built_in">powerState</span>(<span class="string">&quot;on&quot;</span>);</span><br><span class="line">        BlinkerMIOT.<span class="built_in">print</span>();<span class="comment">//反馈状态</span></span><br><span class="line">        <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//延时1秒</span></span><br><span class="line">        myservo.<span class="built_in">write</span>(<span class="number">90</span>);<span class="comment">//舵机归零，回到垂直状态  </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (state == BLINKER_CMD_OFF) &#123;</span><br><span class="line">      </span><br><span class="line">         myservo.<span class="built_in">write</span>(<span class="number">70</span>);            <span class="comment">//舵机偏转70°</span></span><br><span class="line">         BlinkerMIOT.<span class="built_in">powerState</span>(<span class="string">&quot;off&quot;</span>);</span><br><span class="line">         BlinkerMIOT.<span class="built_in">print</span>();</span><br><span class="line">         <span class="built_in">delay</span>(<span class="number">1000</span>);</span><br><span class="line">         myservo.<span class="built_in">write</span>(<span class="number">90</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 按下按键即会执行该函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">button1_callback</span><span class="params">(<span class="type">const</span> String &amp; state)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BLINKER_LOG</span>(<span class="string">&quot;get button state: &quot;</span>, state);</span><br><span class="line">    <span class="keyword">if</span> (state==<span class="string">&quot;on&quot;</span>) </span><br><span class="line">    &#123;</span><br><span class="line">        myservo.<span class="built_in">write</span>(<span class="number">50</span>);<span class="comment">//收到“on”的指令后舵机旋转110</span></span><br><span class="line">        <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//延时</span></span><br><span class="line">        <span class="comment">//myservo.write(90);//舵机归零垂直</span></span><br><span class="line">         </span><br><span class="line">        </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(state==<span class="string">&quot;press&quot;</span>||state==<span class="string">&quot;tap&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">       myservo.<span class="built_in">write</span>(<span class="number">130</span>);<span class="comment">//长按开关按键后舵机旋转70</span></span><br><span class="line">       <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//延时</span></span><br><span class="line">       <span class="comment">//myservo.write(90);//舵机归零垂直</span></span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果未绑定的组件被触发，则会执行其中内容</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dataRead</span><span class="params">(<span class="type">const</span> String &amp; data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BLINKER_LOG</span>(<span class="string">&quot;Blinker readString: &quot;</span>, data);</span><br><span class="line">    counter++;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 初始化串口</span></span><br><span class="line">    Serial.<span class="built_in">begin</span>(<span class="number">115200</span>);</span><br><span class="line">    BLINKER_DEBUG.<span class="built_in">stream</span>(Serial);</span><br><span class="line">    <span class="comment">// 初始化舵机</span></span><br><span class="line">    myservo.<span class="built_in">attach</span>(D4，<span class="number">500</span>，<span class="number">2500</span>);<span class="comment">//开发板的D4引脚</span></span><br><span class="line">    myservo.<span class="built_in">write</span>(<span class="number">90</span>);<span class="comment">//上电时舵机归零垂直</span></span><br><span class="line">  BlinkerMIOT.<span class="built_in">attachPowerState</span>(miotPowerState);</span><br><span class="line">    <span class="comment">// 初始化blinker</span></span><br><span class="line">    Blinker.<span class="built_in">begin</span>(auth, ssid, pswd);</span><br><span class="line">    Blinker.<span class="built_in">attachData</span>(dataRead);</span><br><span class="line">    Button1.<span class="built_in">attach</span>(button1_callback);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Blinker.<span class="built_in">run</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>舵机旋转的角度可以自己调。</p>
-<p>上传后点击IDE右上角的串口监视器</p>
-<p>如果打印出来如下</p>
-<img src="/images/升级玩法/QQ图片20220423231525.png" style="zoom: 80%;">
-
-<p>恭喜你中奖了，板子坏了，开发板是易损品，买到坏的很正常，我已经坏了很多个了。</p>
-<p>打印出来什么什么connected说明WiFi连接成功了，可以打开自己的热点信息看看多了一个连接</p>
-<h2 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h2><p>手机上打开点灯app，刷新你的设备，头上会有在线两个字，点击两个按钮，舵机就会跟着旋转了。</p>
-<p>如此，可以玩的新花样就多了，寝室开关灯，寝室开关门，还有各种物理 上的控制都可以完成，只需要发挥你的想象怎么利用这个舵机的旋转。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/23/%E5%8D%87%E7%BA%A7%E7%8E%A9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -462,7 +441,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-24 00:18:23" itemprop="dateModified" datetime="2022-04-24T00:18:23+08:00">2022-04-24</time>
+      <time title="修改时间：2022-04-24 15:04:02" itemprop="dateModified" datetime="2022-04-24T15:04:02+08:00">2022-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -498,35 +477,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="sg90"><a href="#sg90" class="headerlink" title="sg90"></a>sg90</h1><p>sg90（10块钱左右）是常用的伺服电机，也叫舵机，他内部是动力来源由一个直流电机，也就是马达，由于马达转速过高，所以需要几个齿轮来降低其转速，同时增大扭力，sg90是塑料齿轮。长这样</p>
-<img src="/images/伺服电机的使用/1-16507189279363.jpg" style="zoom: 33%;">
-
-<p>他是升级版叫MG90s（比sg90贵个一两块）,构造是一样的，只是塑料齿轮换成了金属齿轮，增大了扭力。长这样</p>
-<img src="/images/伺服电机的使用/2.webp" style="zoom:33%;">
-
-<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><p>由图可见舵机有3跟引线，红、黄、土色。</p>
-<p>红色代表是电压输入端，5v;</p>
-<p>土色是的接地线；</p>
-<p>黄色可以简单理解为信号线（PWM）；</p>
-<p>很好记，（红色比较危险，说明是输出正极）（土色就是土地的颜色，代表接地，也可以理解为负极）（剩下的皇上就是信号输入了）。</p>
-<h1 id="驱动舵机"><a href="#驱动舵机" class="headerlink" title="驱动舵机"></a>驱动舵机</h1><h2 id="开发板"><a href="#开发板" class="headerlink" title="开发板"></a>开发板</h2><p>驱动舵机当然得用开发板了，有Arduino UNO开发板、esp8266开发板</p>
-<p>ESP8266（10块钱左右）</p>
-<p><img src="/images/%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%9A%84%E4%BD%BF%E7%94%A8/ky-165072155640717.png" alt="ESP8266"></p>
-<p>UNO（几十块钱左右）</p>
-<p><img src="/images/%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%9A%84%E4%BD%BF%E7%94%A8/bky.png" alt="UNO"></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>代码编辑采用的是Arduino IDE(c&#x2F;c++基础)</p>
-<p>如果开发板是UNO,IDE界面选择   工具-&gt;开发板-&gt;开发板管理器&gt;Arduino AVR Boards-&gt;Arduino UNO</p>
-<p>工具-&gt;端口。（如果没有这些的话就在开发板管理器下载）</p>
-<p>如果开发板是esp8266，因为ESP8266是个大的名字，他有很多种类型，上图叫<em><strong>Node MCU</strong></em>,同样的方法选择与开发板名字相对应的开发板管理器。（注意：这里需要下载<a target="_blank" rel="noopener" href="https://cloud.codess-nas.top:5213/s/2Ocn?path=/">https://cloud.codess-nas.top:5213/s/2Ocn?path=%2F</a>: 下载里面的8266_package……..exe.下载完成直接双击就可以了。）</p>
-<blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Servo.h&gt;</span></span></span><br><span class="line">Servo myservo;<span class="comment">//定义你的舵机</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">setup</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="comment">// put your setup code here, to run once:</span></span><br><span class="line">myservo.attach(D4，<span class="number">500</span>，<span class="number">2500</span>);</span><br><span class="line">  <span class="comment">//D4是开发版上对应的引脚，可以更改</span></span><br><span class="line">  <span class="comment">//你们可以试试myservo.attach(D4)和myservo.attach(D4，500，2500)的区别，两段代码都是对的，但是舵机运行有差异。</span></span><br><span class="line">   </span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">loop</span><span class="params">()</span> &#123;</span><br><span class="line">myservo.write(<span class="number">50</span>);<span class="comment">//舵机旋转的角度为50</span></span><br><span class="line">delay(<span class="number">500</span>);<span class="comment">//延迟500ms</span></span><br><span class="line">myservo.write(<span class="number">130</span>);<span class="comment">//舵机旋转的角度为130</span></span><br><span class="line">delay(<span class="number">500</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>选择端口后先编译（一个√按钮）再上传（一个-&gt;）到开发板。</p>
-<h2 id="连线"><a href="#连线" class="headerlink" title="连线"></a>连线</h2><p>以ESP8266为例子：</p>
-<img src="/images/伺服电机的使用/hhh.png" style="zoom: 67%;">
-
-<p>连接成功后，你会发现舵机开始循环旋转了。</p>
-
+          <h1 id="sg90"><a href="#sg90" class="headerlink" title="sg90"></a>sg90</h1><p>sg90（10块钱左右）是常用的伺服电机，也叫舵机，他内部是动力来源由一个直流电机，也就是马达，由于马达转速过高，</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/23/%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%9A%84%E4%BD%BF%E7%94%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
