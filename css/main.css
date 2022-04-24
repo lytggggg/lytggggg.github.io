@@ -1248,6 +1248,10 @@ pre code {
   border: 2px solid #333;
   max-width: 96px;
   padding: 2px;
+  transition: transform 1s ease-out;
+}
+.site-author-image:hover {
+  transform: rotateZ(360deg);
 }
 .site-author-name {
   color: #f5f5f5;
@@ -1540,7 +1544,7 @@ pre code {
   width: 100%;
 }
 .with-love {
-  color: #f00;
+  color: #008080;
   display: inline-block;
   margin: 0 5px;
 }
@@ -2125,6 +2129,10 @@ pre code {
 .post-reward div span {
   display: block;
 }
+.post-reward div:hover span {
+  animation: next-roll 0.1s infinite linear;
+  pointer-events: none;
+}
 .post-reward img {
   display: inline-block;
   margin: 0.8em 2em 0;
@@ -2541,7 +2549,7 @@ ul.breadcrumb li:last-child {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #fff;
+  background: #d0cc9e;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
