@@ -1,25 +1,21 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="秋衫霸霸">
+  <meta name="keywords" content="">
+  
     <meta name="description" content="准备工作下载DNN训练模型(6个文件+图片视频例子) [https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1SznsxtTOu_Tk-8R7xYpzaw]: 	“提取码：1234”">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）">
@@ -36,393 +32,603 @@
 <meta property="article:published_time" content="2022-05-09T14:42:35.000Z">
 <meta property="article:modified_time" content="2022-05-10T16:12:46.323Z">
 <meta property="article:author" content="秋衫霸霸">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/屏幕截图.png">
+  
+  
+  
+  <title>OpenCV+DNN深度学习（请先看C++OpenCV搭建环境） - 秋衫霸霸</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-<link rel="canonical" href="http://example.com/2022/05/09/OpenCV-DNN%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/09/OpenCV-DNN%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/","path":"2022/05/09/OpenCV-DNN深度学习/","title":"OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）"}</script>
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>OpenCV+DNN深度学习（请先看C++OpenCV搭建环境） | 秋衫霸霸</title>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
 
-  <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
 
-  <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">秋衫霸霸</p>
-      <i class="logo-line"></i>
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
     </a>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
-  </ul>
 </nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）"></span>
+          
+        </div>
 
-
-</div>
         
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E8%AF%86%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">图片识别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%A3%80%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">多个对象检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">3.1.</span> <span class="nav-text">常见错误</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%A3%80%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">视频中的对象检测</span></a></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="秋衫霸霸"
-      src="/images/dame.png">
-  <p class="site-author-name" itemprop="name">秋衫霸霸</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">10</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/tags/">
-        <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author site-overview-item animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/lytggggg" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lytggggg" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-05-09 22:42" pubdate>
+          2022年5月9日 晚上
+        </time>
       </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          49 分钟
+        
+      </span>
+    
+
+    
+    
   </div>
 
 
-  <div class="links-of-blogroll site-overview-item animated">
-    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
-      转自
+        
+      </div>
+
+      
     </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://baxw1.github.io/" title="https:&#x2F;&#x2F;baxw1.github.io&#x2F;" rel="noopener" target="_blank">不爱洗碗's blog</a>
-        </li>
-    </ul>
   </div>
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
-
-    
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/09/OpenCV-DNN%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/dame.png">
-      <meta itemprop="name" content="秋衫霸霸">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="秋衫霸霸">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="OpenCV+DNN深度学习（请先看C++OpenCV搭建环境） | 秋衫霸霸">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-09 22:42:35" itemprop="dateCreated datePublished" datetime="2022-05-09T22:42:35+08:00">2022-05-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-11 00:12:46" itemprop="dateModified" datetime="2022-05-11T00:12:46+08:00">2022-05-11</time>
-    </span>
-
-  
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    <a title="OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）" href="/2022/05/09/OpenCV-DNN%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/#SOHUCS" itemprop="discussionUrl">
-      <span id="sourceId::f69a5911abdf6186e4033cbf73e5e0eb" class="cy_cmt_count" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
-        </div>
-      </header>
+</div>
 
+  </header>
+
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>下载DNN训练模型(6个文件+图片视频例子)</p>
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>下载DNN训练模型(6个文件+图片视频例子)</p>
 <p>[<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1SznsxtTOu_Tk-8R7xYpzaw]">https://pan.baidu.com/s/1SznsxtTOu_Tk-8R7xYpzaw]</a>: 	“提取码：1234”</p>
 <span id="more"></span>
 
-<img src="/images/屏幕截图.png" style="zoom: 67%;">
+<img src="/images/屏幕截图.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;">
 
 <p>放在Resources文件夹里面；</p>
 <p>当然也可以用自己的路径，但是下面代码的路径也要相对更改</p>
 <p>测速用的图片和视频文件也要放在Resources文件夹里面，也可以用自己的摄像头</p>
-<h1 id="图片识别"><a href="#图片识别" class="headerlink" title="图片识别"></a>图片识别</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn/all_layers.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> dnn;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	vector&lt;std::string&gt; class_names;</span><br><span class="line">	<span class="function">ifstream <span class="title">ifs</span><span class="params">(string(<span class="string">&quot;Resources/图片识别.txt&quot;</span>).c_str())</span></span>;</span><br><span class="line">	string line;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">getline</span>(ifs, line)) &#123;</span><br><span class="line">		class_names.<span class="built_in">push_back</span>(line);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">auto</span> model = <span class="built_in">readNet</span>(<span class="string">&quot;Resources/图片识别.prototxt&quot;</span>,</span><br><span class="line">		<span class="string">&quot;Resources/图片识别.caffemodel&quot;</span>,</span><br><span class="line">		<span class="string">&quot;Caffe&quot;</span>);</span><br><span class="line">	Mat image = <span class="built_in">imread</span>(<span class="string">&quot;Resources/zz.webp&quot;</span>);</span><br><span class="line">	Mat blob = <span class="built_in">blobFromImage</span>(image, <span class="number">0.01</span>, <span class="built_in">Size</span>(<span class="number">224</span>, <span class="number">224</span>), <span class="built_in">Scalar</span>(<span class="number">104</span>, <span class="number">117</span>, <span class="number">123</span>));</span><br><span class="line">	model.<span class="built_in">setInput</span>(blob);</span><br><span class="line">	Mat outputs = model.forward();</span><br><span class="line">	Point classIdPoint;</span><br><span class="line">	<span class="type">double</span> final_prob;</span><br><span class="line">	<span class="built_in">minMaxLoc</span>(outputs.<span class="built_in">reshape</span>(<span class="number">1</span>, <span class="number">1</span>), <span class="number">0</span>, &amp;final_prob, <span class="number">0</span>, &amp;classIdPoint);</span><br><span class="line">	<span class="type">int</span> label_id = classIdPoint.x;</span><br><span class="line">	string out_text = format(<span class="string">&quot;%s, %.3f&quot;</span>, (class_names[label_id].<span class="built_in">c_str</span>()), final_prob);</span><br><span class="line">	<span class="built_in">putText</span>(image, out_text, <span class="built_in">Point</span>(<span class="number">25</span>, <span class="number">50</span>), FONT_HERSHEY_SIMPLEX, <span class="number">1</span>, <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line">	<span class="built_in">imshow</span>(<span class="string">&quot;Image&quot;</span>, image);</span><br><span class="line">	<span class="built_in">imwrite</span>(<span class="string">&quot;result_image.jpg&quot;</span>, image);</span><br><span class="line">	<span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="图片识别"><a href="#图片识别" class="headerlink" title="图片识别"></a>图片识别</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/opencv.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/dnn.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/dnn/all_layers.hpp&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> dnn;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	vector&lt;std::string&gt; class_names;<br>	<span class="hljs-function">ifstream <span class="hljs-title">ifs</span><span class="hljs-params">(string(<span class="hljs-string">&quot;Resources/图片识别.txt&quot;</span>).c_str())</span></span>;<br>	string line;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-built_in">getline</span>(ifs, line)) &#123;<br>		class_names.<span class="hljs-built_in">push_back</span>(line);<br>	&#125;<br>	<span class="hljs-keyword">auto</span> model = <span class="hljs-built_in">readNet</span>(<span class="hljs-string">&quot;Resources/图片识别.prototxt&quot;</span>,<br>		<span class="hljs-string">&quot;Resources/图片识别.caffemodel&quot;</span>,<br>		<span class="hljs-string">&quot;Caffe&quot;</span>);<br>	Mat image = <span class="hljs-built_in">imread</span>(<span class="hljs-string">&quot;Resources/zz.webp&quot;</span>);<br>	Mat blob = <span class="hljs-built_in">blobFromImage</span>(image, <span class="hljs-number">0.01</span>, <span class="hljs-built_in">Size</span>(<span class="hljs-number">224</span>, <span class="hljs-number">224</span>), <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">104</span>, <span class="hljs-number">117</span>, <span class="hljs-number">123</span>));<br>	model.<span class="hljs-built_in">setInput</span>(blob);<br>	Mat outputs = model.forward();<br>	Point classIdPoint;<br>	<span class="hljs-type">double</span> final_prob;<br>	<span class="hljs-built_in">minMaxLoc</span>(outputs.<span class="hljs-built_in">reshape</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), <span class="hljs-number">0</span>, &amp;final_prob, <span class="hljs-number">0</span>, &amp;classIdPoint);<br>	<span class="hljs-type">int</span> label_id = classIdPoint.x;<br>	string out_text = format(<span class="hljs-string">&quot;%s, %.3f&quot;</span>, (class_names[label_id].<span class="hljs-built_in">c_str</span>()), final_prob);<br>	<span class="hljs-built_in">putText</span>(image, out_text, <span class="hljs-built_in">Point</span>(<span class="hljs-number">25</span>, <span class="hljs-number">50</span>), FONT_HERSHEY_SIMPLEX, <span class="hljs-number">1</span>, <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>), <span class="hljs-number">2</span>);<br>	<span class="hljs-built_in">imshow</span>(<span class="hljs-string">&quot;Image&quot;</span>, image);<br>	<span class="hljs-built_in">imwrite</span>(<span class="hljs-string">&quot;result_image.jpg&quot;</span>, image);<br>	<span class="hljs-built_in">waitKey</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>效果如下</p>
-<img src="/images/屏幕截图15.png" style="zoom: 67%;">
+<img src="/images/屏幕截图15.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;">
 
-<img src="/images/屏幕截图16.png" style="zoom: 67%;">
+<img src="/images/屏幕截图16.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;">
 
 <p>还是能检测出来</p>
-<h1 id="多个对象检测"><a href="#多个对象检测" class="headerlink" title="多个对象检测"></a>多个对象检测</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn/all_layers.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> dnn;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	vector&lt;std::string&gt; class_names;</span><br><span class="line">	<span class="function">ifstream <span class="title">ifs</span><span class="params">(string(<span class="string">&quot;Resources/多个对象识别.txt&quot;</span>).c_str())</span></span>;</span><br><span class="line">	string line;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">getline</span>(ifs, line)) &#123;</span><br><span class="line">		class_names.<span class="built_in">push_back</span>(line);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">auto</span> model = <span class="built_in">readNet</span>(<span class="string">&quot;Resources/多个对象识别.pb&quot;</span>,</span><br><span class="line">			<span class="string">&quot;Resources/多个对象识别.pbtxt&quot;</span>,</span><br><span class="line">			<span class="string">&quot;TensorFlow&quot;</span>);</span><br><span class="line">	<span class="comment">// read the image from disk</span></span><br><span class="line">	Mat image = <span class="built_in">imread</span>(<span class="string">&quot;Resources/ggg.webp&quot;</span>);</span><br><span class="line">	<span class="type">int</span> image_height = image.cols;</span><br><span class="line">	<span class="type">int</span> image_width = image.rows;</span><br><span class="line">	<span class="comment">//create blob from image</span></span><br><span class="line">	Mat blob = <span class="built_in">blobFromImage</span>(image, <span class="number">1.0</span>, <span class="built_in">Size</span>(<span class="number">300</span>, <span class="number">300</span>), <span class="built_in">Scalar</span>(<span class="number">127.5</span>, <span class="number">127.5</span>, <span class="number">127.5</span>), <span class="literal">true</span>, <span class="literal">false</span>);</span><br><span class="line">	model.<span class="built_in">setInput</span>(blob);</span><br><span class="line">	<span class="comment">//forward pass through the model to carry out the detection</span></span><br><span class="line">	Mat output = model.forward();</span><br><span class="line">	<span class="function">Mat <span class="title">detectionMat</span><span class="params">(output.size[<span class="number">2</span>], output.size[<span class="number">3</span>], CV_32F, output.ptr&lt;<span class="type">float</span>&gt;())</span></span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; detectionMat.rows; i++) &#123;</span><br><span class="line">		<span class="type">int</span> class_id = detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">1</span>);</span><br><span class="line">		<span class="type">float</span> confidence = detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">2</span>);</span><br><span class="line">		<span class="comment">// Check if the detection is of good quality</span></span><br><span class="line">		<span class="keyword">if</span> (confidence &gt; <span class="number">0.4</span>) &#123;</span><br><span class="line">			<span class="type">int</span> box_x = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">3</span>) * image.cols);</span><br><span class="line">			<span class="type">int</span> box_y = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">4</span>) * image.rows);</span><br><span class="line">			<span class="type">int</span> box_width = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">5</span>) * image.cols - box_x);</span><br><span class="line">			<span class="type">int</span> box_height = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">6</span>) * image.rows - box_y);</span><br><span class="line">			<span class="built_in">rectangle</span>(image, <span class="built_in">Point</span>(box_x, box_y), <span class="built_in">Point</span>(box_x + box_width, box_y + box_height), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>), <span class="number">2</span>);</span><br><span class="line">			<span class="built_in">putText</span>(image, class_names[class_id - <span class="number">1</span>].<span class="built_in">c_str</span>(), <span class="built_in">Point</span>(box_x, box_y - <span class="number">5</span>), FONT_HERSHEY_SIMPLEX, <span class="number">0.5</span>, <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>), <span class="number">1.5</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">imshow</span>(<span class="string">&quot;image&quot;</span>, image);</span><br><span class="line">	<span class="built_in">imwrite</span>(<span class="string">&quot;image_result.jpg&quot;</span>, image);</span><br><span class="line">	<span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">destroyAllWindows</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="多个对象检测"><a href="#多个对象检测" class="headerlink" title="多个对象检测"></a>多个对象检测</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/opencv.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/dnn.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/dnn/all_layers.hpp&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> dnn;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	vector&lt;std::string&gt; class_names;<br>	<span class="hljs-function">ifstream <span class="hljs-title">ifs</span><span class="hljs-params">(string(<span class="hljs-string">&quot;Resources/多个对象识别.txt&quot;</span>).c_str())</span></span>;<br>	string line;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-built_in">getline</span>(ifs, line)) &#123;<br>		class_names.<span class="hljs-built_in">push_back</span>(line);<br>	&#125;<br>	<span class="hljs-keyword">auto</span> model = <span class="hljs-built_in">readNet</span>(<span class="hljs-string">&quot;Resources/多个对象识别.pb&quot;</span>,<br>			<span class="hljs-string">&quot;Resources/多个对象识别.pbtxt&quot;</span>,<br>			<span class="hljs-string">&quot;TensorFlow&quot;</span>);<br>	<span class="hljs-comment">// read the image from disk</span><br>	Mat image = <span class="hljs-built_in">imread</span>(<span class="hljs-string">&quot;Resources/ggg.webp&quot;</span>);<br>	<span class="hljs-type">int</span> image_height = image.cols;<br>	<span class="hljs-type">int</span> image_width = image.rows;<br>	<span class="hljs-comment">//create blob from image</span><br>	Mat blob = <span class="hljs-built_in">blobFromImage</span>(image, <span class="hljs-number">1.0</span>, <span class="hljs-built_in">Size</span>(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>), <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">127.5</span>, <span class="hljs-number">127.5</span>, <span class="hljs-number">127.5</span>), <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>);<br>	model.<span class="hljs-built_in">setInput</span>(blob);<br>	<span class="hljs-comment">//forward pass through the model to carry out the detection</span><br>	Mat output = model.forward();<br>	<span class="hljs-function">Mat <span class="hljs-title">detectionMat</span><span class="hljs-params">(output.size[<span class="hljs-number">2</span>], output.size[<span class="hljs-number">3</span>], CV_32F, output.ptr&lt;<span class="hljs-type">float</span>&gt;())</span></span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; detectionMat.rows; i++) &#123;<br>		<span class="hljs-type">int</span> class_id = detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">1</span>);<br>		<span class="hljs-type">float</span> confidence = detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">2</span>);<br>		<span class="hljs-comment">// Check if the detection is of good quality</span><br>		<span class="hljs-keyword">if</span> (confidence &gt; <span class="hljs-number">0.4</span>) &#123;<br>			<span class="hljs-type">int</span> box_x = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">3</span>) * image.cols);<br>			<span class="hljs-type">int</span> box_y = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">4</span>) * image.rows);<br>			<span class="hljs-type">int</span> box_width = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">5</span>) * image.cols - box_x);<br>			<span class="hljs-type">int</span> box_height = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">6</span>) * image.rows - box_y);<br>			<span class="hljs-built_in">rectangle</span>(image, <span class="hljs-built_in">Point</span>(box_x, box_y), <span class="hljs-built_in">Point</span>(box_x + box_width, box_y + box_height), <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), <span class="hljs-number">2</span>);<br>			<span class="hljs-built_in">putText</span>(image, class_names[class_id - <span class="hljs-number">1</span>].<span class="hljs-built_in">c_str</span>(), <span class="hljs-built_in">Point</span>(box_x, box_y - <span class="hljs-number">5</span>), FONT_HERSHEY_SIMPLEX, <span class="hljs-number">0.5</span>, <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), <span class="hljs-number">1.5</span>);<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">imshow</span>(<span class="hljs-string">&quot;image&quot;</span>, image);<br>	<span class="hljs-built_in">imwrite</span>(<span class="hljs-string">&quot;image_result.jpg&quot;</span>, image);<br>	<span class="hljs-built_in">waitKey</span>(<span class="hljs-number">0</span>);<br>	<span class="hljs-built_in">destroyAllWindows</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>运行效果如下</p>
-<img src="/images/屏幕截图2.png" style="zoom: 67%;">
+<img src="/images/屏幕截图2.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;">
 
 <p>可以看到，人、车、自行车几乎都可以识别出来。但是请仔细看，这个识别的正确率并没有达到100%、</p>
 <p>这是DNN为了速度而牺牲了准确率。</p>
 <p>识别图片在Resources文件夹同级目录</p>
-<img src="/images/屏幕截图3.png" style="zoom: 67%;">
+<img src="/images/屏幕截图3.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;">
 
 <h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><p>注意这一行代码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mat blob = <span class="built_in">blobFromImage</span>(image, <span class="number">1.0</span>, <span class="built_in">Size</span>(<span class="number">300</span>, <span class="number">300</span>), <span class="built_in">Scalar</span>(<span class="number">127.5</span>, <span class="number">127.5</span>, <span class="number">127.5</span>), <span class="literal">true</span>, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">Mat blob = <span class="hljs-built_in">blobFromImage</span>(image, <span class="hljs-number">1.0</span>, <span class="hljs-built_in">Size</span>(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>), <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">127.5</span>, <span class="hljs-number">127.5</span>, <span class="hljs-number">127.5</span>), <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>);<br></code></pre></td></tr></table></figure>
 
 <p>Size(300, 300)是DNN模型在几乎所有框架期望的大小，如果识别自己已经有的图片，往后程序会报错，这时候就要更改Size（）里面的值，直到识别完整为止。</p>
 <hr>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rectangle</span>(image, <span class="built_in">Point</span>(box_x, box_y), <span class="built_in">Point</span>(box_x + box_width, box_y + box_height), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">rectangle</span>(image, <span class="hljs-built_in">Point</span>(box_x, box_y), <span class="hljs-built_in">Point</span>(box_x + box_width, box_y + box_height), <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), <span class="hljs-number">2</span>);<br></code></pre></td></tr></table></figure>
 
 <p>其中Scalar()是更改跟踪框的颜色的，可以随意更改。</p>
 <h1 id="视频中的对象检测"><a href="#视频中的对象检测" class="headerlink" title="视频中的对象检测"></a>视频中的对象检测</h1><p>与图片对象检测一样 </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn/all_layers.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> dnn;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	vector&lt;std::string&gt; class_names;</span><br><span class="line">	<span class="function">ifstream <span class="title">ifs</span><span class="params">(string(<span class="string">&quot;Resources/object_detection_classes_coco.txt&quot;</span>).c_str())</span></span>;</span><br><span class="line">	string line;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">getline</span>(ifs, line)) &#123;</span><br><span class="line">		class_names.<span class="built_in">push_back</span>(line);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> model = <span class="built_in">readNet</span>(<span class="string">&quot;Resources/frozen_inference_graph.pb&quot;</span>,</span><br><span class="line">		<span class="string">&quot;Resources/ssd_mobilenet_v2_coco_2018_03_29.pbtxt&quot;</span>,</span><br><span class="line">		<span class="string">&quot;TensorFlow&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="function">VideoCapture <span class="title">cap</span><span class="params">(<span class="string">&quot;Resources/ooo.mp4&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> frame_width = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(cap.<span class="built_in">get</span>(<span class="number">3</span>));</span><br><span class="line">	<span class="type">int</span> frame_height = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(cap.<span class="built_in">get</span>(<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">	<span class="function">VideoWriter <span class="title">out</span><span class="params">(<span class="string">&quot;video_result.avi&quot;</span>, VideoWriter::fourcc(<span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;J&#x27;</span>, <span class="string">&#x27;P&#x27;</span>, <span class="string">&#x27;G&#x27;</span>), <span class="number">60</span>, Size(frame_width, frame_height))</span></span>;</span><br><span class="line">	<span class="keyword">while</span> (cap.<span class="built_in">isOpened</span>()) &#123;</span><br><span class="line">		Mat image;</span><br><span class="line">		<span class="type">bool</span> isSuccess = cap.<span class="built_in">read</span>(image);</span><br><span class="line">		<span class="type">int</span> image_height = image.cols;</span><br><span class="line">		<span class="type">int</span> image_width = image.rows;</span><br><span class="line"></span><br><span class="line">		Mat blob = <span class="built_in">blobFromImage</span>(image, <span class="number">1.0</span>, <span class="built_in">Size</span>(<span class="number">300</span>, <span class="number">300</span>), <span class="built_in">Scalar</span>(<span class="number">127.5</span>, <span class="number">127.5</span>, <span class="number">127.5</span>),</span><br><span class="line">			<span class="literal">true</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		model.<span class="built_in">setInput</span>(blob);</span><br><span class="line"></span><br><span class="line">		Mat output = model.forward();</span><br><span class="line">		<span class="function">Mat <span class="title">detectionMat</span><span class="params">(output.size[<span class="number">2</span>], output.size[<span class="number">3</span>], CV_32F, output.ptr&lt;<span class="type">float</span>&gt;())</span></span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; detectionMat.rows; i++) &#123;</span><br><span class="line">			<span class="type">int</span> class_id = detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">1</span>);</span><br><span class="line">			<span class="type">float</span> confidence = detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (confidence &gt; <span class="number">0.4</span>) &#123;</span><br><span class="line">				<span class="type">int</span> box_x = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">3</span>) * image.cols);</span><br><span class="line">				<span class="type">int</span> box_y = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">4</span>) * image.rows);</span><br><span class="line">				<span class="type">int</span> box_width = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">5</span>) * image.cols - box_x);</span><br><span class="line">				<span class="type">int</span> box_height = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(detectionMat.<span class="built_in">at</span>&lt;<span class="type">float</span>&gt;(i, <span class="number">6</span>) * image.rows - box_y);</span><br><span class="line">				<span class="built_in">rectangle</span>(image, <span class="built_in">Point</span>(box_x, box_y), <span class="built_in">Point</span>(box_x + box_width, box_y + box_height), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">2</span>);</span><br><span class="line">				<span class="built_in">putText</span>(image, class_names[class_id - <span class="number">1</span>].<span class="built_in">c_str</span>(), <span class="built_in">Point</span>(box_x, box_y - <span class="number">5</span>), FONT_HERSHEY_SIMPLEX, <span class="number">0.5</span>, <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>), <span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">imshow</span>(<span class="string">&quot;image&quot;</span>, image);</span><br><span class="line">		out.<span class="built_in">write</span>(image);</span><br><span class="line">		<span class="type">int</span> k = <span class="built_in">waitKey</span>(<span class="number">10</span>);</span><br><span class="line">		<span class="keyword">if</span> (k == <span class="number">113</span>) &#123;<span class="comment">//按q结束视频，别问为什么是113</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cap.<span class="built_in">release</span>();</span><br><span class="line">	<span class="built_in">destroyAllWindows</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/opencv.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/dnn.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/dnn/all_layers.hpp&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> dnn;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	vector&lt;std::string&gt; class_names;<br>	<span class="hljs-function">ifstream <span class="hljs-title">ifs</span><span class="hljs-params">(string(<span class="hljs-string">&quot;Resources/object_detection_classes_coco.txt&quot;</span>).c_str())</span></span>;<br>	string line;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-built_in">getline</span>(ifs, line)) &#123;<br>		class_names.<span class="hljs-built_in">push_back</span>(line);<br>	&#125;<br><br>	<span class="hljs-keyword">auto</span> model = <span class="hljs-built_in">readNet</span>(<span class="hljs-string">&quot;Resources/frozen_inference_graph.pb&quot;</span>,<br>		<span class="hljs-string">&quot;Resources/ssd_mobilenet_v2_coco_2018_03_29.pbtxt&quot;</span>,<br>		<span class="hljs-string">&quot;TensorFlow&quot;</span>);<br><br>	<span class="hljs-function">VideoCapture <span class="hljs-title">cap</span><span class="hljs-params">(<span class="hljs-string">&quot;Resources/ooo.mp4&quot;</span>)</span></span>;<br><br>	<span class="hljs-type">int</span> frame_width = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(cap.<span class="hljs-built_in">get</span>(<span class="hljs-number">3</span>));<br>	<span class="hljs-type">int</span> frame_height = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(cap.<span class="hljs-built_in">get</span>(<span class="hljs-number">4</span>));<br><br>	<span class="hljs-function">VideoWriter <span class="hljs-title">out</span><span class="hljs-params">(<span class="hljs-string">&quot;video_result.avi&quot;</span>, VideoWriter::fourcc(<span class="hljs-string">&#x27;M&#x27;</span>, <span class="hljs-string">&#x27;J&#x27;</span>, <span class="hljs-string">&#x27;P&#x27;</span>, <span class="hljs-string">&#x27;G&#x27;</span>), <span class="hljs-number">60</span>, Size(frame_width, frame_height))</span></span>;<br>	<span class="hljs-keyword">while</span> (cap.<span class="hljs-built_in">isOpened</span>()) &#123;<br>		Mat image;<br>		<span class="hljs-type">bool</span> isSuccess = cap.<span class="hljs-built_in">read</span>(image);<br>		<span class="hljs-type">int</span> image_height = image.cols;<br>		<span class="hljs-type">int</span> image_width = image.rows;<br><br>		Mat blob = <span class="hljs-built_in">blobFromImage</span>(image, <span class="hljs-number">1.0</span>, <span class="hljs-built_in">Size</span>(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>), <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">127.5</span>, <span class="hljs-number">127.5</span>, <span class="hljs-number">127.5</span>),<br>			<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>);<br><br>		model.<span class="hljs-built_in">setInput</span>(blob);<br><br>		Mat output = model.forward();<br>		<span class="hljs-function">Mat <span class="hljs-title">detectionMat</span><span class="hljs-params">(output.size[<span class="hljs-number">2</span>], output.size[<span class="hljs-number">3</span>], CV_32F, output.ptr&lt;<span class="hljs-type">float</span>&gt;())</span></span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; detectionMat.rows; i++) &#123;<br>			<span class="hljs-type">int</span> class_id = detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">1</span>);<br>			<span class="hljs-type">float</span> confidence = detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">2</span>);<br><br>			<span class="hljs-keyword">if</span> (confidence &gt; <span class="hljs-number">0.4</span>) &#123;<br>				<span class="hljs-type">int</span> box_x = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">3</span>) * image.cols);<br>				<span class="hljs-type">int</span> box_y = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">4</span>) * image.rows);<br>				<span class="hljs-type">int</span> box_width = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">5</span>) * image.cols - box_x);<br>				<span class="hljs-type">int</span> box_height = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">int</span>&gt;(detectionMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(i, <span class="hljs-number">6</span>) * image.rows - box_y);<br>				<span class="hljs-built_in">rectangle</span>(image, <span class="hljs-built_in">Point</span>(box_x, box_y), <span class="hljs-built_in">Point</span>(box_x + box_width, box_y + box_height), <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), <span class="hljs-number">2</span>);<br>				<span class="hljs-built_in">putText</span>(image, class_names[class_id - <span class="hljs-number">1</span>].<span class="hljs-built_in">c_str</span>(), <span class="hljs-built_in">Point</span>(box_x, box_y - <span class="hljs-number">5</span>), FONT_HERSHEY_SIMPLEX, <span class="hljs-number">0.5</span>, <span class="hljs-built_in">Scalar</span>(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), <span class="hljs-number">1</span>);<br>			&#125;<br>		&#125;<br>		<span class="hljs-built_in">imshow</span>(<span class="hljs-string">&quot;image&quot;</span>, image);<br>		out.<span class="hljs-built_in">write</span>(image);<br>		<span class="hljs-type">int</span> k = <span class="hljs-built_in">waitKey</span>(<span class="hljs-number">10</span>);<br>		<span class="hljs-keyword">if</span> (k == <span class="hljs-number">113</span>) &#123;<span class="hljs-comment">//按q结束视频，别问为什么是113</span><br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>	&#125;<br>	cap.<span class="hljs-built_in">release</span>();<br>	<span class="hljs-built_in">destroyAllWindows</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>效果如下</p>
-<img src="/images/屏幕截图4.png" style="zoom: 67%;">
+<img src="/images/屏幕截图4.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;">
 
 <p>注意在Release下编译，不然卡得像PPT。</p>
 <p>程序运行完后可以在Resources文件夹同级目录看到完整视频。</p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）</div>
+      <div>http://example.com/2022/05/09/OpenCV-DNN深度学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>秋衫霸霸</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年5月9日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/10/OpenCV%E4%BA%BA%E5%A4%B4%E6%A3%80%E6%B5%8B/" title="OpenCV人头检测">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">OpenCV人头检测</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/29/js%E7%9A%84%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97%E5%84%BF/" title="js的俄罗斯方块儿">
+                        <span class="hidden-mobile">js的俄罗斯方块儿</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
     </div>
 
-    
-    
-    
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-    <footer class="post-footer">
-          <div class="reward-container">
-  <div>Buy me a 可乐</div>
-  <button>
-    赞赏
-  </button>
-  <div class="post-reward">
-      <div>
-        <img src="/images/wechatpay.png" alt="秋衫霸霸 微信">
-        <span>微信</span>
-      </div>
-      <div>
-        <img src="/images/alipay.png" alt="秋衫霸霸 支付宝">
-        <span>支付宝</span>
-      </div>
 
+
+  </aside>
+
+
+    </div>
   </div>
 </div>
 
 
-        
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/04/29/js%E7%9A%84%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97%E5%84%BF/" rel="prev" title="js的俄罗斯方块儿">
-                  <i class="fa fa-chevron-left"></i> js的俄罗斯方块儿
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/05/10/OpenCV%E4%BA%BA%E5%A4%B4%E6%A3%80%E6%B5%8B/" rel="next" title="OpenCV人头检测">
-                  OpenCV人头检测 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
-  </article>
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
+    
 
-
-
-
-
-    <div class="comments" id="SOHUCS" sid="f69a5911abdf6186e4033cbf73e5e0eb"></div>
-</div>
+    
   </main>
 
-  <footer class="footer">
+  <footer>
     <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">秋衫霸霸</span>
-</div>
-<div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
-
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
+  
+  
+  
+  
+</div>
+
   </footer>
 
+  <!-- Scripts -->
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
 
 
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
 
   
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
-<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyw2sr3N1","appkey":"46abd16e099f1103aae99886481de612"}</script>
-<script src="/js/third-party/comments/changyan.js"></script>
 
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
