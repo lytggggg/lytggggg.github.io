@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="秋衫霸霸">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、AHT20介绍 综述   AHT20，新一代温湿度传感器在尺寸与智能 方面建立了新的标准：它嵌入了适于回流焊 的双列扁平无引脚SMD 封装，底面 3 x 3mm ， 高度1.0mm。传感器输出经过标定的数字信 号，标准 I2C 格式。  AHT20 配有一个全新设计的 ASIC专用芯片、 一个经过改进的MEMS半导体电容式湿度传感 元件和一个标准的片上温度传感元件，其性 能已经大大提升甚至超出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I2C总线通信协议及温湿度采集">
+<meta property="og:url" content="http://example.com/2022/11/16/I2C%E6%80%BB%E7%BA%BF%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%B8%A9%E6%B9%BF%E5%BA%A6%E9%87%87%E9%9B%86/index.html">
+<meta property="og:site_name" content="秋衫霸霸">
+<meta property="og:description" content="一、AHT20介绍 综述   AHT20，新一代温湿度传感器在尺寸与智能 方面建立了新的标准：它嵌入了适于回流焊 的双列扁平无引脚SMD 封装，底面 3 x 3mm ， 高度1.0mm。传感器输出经过标定的数字信 号，标准 I2C 格式。  AHT20 配有一个全新设计的 ASIC专用芯片、 一个经过改进的MEMS半导体电容式湿度传感 元件和一个标准的片上温度传感元件，其性 能已经大大提升甚至超出">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/a_1.png">
+<meta property="og:image" content="http://example.com/images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/QQ.jpg">
+<meta property="og:image" content="http://example.com/images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/a_2.png">
+<meta property="og:image" content="http://example.com/images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/a_3.png">
+<meta property="article:published_time" content="2022-11-16T14:12:23.000Z">
+<meta property="article:modified_time" content="2023-03-06T04:05:10.469Z">
+<meta property="article:author" content="秋衫霸霸">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/a_1.png">
+  
+  
+  
+  <title>I2C总线通信协议及温湿度采集 - 秋衫霸霸</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="I2C总线通信协议及温湿度采集"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-16 22:12" pubdate>
+          2022年11月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          59 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">I2C总线通信协议及温湿度采集</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、AHT20介绍"><a href="#一、AHT20介绍" class="headerlink" title="一、AHT20介绍"></a>一、AHT20介绍</h1><ol>
+<li>综述</li>
+</ol>
+<ul>
+<li><p>AHT20，新一代温湿度传感器在尺寸与智能 方面建立了新的标准：它嵌入了适于回流焊 的双列扁平无引脚SMD 封装，底面 3 x 3mm ， 高度1.0mm。传感器输出经过标定的数字信 号，标准 I2C 格式。</p>
+</li>
+<li><p>AHT20 配有一个全新设计的 ASIC专用芯片、 一个经过改进的MEMS半导体电容式湿度传感 元件和一个标准的片上温度传感元件，其性 能已经大大提升甚至超出了前一代传感器的 可靠性水平，新一代温湿度传感器，经过改 进使其在恶劣环境下的性能更稳定。</p>
+</li>
+<li><p>每一个传感器都经过校准和测试，在产品表 面印有产品批号。由于对传感器做了改良和 微型化改进，因此它的性价比更高，并且最 终所有设备都将得益于尖端的节能运行模式</p>
+<p> 2.优点</p>
+</li>
+<li><p>完全标定</p>
+</li>
+<li><p>数字输出，I2C 接口</p>
+</li>
+<li><p>优异的长期稳定性</p>
+</li>
+<li><p>采用SMD封装适于回流焊</p>
+</li>
+<li><p>响应迅速、抗干扰能力强</p>
+</li>
+</ul>
+<ol start="3">
+<li>应用范围<br>暖通空调 、除湿器、测试及检测设备、消费品、汽车 、自动控制、数据记录器、气象 站、家电、湿度调节、医疗及其他相关温湿度检测控制。</li>
+</ol>
+<h1 id="二、I2C总线通信协议"><a href="#二、I2C总线通信协议" class="headerlink" title="二、I2C总线通信协议"></a>二、I2C总线通信协议</h1><ul>
+<li><p>I2C是Inter-Integrated Circuit的简称，读作：I-squared-C。由飞利浦公司于1980年代提出，为了让主板、嵌入式系统或手机用以连接低速周边外部设备而发展。</p>
+</li>
+<li><p>主要用途：<br>SOC和周边外设间的通信（如：EEPROM，电容触摸芯片，各种Sensor等）。</p>
+</li>
+<li><p>I2C总线只使用两条双向漏极开路的信号线（串行数据线：SDA，及串行时钟线：SCL），并利用电阻上拉。I2C总线仅仅使用SCL、SDA两根信号线，就实现了设备间的数据交互，极大地简化了对硬件资源和PCB板布线空间的占用。I2C总线广泛应用在EEPROM、实时时钟、LCD、及其他芯片的接口。I2C允许相当大的工作电压范围，典型的电压基准为：+3.3V或+5V。</p>
+</li>
+<li><p>SCL（Serial Clock）：串行时钟线，传输CLK信号，一般是主设备向从设备提供</p>
+</li>
+<li><p>SDA（Serial Data）：串行数据线，传输通信数据</p>
+</li>
+<li><p>内部结构图：</p>
+</li>
+</ul>
+<p><img src="/../images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/a_1.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="三、I2C硬件与软件的对比"><a href="#三、I2C硬件与软件的对比" class="headerlink" title="三、I2C硬件与软件的对比"></a>三、I2C硬件与软件的对比</h1><p>硬件I2C对应芯片上的I2C外设，有相应I2C驱动电路，其所使用的I2C管脚也是专用的，因而效率要远高于软件模拟的I2C；一般也较为稳定，但是程序较为繁琐。</p>
+<p>硬件I2C是直接调用内部寄存器进行配置；而软件I2C是没有寄存器这个概念的。</p>
+<p>主要对比：<br>1.硬件IIC用法比较复杂，模拟IIC的流程更清楚一些。<br>2.硬件IIC速度比模拟快，并且可以用DMA<br>3.模拟IIC可以在任何管脚上，而硬件只能在固定管脚上</p>
+<h1 id="四、温湿度采集"><a href="#四、温湿度采集" class="headerlink" title="四、温湿度采集"></a>四、温湿度采集</h1><h2 id="1-实验内容"><a href="#1-实验内容" class="headerlink" title="1.实验内容"></a>1.实验内容</h2><p>学习I2C总线通信协议，使用STM32F103完成基于I2C协议的AHT20温湿度传感器的数据采集，并将采集的温度-湿度值通过串口输出(每隔2秒钟采集一次温湿度数据，并通过串口发送到上位机（win10))。<br>需要的硬件</p>
+<table>
+<thead>
+<tr>
+<th align="center">STM32F103C8</th>
+<th align="center">AHT20</th>
+</tr>
+</thead>
+</table>
+<h2 id="2-硬件连线"><a href="#2-硬件连线" class="headerlink" title="2. 硬件连线"></a>2. 硬件连线</h2><ul>
+<li>STM32核心板和AHT20的连线</li>
+<li>SCL——B6</li>
+<li>GND——GND</li>
+<li>SDA——B7</li>
+<li>VCC——3.3V</li>
+</ul>
+<h2 id="3-实验电路"><a href="#3-实验电路" class="headerlink" title="3.实验电路"></a>3.实验电路</h2><p><img src="/../images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/QQ.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-实验代码"><a href="#4-实验代码" class="headerlink" title="4.实验代码"></a>4.实验代码</h2><p>关键代码如下，完整代码链接如下</p>
+<p><strong>myiic.h</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> __MYIIC_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __MYIIC_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;sys.h&quot;</span></span><br><br><span class="hljs-comment">//IO方向设置</span><br> <br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SDA_IN()  &#123;GPIOB-&gt;CRL&amp;=0X0FFFFFFF;GPIOB-&gt;CRL|=(u32)8&lt;&lt;28;&#125;</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SDA_OUT() &#123;GPIOB-&gt;CRL&amp;=0X0FFFFFFF;GPIOB-&gt;CRL|=(u32)3&lt;&lt;28;&#125;</span><br><br><span class="hljs-comment">//IO操作函数	 </span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> IIC_SCL    PBout(6) <span class="hljs-comment">//SCL</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> IIC_SDA    PBout(7) <span class="hljs-comment">//SDA	 </span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> READ_SDA   PBin(7)  <span class="hljs-comment">//输入SDA </span></span><br><br><span class="hljs-comment">//IIC所有操作函数</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;                <span class="hljs-comment">//初始化IIC的IO口				 </span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Start</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;				<span class="hljs-comment">//发送IIC开始信号</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Stop</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;	  			<span class="hljs-comment">//发送IIC停止信号</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Send_Byte</span><span class="hljs-params">(u8 txd)</span>;			<span class="hljs-comment">//IIC发送一个字节</span><br>u8 <span class="hljs-title function_">IIC_Read_Byte</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> ack)</span>;<span class="hljs-comment">//IIC读取一个字节</span><br>u8 <span class="hljs-title function_">IIC_Wait_Ack</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>; 				<span class="hljs-comment">//IIC等待ACK信号</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Ack</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;					<span class="hljs-comment">//IIC发送ACK信号</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_NAck</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;				<span class="hljs-comment">//IIC不发送ACK信号</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Write_One_Byte</span><span class="hljs-params">(u8 daddr,u8 addr,u8 data)</span>;<br>u8 <span class="hljs-title function_">IIC_Read_One_Byte</span><span class="hljs-params">(u8 daddr,u8 addr)</span>;	  <br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<p><strong>myiic.c</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;myiic.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;delay.h&quot;</span></span><br> <br><span class="hljs-comment">//初始化IIC</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;					     <br>	GPIO_InitTypeDef GPIO_InitStructure;<br>	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOB, ENABLE );	<span class="hljs-comment">//使能GPIOB时钟</span><br>	   <br>	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;<br>	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   <span class="hljs-comment">//推挽输出</span><br>	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;<br>	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);<br>	GPIO_SetBits(GPIOB,GPIO_Pin_6|GPIO_Pin_7); 	<span class="hljs-comment">//PB6,PB7 输出高</span><br>&#125;<br><span class="hljs-comment">//产生IIC起始信号</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Start</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	SDA_OUT();     <span class="hljs-comment">//sda线输出</span><br>	IIC_SDA=<span class="hljs-number">1</span>;	  	  <br>	IIC_SCL=<span class="hljs-number">1</span>;<br>	delay_us(<span class="hljs-number">4</span>);<br> 	IIC_SDA=<span class="hljs-number">0</span>;<span class="hljs-comment">//START:when CLK is high,DATA change form high to low </span><br>	delay_us(<span class="hljs-number">4</span>);<br>	IIC_SCL=<span class="hljs-number">0</span>;<span class="hljs-comment">//钳住I2C总线，准备发送或接收数据 </span><br>&#125;	  <br><span class="hljs-comment">//产生IIC停止信号</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Stop</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	SDA_OUT();<span class="hljs-comment">//sda线输出</span><br>	IIC_SCL=<span class="hljs-number">0</span>;<br>	IIC_SDA=<span class="hljs-number">0</span>;<span class="hljs-comment">//STOP:when CLK is high DATA change form low to high</span><br> 	delay_us(<span class="hljs-number">4</span>);<br>	IIC_SCL=<span class="hljs-number">1</span>; <br>	IIC_SDA=<span class="hljs-number">1</span>;<span class="hljs-comment">//发送I2C总线结束信号</span><br>	delay_us(<span class="hljs-number">4</span>);							   	<br>&#125;<br><span class="hljs-comment">////等待应答信号到来</span><br><span class="hljs-comment">////返回值：1，接收应答成功</span><br><span class="hljs-comment">////        0，接收应答失败</span><br>u8 <span class="hljs-title function_">IIC_Wait_Ack</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	u8 ucErrTime=<span class="hljs-number">0</span>;<br>	SDA_IN();      <span class="hljs-comment">//SDA设置为输入  </span><br>	IIC_SDA=<span class="hljs-number">1</span>;delay_us(<span class="hljs-number">1</span>);	   <br>	IIC_SCL=<span class="hljs-number">1</span>;delay_us(<span class="hljs-number">1</span>);	 <br>	<span class="hljs-keyword">while</span>(READ_SDA)<br>	&#123;<br>		ucErrTime++;<br>		<span class="hljs-keyword">if</span>(ucErrTime&gt;<span class="hljs-number">250</span>)<br>		&#123;<br>			IIC_Stop();<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		&#125;<br>	&#125;<br>	IIC_SCL=<span class="hljs-number">0</span>;<span class="hljs-comment">//时钟输出0 	   </span><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <br>&#125;    <br><br><span class="hljs-comment">//产生ACK应答</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Ack</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	IIC_SCL=<span class="hljs-number">0</span>;<br>	SDA_OUT();<br>	IIC_SDA=<span class="hljs-number">0</span>;<br>	delay_us(<span class="hljs-number">2</span>);<br>	IIC_SCL=<span class="hljs-number">1</span>;<br>	delay_us(<span class="hljs-number">2</span>);<br>	IIC_SCL=<span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">//不产生ACK应答		    </span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_NAck</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	IIC_SCL=<span class="hljs-number">0</span>;<br>	SDA_OUT();<br>	IIC_SDA=<span class="hljs-number">1</span>;<br>	delay_us(<span class="hljs-number">2</span>);<br>	IIC_SCL=<span class="hljs-number">1</span>;<br>	delay_us(<span class="hljs-number">2</span>);<br>	IIC_SCL=<span class="hljs-number">0</span>;<br>&#125;					 				     <br><span class="hljs-comment">//IIC发送一个字节</span><br><span class="hljs-comment">//返回从机有无应答</span><br><span class="hljs-comment">//1，有应答</span><br><span class="hljs-comment">//0，无应答			  </span><br><span class="hljs-type">void</span> <span class="hljs-title function_">IIC_Send_Byte</span><span class="hljs-params">(u8 txd)</span><br>&#123;                        <br>    u8 t;   <br>	SDA_OUT(); 	    <br>    IIC_SCL=<span class="hljs-number">0</span>;<span class="hljs-comment">//拉低时钟开始数据传输</span><br>    <span class="hljs-keyword">for</span>(t=<span class="hljs-number">0</span>;t&lt;<span class="hljs-number">8</span>;t++)<br>    &#123;              <br>        IIC_SDA=(txd&amp;<span class="hljs-number">0x80</span>)&gt;&gt;<span class="hljs-number">7</span>;<br>        txd&lt;&lt;=<span class="hljs-number">1</span>; 	  <br>		delay_us(<span class="hljs-number">2</span>);   <span class="hljs-comment">//对TEA5767这三个延时都是必须的</span><br>		IIC_SCL=<span class="hljs-number">1</span>;<br>		delay_us(<span class="hljs-number">2</span>); <br>		IIC_SCL=<span class="hljs-number">0</span>;	<br>		delay_us(<span class="hljs-number">2</span>);<br>    &#125;	 <br>&#125; 	    <br><span class="hljs-comment">//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   </span><br>u8 <span class="hljs-title function_">IIC_Read_Byte</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> ack)</span><br>&#123;<br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i,receive=<span class="hljs-number">0</span>;<br>	SDA_IN();<span class="hljs-comment">//SDA设置为输入</span><br>    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">8</span>;i++ )<br>	&#123;<br>        IIC_SCL=<span class="hljs-number">0</span>; <br>        delay_us(<span class="hljs-number">2</span>);<br>		IIC_SCL=<span class="hljs-number">1</span>;<br>        receive&lt;&lt;=<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(READ_SDA)receive++;   <br>		delay_us(<span class="hljs-number">1</span>); <br>    &#125;					 <br>    <span class="hljs-keyword">if</span> (!ack)<br>        IIC_NAck();<span class="hljs-comment">//发送nACK,表示停止接收</span><br>    <span class="hljs-keyword">else</span><br>        IIC_Ack(); <span class="hljs-comment">//发送ACK,表示继续接收   </span><br>    <span class="hljs-keyword">return</span> receive;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>temhum.h</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> __TEMHUM_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __TEMHUM_H</span><br><br><span class="hljs-comment">/*******************</span><br><span class="hljs-comment">*</span><br><span class="hljs-comment">*  @file    temhum.h </span><br><span class="hljs-comment">*  @author  LYJ</span><br><span class="hljs-comment">*  @version V1.0</span><br><span class="hljs-comment">*  @attention</span><br><span class="hljs-comment">*       用于AHT20温湿度传感器通信的相关函数</span><br><span class="hljs-comment">*</span><br><span class="hljs-comment">********************/</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;myiic.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;delay.h&quot;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">temphum_init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br>u8 <span class="hljs-title function_">AHT20_Read_Status</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">AHT20_SendAC</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">AHT20_Init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">AHT20_Read_CTdata</span><span class="hljs-params">(u32 *ct)</span>;<br><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br></code></pre></td></tr></table></figure>
+
+<p><strong>temhum.c</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;temhum.h&quot;</span></span><br><br><span class="hljs-comment">//读取AHT20的状态寄存器</span><br>u8 <span class="hljs-title function_">AHT20_Read_Status</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	u8 Byte_first,flag;	<br>	IIC_Start();<br>    IIC_Send_Byte(<span class="hljs-number">0x71</span>);<br>	flag=IIC_Wait_Ack();<br>	Byte_first = IIC_Read_Byte(flag);<br>	IIC_NAck();<br>	IIC_Stop();<br><br>	<span class="hljs-keyword">return</span> Byte_first;<br>&#125;<br><br><span class="hljs-comment">//向AHT20发送AC命令</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">AHT20_SendAC</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <br>&#123;<br>	IIC_Start();<br>	IIC_Send_Byte(<span class="hljs-number">0x70</span>);    <span class="hljs-comment">//启动传输后发送的01110000 （最后1bit表示读/写 0--写,1--读）</span><br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0xac</span>);<span class="hljs-comment">//0xAC采集命令 命令参数有两个字节，第一个字节为 0x33，第二个字节为0x00。</span><br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0x33</span>);<br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0x00</span>);<br>	IIC_Wait_Ack();<br>	IIC_Stop();<br><br>&#125;<br><br><span class="hljs-comment">//初始化AHT20</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">AHT20_Init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>   <br>&#123;	<br>	IIC_Init();<br>	IIC_Start();<br>	IIC_Send_Byte(<span class="hljs-number">0x70</span>);<br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0xa8</span>);<span class="hljs-comment">//0xA8进入NOR工作模式</span><br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0x00</span>);<br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0x00</span>);<br>	IIC_Wait_Ack();<br>	IIC_Stop();<br><br>	delay_ms(<span class="hljs-number">10</span>);<span class="hljs-comment">//延时10ms左右</span><br><br>	IIC_Start();<br>	IIC_Send_Byte(<span class="hljs-number">0x70</span>);<br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0xbe</span>);<span class="hljs-comment">//0xBE初始化命令，AHT20的初始化命令是0xBE,   AHT10的初始化命令是0xE1</span><br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0x08</span>);<span class="hljs-comment">//相关寄存器bit[3]置1，为校准输出</span><br>	IIC_Wait_Ack();<br>	IIC_Send_Byte(<span class="hljs-number">0x00</span>);<br>	IIC_Wait_Ack();<br>	IIC_Stop();<br>	delay_ms(<span class="hljs-number">10</span>);<span class="hljs-comment">//延时10ms左右</span><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">temphum_init</span><span class="hljs-params">()</span><br>&#123;<br>	delay_ms(<span class="hljs-number">40</span>);<span class="hljs-comment">//刚上电，延时40ms才可以读取状态</span><br>	<br>    <span class="hljs-comment">//首先发0x71读取状态字bit[3]，如果=1,为校准输出，无须初始化!!!正常情况下读回来的状态是0x1C或者是0x18,读回来是0x80表示忙状态;</span><br>	<span class="hljs-keyword">if</span>(!((AHT20_Read_Status()&amp;<span class="hljs-number">0x08</span>)==<span class="hljs-number">0x08</span>))<br>	&#123;<br>        AHT20_Init(); <span class="hljs-comment">//初始化AHT20 </span><br>	&#125;<br>&#125;<br><br><span class="hljs-comment">//没有CRC校验，直接读取AHT20的温度和湿度数据    </span><br><span class="hljs-type">void</span> <span class="hljs-title function_">AHT20_Read_CTdata</span><span class="hljs-params">(u32 *ct)</span> <br>&#123;<br>	<span class="hljs-keyword">volatile</span> u8 Byte_1th=<span class="hljs-number">0</span>,Byte_2th=<span class="hljs-number">0</span>,Byte_3th=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">volatile</span> u8 Byte_4th=<span class="hljs-number">0</span>,Byte_5th=<span class="hljs-number">0</span>,Byte_6th=<span class="hljs-number">0</span>;<br>	u32 RetuData = <span class="hljs-number">0</span>;<br>	u16 cnt = <span class="hljs-number">0</span>,flag;<br>	AHT20_SendAC();<span class="hljs-comment">//向AHT20发送AC命令</span><br>	delay_ms(<span class="hljs-number">80</span>);	<span class="hljs-comment">//大约延时80ms</span><br>    <br>	<span class="hljs-keyword">while</span>(((AHT20_Read_Status()&amp;<span class="hljs-number">0x80</span>)==<span class="hljs-number">0x80</span>))<span class="hljs-comment">//直到状态bit[7]为0，表示为空闲状态，若为1，表示忙状态</span><br>	&#123;<br>		delay_ms(<span class="hljs-number">1</span>);<br>		<span class="hljs-keyword">if</span>(cnt++&gt;=<span class="hljs-number">100</span>) <span class="hljs-keyword">break</span>;<br>	&#125;<br>    <br>	IIC_Start();<br>	IIC_Send_Byte(<span class="hljs-number">0x71</span>);<br>	flag=IIC_Wait_Ack();<br>	Byte_1th = IIC_Read_Byte(flag);<span class="hljs-comment">//状态字</span><br>	Byte_2th = IIC_Read_Byte(flag);<span class="hljs-comment">//湿度,发送ACK(继续发送)</span><br>	Byte_3th = IIC_Read_Byte(flag);<span class="hljs-comment">//湿度</span><br>	Byte_4th = IIC_Read_Byte(flag);<span class="hljs-comment">//湿度/温度</span><br>	Byte_5th = IIC_Read_Byte(flag);<span class="hljs-comment">//温度</span><br>	Byte_6th = IIC_Read_Byte(!flag);<span class="hljs-comment">//温度,发送NACK(停止发送)  </span><br>	IIC_Stop();<br>    <br>    <span class="hljs-comment">//保存得到的数据到RetuData中</span><br>	RetuData = (RetuData|Byte_2th)&lt;&lt;<span class="hljs-number">8</span>;  <br>	RetuData = (RetuData|Byte_3th)&lt;&lt;<span class="hljs-number">8</span>;<br>	RetuData = (RetuData|Byte_4th);<br>	RetuData =RetuData &gt;&gt;<span class="hljs-number">4</span>;<br>	ct[<span class="hljs-number">0</span>] = RetuData;<span class="hljs-comment">//湿度</span><br>    <br>	RetuData = <span class="hljs-number">0</span>;<br>	RetuData = (RetuData|Byte_4th)&lt;&lt;<span class="hljs-number">8</span>;<br>	RetuData = (RetuData|Byte_5th)&lt;&lt;<span class="hljs-number">8</span>;<br>	RetuData = (RetuData|Byte_6th);<br>	RetuData = RetuData&amp;<span class="hljs-number">0x0fffff</span>;<br>	ct[<span class="hljs-number">1</span>] =RetuData; <span class="hljs-comment">//温度</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="5-实验效果"><a href="#5-实验效果" class="headerlink" title="5.实验效果"></a>5.实验效果</h2><p><img src="/../images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/a_2.png" srcset="/img/loading.gif" lazyload></p>
+<p>哈一口气后变化</p>
+<p><img src="/../images/%E6%B8%A9%E6%B9%BF%E5%BA%A6/a_3.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>I2C总线通信协议及温湿度采集</div>
+      <div>http://example.com/2022/11/16/I2C总线通信协议及温湿度采集/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>秋衫霸霸</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年11月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/17/SPI%E6%8E%A5%E5%8F%A3%E7%9A%84OLED%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA/" title="SPI接口的OLED温湿度显示">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SPI接口的OLED温湿度显示</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/11/12/D%E8%A7%A6%E5%8F%91%E5%99%A8%E5%8F%8A%E4%BB%BF%E7%9C%9F/" title="D触发器及仿真">
+                        <span class="hidden-mobile">D触发器及仿真</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
