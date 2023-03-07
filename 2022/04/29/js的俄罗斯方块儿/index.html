@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="​       在网上看到一个博主写了个俄罗斯方块然后转到手机app上去，然后我就跟着他操作一波，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js的俄罗斯方块儿">
+<meta property="og:url" content="http://example.com/2022/04/29/js%E7%9A%84%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97%E5%84%BF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="​       在网上看到一个博主写了个俄罗斯方块然后转到手机app上去，然后我就跟着他操作一波，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-28T16:39:27.000Z">
+<meta property="article:modified_time" content="2023-03-06T04:05:09.246Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="小游戏">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js的俄罗斯方块儿 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js的俄罗斯方块儿"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-04-29 00:39" pubdate>
+          April 29, 2022 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          131 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js的俄罗斯方块儿</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>​       在网上看到一个博主写了个俄罗斯方块然后转到手机app上去，然后我就跟着他操作一波，<span id="more"></span>我发现他的这个不是很完善，很不方便，谁家的俄罗斯方块就一种图形。然后我就自己重写了一遍，但是写完之后发现，我这是tm纯纯的面向过程的编程阿，代码重复性太高了，但我也懒得改了。兄弟们可以自己动手操作再改一遍。面向对象用继承的方法，代码真的少好多。用的是html+JavaScript+VScode。</p>
+<p>​       VScode真的比vs2019好用得多得多。</p>
+<p>直接上代码</p>
+<p>直接桌面创建个html文件然后直接往vscode里托。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html lang=&quot;en&quot;&gt;<br><br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-8&quot;&gt;<br>    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;style&gt;<br>        td &#123;<br>            width: 20px;<br>            height: 20px;<br>            border: 1px solid #999;<br>        &#125;<br><br>        .bgRed &#123;<br>            background-color: black;<br>        &#125;<br><br>        .bgGreen &#123;<br>            background-color: #666;<br>        &#125;<br>    &lt;/style&gt;<br>    &lt;h1 id=&quot;totalScore&quot;&gt;&lt;/h1&gt;<br>    &lt;table&gt;&lt;/table&gt;<br>    &lt;button id=&quot;left&quot;&gt;A&lt;/button&gt;<br>    &lt;button id=&quot;right&quot;&gt;D&lt;/button&gt;<br>    &lt;button id=&quot;down&quot;&gt;S&lt;/button&gt;<br>    &lt;button id=&quot;transform&quot;&gt;空格&lt;/button&gt;<br>    &lt;script&gt;<br>        let t;<br>        class A &#123;<br>            status = 0 //形态<br>            position = null; //当前形态的坐标<br>            positionList = null; //保存所有形态的坐标<br>            constructor(origin) &#123; //初始化icon<br>                this.setPositionList(origin);<br>                this.position = this.positionList[0]; // 初始化是形态1<br>            &#125;<br>            // 通过原点左边，设置所有形态的坐标<br>            setPositionList(&#123; top, left &#125;) &#123;<br>                this.positionList = [<br>                    [<br>                        &#123; top: top - 1, left: left - 1 &#125;,<br>                        &#123; top: top - 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top - 1, left: left + 1 &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top, left: left - 1 &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top + 1, left: left + 1 &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top - 1, left: left &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top + 1, left: left - 1 &#125;,<br>                        &#123; top: top, left: left - 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                    ]<br><br>                ]<br>            &#125;<br><br>            // 通过status设置icon的位置<br>            setPosition(status) &#123;<br>                this.status = status;<br>                this.position = this.positionList[status];<br>            &#125;<br>            // 获取原点<br>            getOrigin() &#123;<br>                return this.position[2];<br>            &#125;<br>            // 变形<br>            transform() &#123;<br>                this.status++; //状态 + 1，准备切换到下一个状态<br>                this.status = this.status == this.positionList.length ? 0 : this.status<br>                let newIcon = new this.constructor(this.getOrigin());<br>                newIcon.setPosition(this.status);<br>                return newIcon<br>            &#125;<br>        &#125;<br>        class B &#123;<br>            status = 0 //形态<br>            position = null; //当前形态的坐标<br>            positionList = null; //保存所有形态的坐标<br>            constructor(origin) &#123; //初始化icon<br>                this.setPositionList(origin);<br>                this.position = this.positionList[0]; // 初始化是形态1<br>            &#125;<br>            // 通过原点左边，设置所有形态的坐标<br>            setPositionList(&#123; top, left &#125;) &#123;<br>                this.positionList = [<br>                    [<br>                        &#123; top: top, left: left + 2 &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top, left: left - 1 &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top + 2, left: left &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top - 1, left: left &#125;,<br>                    ],<br><br><br>                ]<br>            &#125;<br>            // 通过status设置icon的位置<br>            setPosition(status) &#123;<br>                this.status = status;<br>                this.position = this.positionList[status];<br>            &#125;<br>            // 获取原点<br>            getOrigin() &#123;<br>                return this.position[2];<br>            &#125;<br>            // 变形<br>            transform() &#123;<br>                this.status++; //状态 + 1，准备切换到下一个状态<br>                this.status = this.status == this.positionList.length ? 0 : this.status<br>                let newIcon = new this.constructor(this.getOrigin());<br>                newIcon.setPosition(this.status);<br>                return newIcon<br>            &#125;<br>        &#125;<br>        class C &#123;<br>            status = 0 //形态<br>            position = null; //当前形态的坐标<br>            positionList = null; //保存所有形态的坐标<br>            constructor(origin) &#123; //初始化icon<br>                this.setPositionList(origin);<br>                this.position = this.positionList[0]; // 初始化是形态1<br>            &#125;<br>            // 通过原点左边，设置所有形态的坐标<br>            setPositionList(&#123; top, left &#125;) &#123;<br>                this.positionList = [<br>                    [<br>                        &#123; top: top, left: left - 1 &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top - 1, left: left &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top, left: left - 1 &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top - 1, left: left &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top - 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top, left: left - 1 &#125;,<br>                    ]<br><br><br>                ]<br>            &#125;<br><br>            // 通过status设置icon的位置<br>            setPosition(status) &#123;<br>                this.status = status;<br>                this.position = this.positionList[status];<br>            &#125;<br>            // 获取原点<br>            getOrigin() &#123;<br>                return this.position[2];<br>            &#125;<br>            // 变形<br>            transform() &#123;<br>                this.status++; //状态 + 1，准备切换到下一个状态<br>                this.status = this.status == this.positionList.length ? 0 : this.status<br>                let newIcon = new this.constructor(this.getOrigin());<br>                newIcon.setPosition(this.status);<br>                return newIcon<br>            &#125;<br>        &#125;<br>        class D &#123;<br>            status = 0 //形态<br>            position = null; //当前形态的坐标<br>            positionList = null; //保存所有形态的坐标<br>            constructor(origin) &#123; //初始化icon<br>                this.setPositionList(origin);<br>                this.position = this.positionList[0]; // 初始化是形态1<br>            &#125;<br>            // 通过原点左边，设置所有形态的坐标<br>            setPositionList(&#123; top, left &#125;) &#123;<br>                this.positionList = [<br>                    [<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top + 1, left: left - 1 &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top - 1, left: left  &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top + 1, left: left+1 &#125;,<br>                    ]<br><br><br><br>                ]<br>            &#125;<br><br>            // 通过status设置icon的位置<br>            setPosition(status) &#123;<br>                this.status = status;<br>                this.position = this.positionList[status];<br>            &#125;<br>            // 获取原点<br>            getOrigin() &#123;<br>                return this.position[2];<br>            &#125;<br>            // 变形<br>            transform() &#123;<br>                this.status++; //状态 + 1，准备切换到下一个状态<br>                this.status = this.status == this.positionList.length ? 0 : this.status<br>                let newIcon = new this.constructor(this.getOrigin());<br>                newIcon.setPosition(this.status);<br>                return newIcon<br>            &#125;<br>        &#125;<br>        class E &#123;<br>            status = 0 //形态<br>            position = null; //当前形态的坐标<br>            positionList = null; //保存所有形态的坐标<br>            constructor(origin) &#123; //初始化icon<br>                this.setPositionList(origin);<br>                this.position = this.positionList[0]; // 初始化是形态1<br>            &#125;<br>            // 通过原点左边，设置所有形态的坐标<br>            setPositionList(&#123; top, left &#125;) &#123;<br>                this.positionList = [<br>                    [<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top + 1, left: left + 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                    ]<br><br><br><br><br>                ]<br>            &#125;<br><br>            // 通过status设置icon的位置<br>            setPosition(status) &#123;<br>                this.status = status;<br>                this.position = this.positionList[status];<br>            &#125;<br>            // 获取原点<br>            getOrigin() &#123;<br>                return this.position[2];<br>            &#125;<br>            // 变形<br>            transform() &#123;<br>                this.status++; //状态 + 1，准备切换到下一个状态<br>                this.status = this.status == this.positionList.length ? 0 : this.status<br>                let newIcon = new this.constructor(this.getOrigin());<br>                newIcon.setPosition(this.status);<br>                return newIcon<br>            &#125;<br>        &#125;<br>        class F &#123;<br>            status = 0 //形态<br>            position = null; //当前形态的坐标<br>            positionList = null; //保存所有形态的坐标<br>            constructor(origin) &#123; //初始化icon<br>                this.setPositionList(origin);<br>                this.position = this.positionList[0]; // 初始化是形态1<br>            &#125;<br>            // 通过原点左边，设置所有形态的坐标<br>            setPositionList(&#123; top, left &#125;) &#123;<br>                this.positionList = [<br>                    [<br>                        &#123; top: top, left: left - 1 &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top + 1, left: left + 1 &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top - 1, left: left + 1 &#125;,<br>                    ]<br>                ]<br>            &#125;<br><br>            // 通过status设置icon的位置<br>            setPosition(status) &#123;<br>                this.status = status;<br>                this.position = this.positionList[status];<br>            &#125;<br>            // 获取原点<br>            getOrigin() &#123;<br>                return this.position[2];<br>            &#125;<br>            // 变形<br>            transform() &#123;<br>                this.status++; //状态 + 1，准备切换到下一个状态<br>                this.status = this.status == this.positionList.length ? 0 : this.status<br>                let newIcon = new this.constructor(this.getOrigin());<br>                newIcon.setPosition(this.status);<br>                return newIcon<br>            &#125;<br>        &#125;<br>        class G&#123;<br>            status = 0 //形态<br>            position = null; //当前形态的坐标<br>            positionList = null; //保存所有形态的坐标<br>            constructor(origin) &#123; //初始化icon<br>                this.setPositionList(origin);<br>                this.position = this.positionList[0]; // 初始化是形态1<br>            &#125;<br>            // 通过原点左边，设置所有形态的坐标<br>            setPositionList(&#123; top, left &#125;) &#123;<br>                this.positionList = [<br>                    [<br>                        &#123; top: top, left: left + 1 &#125;,<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top + 2, left: left  &#125;,<br>                    ],<br>                    [<br>                        &#123; top: top + 1, left: left &#125;,<br>                        &#123; top: top, left: left -1 &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top , left: left -2 &#125;,<br>                    ],<br>                    [<br>                    &#123; top: top , left: left-1 &#125;,<br>                        &#123; top: top-1, left: left  &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top-2 , left: left  &#125;,<br>                    ],<br>                    [<br>                    &#123; top: top -1, left: left &#125;,<br>                        &#123; top: top, left: left+1  &#125;,<br>                        &#123; top: top, left: left &#125;,<br>                        &#123; top: top , left: left +2 &#125;,<br>                    ]<br>                ]<br>            &#125;<br><br>            // 通过status设置icon的位置<br>            setPosition(status) &#123;<br>                this.status = status;<br>                this.position = this.positionList[status];<br>            &#125;<br>            // 获取原点<br>            getOrigin() &#123;<br>                return this.position[2];<br>            &#125;<br>            // 变形<br>            transform() &#123;<br>                this.status++; //状态 + 1，准备切换到下一个状态<br>                this.status = this.status == this.positionList.length ? 0 : this.status<br>                let newIcon = new this.constructor(this.getOrigin());<br>                newIcon.setPosition(this.status);<br>                return newIcon<br>            &#125;<br>        &#125;<br>        // 获取DOM元素，绑定事件<br>        window.onload = function () &#123;<br>            window.onkeypress = function (e) &#123;<br>                //  alert(e.key+&#x27; 按键对应的值: &#x27;+e.keyCode)<br>                if (e.key == &#x27;a&#x27;) &#123;<br>                    game.left();<br>                &#125; else if (e.key == &#x27;d&#x27;) &#123;<br>                    game.right();<br>                &#125; else if (e.key == &#x27;s&#x27;) &#123;<br>                    game.down();<br>                &#125; else if (e.key == &#x27; &#x27;) &#123;<br>                    game.transform();<br>                &#125;<br>            &#125;<br>        &#125;<br>        let totalScoreEl = document.querySelector(&quot;#totalScore&quot;);<br>        let table = document.querySelector(&quot;table&quot;)<br>        //游戏对象，渲染，清除等一系列方法和数据<br>        let game = &#123;<br>            _icon: null, //移动或变形之前的icon对象<br>            icon_: null, //移动或变形之后的icon对象<br>            totalScore: 0, //总分<br>            classX: null, //随机生成的类名，用来随机生成icon<br>            data: [ //数据集合<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;],<br>                [&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;]<br>            ],<br>            render() &#123; //把数据和积分渲染到页面上<br>                totalScoreEl.innerHTML = this.totalScore;<br>                table.innerHTML = &quot;&quot;;<br>                this.data.map(v =&gt; &#123;<br>                    let tr = document.createElement(&quot;tr&quot;);<br>                    table.appendChild(tr);<br>                    v.map(v =&gt; &#123;<br>                        let td = document.createElement(&quot;td&quot;);<br>                        tr.appendChild(td);<br>                        if (v.state === 1) &#123;<br>                            td.className = &quot;bgRed&quot;<br>                        &#125; else if (v.state === 2) &#123;<br>                            td.className = &quot;bgGreen&quot;<br>                        &#125;<br>                    &#125;)<br>                &#125;)<br>            &#125;,<br>            showIcon(icon) &#123; //将icon同步到数据结合中<br>                icon.position.map(v =&gt; &#123;<br>                    let y = v.top;<br>                    let x = v.left;<br>                    this.data[y][x].state = 1;<br>                &#125;)<br>            &#125;,<br>            // 移动和变形时，清除前一个icon的坐标<br>            clearIcon(icon) &#123;<br>                icon.position.map(v =&gt; &#123;<br>                    let y = v.top;<br>                    let x = v.left;<br>                    this.data[y][x].state = 0;<br>                &#125;)<br>            &#125;,<br>            // 设置icon到达底部，颜色改变<br>            setBottom(icon) &#123;<br>                icon.position.map(v =&gt; &#123;<br>                    let y = v.top;<br>                    let x = v.left;<br>                    this.data[y][x].state = 2;<br>                &#125;)<br>            &#125;,<br>            iconClassList: [A, B, C, D, E, F,G], //存放icon类，多个icon可以随机生成<br>            // icon初始化<br>            init() &#123;<br>                let n = Math.floor(Math.random() * this.iconClassList.length);<br>                this.classX = this.iconClassList[n];<br>                this._icon = new this.classX(&#123; top: 1, left: 5 &#125;);<br>                if (this.checkTouch(this._icon)) &#123;<br>                    alert(`游戏结束，您的总分为$&#123;this.totalScore&#125;`)<br>                    clearInterval(t);<br>                &#125;<br>                this.showIcon(this._icon);<br>                this.render();<br>            &#125;,<br>            // 移动，to是方向<br>            move(to) &#123;<br>                let y, x;<br>                switch (to) &#123;<br>                    case &quot;left&quot;: y = 0; x = -1; break;<br>                    case &quot;right&quot;: y = 0; x = 1; break;<br>                    case &quot;down&quot;: y = 1; x = 0; break;<br>                &#125;<br>                let origin = this._icon.getOrigin();<br>                let newOrigin = &#123;<br>                    top: origin.top + y,<br>                    left: origin.left + x<br>                &#125;<br>                this.icon_ = new this.classX(newOrigin);<br>                this.icon_.setPosition(this._icon.status);//同步新生成的icon状态<br>                if (this.checkTouch(this.icon_)) &#123;<br>                    if (to === &quot;down&quot;) &#123;<br>                        this.nextTick()<br>                    &#125;<br>                &#125; else &#123;<br>                    this.clearIcon(this._icon);<br>                    this._icon = this.icon_;<br>                    this.showIcon(this._icon);<br>                    this.render();<br>                &#125;<br>            &#125;,<br>            // 变形<br>            transform() &#123;<br>                this.icon_ = this._icon.transform();<br>                if (!this.checkTouch(this.icon_)) &#123;<br>                    this.clearIcon(this._icon);<br>                    this._icon = this.icon_;<br>                    this.classX = this._icon.constructor;<br>                    this.showIcon(this._icon);<br>                    this.render();<br>                &#125;<br><br>            &#125;,<br>            left() &#123;<br>                this.move(&quot;left&quot;);<br>            &#125;,<br>            right() &#123;<br>                this.move(&quot;right&quot;);<br>            &#125;,<br>            down() &#123;<br>                this.move(&quot;down&quot;);<br>            &#125;,<br>            // 是否触碰边界或体积碰撞<br>            checkTouch(icon) &#123;<br>                let flag = false;<br>                icon.position.map(v =&gt; &#123;<br>                    if (v.top &gt; 16 || v.left &lt; 0 || v.left &gt; 9) &#123;<br>                        flag = true;<br>                    &#125; else if (this.data[v.top][v.left] &amp;&amp; this.data[v.top][v.left].state === 2) &#123;<br>                        flag = true;<br>                    &#125;<br>                &#125;)<br>                return flag;<br>            &#125;,<br>            // 当前icon落地，生成下一个。<br>            nextTick() &#123;<br>                this.setBottom(this._icon);<br>                this.score();<br>                this.init();<br>            &#125;,<br>            // 消除与得分<br>            score() &#123;<br>                let list = [];<br>                for (let i = 0; i &lt; this.data.length; i++) &#123;<br>                    for (let j = 0; j &lt; this.data[i].length; j++) &#123;<br>                        if (this.data[i][j].state !== 2) &#123;<br>                            break;<br>                        &#125;<br>                        if (j === this.data[i].length - 1) &#123;<br>                            list.push(i)<br>                        &#125;<br><br>                    &#125;<br>                &#125;;<br>                list.map(v =&gt; &#123;<br>                    this.data.splice(v, 1);<br>                    this.data.unshift([&#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;, &#123;&#125;])<br>                    this.totalScore++;<br>                &#125;)<br>            &#125;<br>        &#125;<br>        // 开始游戏<br>        game.init();<br>        t = setInterval(() =&gt; &#123;<br>            game.down();<br>        &#125;, 800)<br>    &lt;/script&gt;<br>&lt;/head&gt;<br><br>&lt;body&gt;<br><br>&lt;/body&gt;<br><br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BD%AF%E4%BB%B6/" class="category-chain-item">软件</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B0%8F%E6%B8%B8%E6%88%8F/">#小游戏</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js的俄罗斯方块儿</div>
+      <div>http://example.com/2022/04/29/js的俄罗斯方块儿/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 29, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/09/OpenCV-DNN%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">OpenCV+DNN深度学习（请先看C++OpenCV搭建环境）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/25/c-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/" title="c++文件读写">
+                        <span class="hidden-mobile">c++文件读写</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
