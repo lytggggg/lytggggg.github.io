@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、用excel中数据分析功能做线性回归练习1.用excel打开weights_heights.xls 2.添加数据分析的工具： 文件—更多—选项—加载项—转到    3.用excel表完成线性回归1.点击数据—数据分析—回归，点击确定 2.选择weight做Y值，heightX值，选取20个数据，选择线性拟合图，新建工作表，点击确定 3.双击体重，设置坐标轴格式，点击坐标轴选项，设置最大最小值，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识线性回归(Excel-Python实现)">
+<meta property="og:url" content="http://example.com/2023/03/14/asd/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、用excel中数据分析功能做线性回归练习1.用excel打开weights_heights.xls 2.添加数据分析的工具： 文件—更多—选项—加载项—转到    3.用excel表完成线性回归1.点击数据—数据分析—回归，点击确定 2.选择weight做Y值，heightX值，选取20个数据，选择线性拟合图，新建工作表，点击确定 3.双击体重，设置坐标轴格式，点击坐标轴选项，设置最大最小值，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/excel/s_0.png">
+<meta property="og:image" content="http://example.com/images/excel/s_1.png">
+<meta property="og:image" content="http://example.com/images/excel/s_2.png">
+<meta property="og:image" content="http://example.com/images/excel/s_3.png">
+<meta property="og:image" content="http://example.com/images/excel/s_4.png">
+<meta property="og:image" content="http://example.com/images/excel/s_5.png">
+<meta property="og:image" content="http://example.com/images/excel/s_6.png">
+<meta property="og:image" content="http://example.com/images/excel/s_7.png">
+<meta property="og:image" content="http://example.com/images/excel/s_8.png">
+<meta property="og:image" content="http://example.com/images/excel/s_9.png">
+<meta property="og:image" content="http://example.com/images/excel/s_11.png">
+<meta property="og:image" content="http://example.com/images/excel/s_10.png">
+<meta property="og:image" content="http://example.com/images/excel/s_12.png">
+<meta property="og:image" content="http://example.com/images/excel/s_13.png">
+<meta property="og:image" content="http://example.com/images/excel/s_14.png">
+<meta property="og:image" content="http://example.com/images/excel/s_15.png">
+<meta property="og:image" content="http://example.com/images/excel/s_16.png">
+<meta property="og:image" content="http://example.com/images/excel/s_17.png">
+<meta property="og:image" content="http://example.com/images/excel/s_18.png">
+<meta property="og:image" content="http://example.com/images/excel/s_19.png">
+<meta property="og:image" content="http://example.com/images/excel/s_20.png">
+<meta property="article:published_time" content="2023-03-14T13:30:43.000Z">
+<meta property="article:modified_time" content="2023-03-14T14:09:21.613Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/excel/s_0.png">
+  
+  
+  
+  <title>初识线性回归(Excel-Python实现) - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="初识线性回归(Excel-Python实现)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-14 21:30" pubdate>
+          March 14, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">初识线性回归(Excel-Python实现)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、用excel中数据分析功能做线性回归练习"><a href="#一、用excel中数据分析功能做线性回归练习" class="headerlink" title="一、用excel中数据分析功能做线性回归练习"></a>一、用excel中数据分析功能做线性回归练习</h1><h2 id="1-用excel打开weights-heights-xls"><a href="#1-用excel打开weights-heights-xls" class="headerlink" title="1.用excel打开weights_heights.xls"></a>1.用excel打开weights_heights.xls</h2><p><img src="/../images/excel/s_0.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-添加数据分析的工具："><a href="#2-添加数据分析的工具：" class="headerlink" title="2.添加数据分析的工具："></a>2.添加数据分析的工具：</h2><ul>
+<li><em>文件—更多—选项</em>—加载项—转到</li>
+</ul>
+<p><img src="/../images/excel/s_1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/excel/s_2.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-用excel表完成线性回归"><a href="#3-用excel表完成线性回归" class="headerlink" title="3.用excel表完成线性回归"></a>3.用excel表完成线性回归</h2><h3 id="1-点击数据—数据分析—回归，点击确定"><a href="#1-点击数据—数据分析—回归，点击确定" class="headerlink" title="1.点击数据—数据分析—回归，点击确定"></a>1.点击<em>数据</em>—<em>数据分析</em>—<em>回归</em>，点击<em>确定</em></h3><p><img src="/../images/excel/s_3.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-选择weight做Y值，heightX值，选取20个数据，选择线性拟合图，新建工作表，点击确定"><a href="#2-选择weight做Y值，heightX值，选取20个数据，选择线性拟合图，新建工作表，点击确定" class="headerlink" title="2.选择weight做Y值，heightX值，选取20个数据，选择线性拟合图，新建工作表，点击确定"></a>2.选择weight做Y值，heightX值，选取20个数据，选择<em>线性拟合图</em>，新建工作表，点击确定</h3><p><img src="/../images/excel/s_4.png" srcset="/img/loading.gif" lazyload><img src="/../images/excel/s_5.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-双击体重，设置坐标轴格式，点击坐标轴选项，设置最大最小值，间隔单位"><a href="#3-双击体重，设置坐标轴格式，点击坐标轴选项，设置最大最小值，间隔单位" class="headerlink" title="3.双击体重，设置坐标轴格式，点击坐标轴选项，设置最大最小值，间隔单位"></a>3.双击体重，<em>设置坐标轴格式</em>，点击<em>坐标轴选项</em>，设置最大最小值，间隔单位</h3><p><img src="/../images/excel/s_6.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-，鼠标右键图标，添加趋势线，设置公式"><a href="#4-，鼠标右键图标，添加趋势线，设置公式" class="headerlink" title="4.，鼠标右键图标，添加趋势线，设置公式"></a>4.，鼠标右键图标，添加趋势线，设置公式</h3><p><img src="/../images/excel/s_7.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/excel/s_8.png" srcset="/img/loading.gif" lazyload></p>
+<p>如下图</p>
+<p><img src="/../images/excel/s_9.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="5-以同样的方法选择200个数据，只需后面加个0"><a href="#5-以同样的方法选择200个数据，只需后面加个0" class="headerlink" title="5.以同样的方法选择200个数据，只需后面加个0"></a>5.以同样的方法选择200个数据，只需后面加个0</h3><p><img src="/../images/excel/s_11.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/excel/s_10.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="6-以同样的方法选择20000个数据"><a href="#6-以同样的方法选择20000个数据" class="headerlink" title="6.以同样的方法选择20000个数据"></a>6.以同样的方法选择20000个数据</h3><p><img src="/../images/excel/s_12.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="二、jupyter编程（不借助第三方库），最小二乘法，重做第1题"><a href="#二、jupyter编程（不借助第三方库），最小二乘法，重做第1题" class="headerlink" title="二、jupyter编程（不借助第三方库），最小二乘法，重做第1题"></a>二、jupyter编程（不借助第三方库），最小二乘法，重做第1题</h1><p>前20组数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> math<br><span class="hljs-comment">#准备数据</span><br>p=pd.read_excel(<span class="hljs-string">&#x27;c:\\weights_heights.xls&#x27;</span>,<span class="hljs-string">&#x27;weights_heights&#x27;</span>)<br><span class="hljs-comment">#读取20行数据</span><br>p1=p.head(<span class="hljs-number">20</span>)<br>x=p1[<span class="hljs-string">&quot;Height&quot;</span>]<br>y=p1[<span class="hljs-string">&quot;Weight&quot;</span>]<br><span class="hljs-comment"># 平均值</span><br>x_mean = np.mean(x)<br>y_mean = np.mean(y)<br>xsize = x.size<br>zi = (x * y).<span class="hljs-built_in">sum</span>() - xsize * x_mean *y_mean<br>mu = (x ** <span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>() - xsize * x_mean ** <span class="hljs-number">2</span><br><span class="hljs-comment"># 参数a b</span><br>a = zi / mu<br>b = y_mean - a * x_mean<br><span class="hljs-comment"># 这里对参数保留两位有效数字</span><br>a = np.around(a,decimals=<span class="hljs-number">2</span>)<br>b = np.around(b,decimals=<span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;回归线方程:y = <span class="hljs-subst">&#123;a&#125;</span>x + <span class="hljs-subst">&#123;b&#125;</span>&#x27;</span>) <br><span class="hljs-comment">#借助第三方库skleran画出拟合曲线</span><br>y1 = a*x + b<br>plt.scatter(x,y)<br>plt.plot(x,y1,c=<span class="hljs-string">&#x27;r&#x27;</span>)<br><br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/excel/s_13.png" srcset="/img/loading.gif" lazyload></p>
+<p>前200组数据</p>
+<p><img src="/../images/excel/s_14.png" srcset="/img/loading.gif" lazyload></p>
+<p>前20000组数据</p>
+<p><img src="/../images/excel/s_15.png" srcset="/img/loading.gif" lazyload></p>
+<p>与excel分析一致。</p>
+<h1 id="三、jupyter编程，借助skleran，重做第1题"><a href="#三、jupyter编程，借助skleran，重做第1题" class="headerlink" title="三、jupyter编程，借助skleran，重做第1题"></a>三、jupyter编程，借助skleran，重做第1题</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入所需的模块</span><br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LinearRegression<br><br>p=pd.read_excel(<span class="hljs-string">&#x27;c:\\weights_heights.xls&#x27;</span>,<span class="hljs-string">&#x27;weights_heights&#x27;</span>)<br><span class="hljs-comment">#读取数据行数</span><br>p1=p.head(<span class="hljs-number">20</span>)<br>x=p1[<span class="hljs-string">&quot;Height&quot;</span>]<br>y=p1[<span class="hljs-string">&quot;Weight&quot;</span>]<br><span class="hljs-comment"># 数据处理</span><br><span class="hljs-comment"># sklearn 拟合输入输出一般都是二维数组，这里将一维转换为二维。</span><br>y = np.array(y).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>x = np.array(x).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br><span class="hljs-comment"># 拟合</span><br>reg = LinearRegression()<br>reg.fit(x,y)<br>a = reg.coef_[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]     <span class="hljs-comment"># 系数</span><br>b = reg.intercept_[<span class="hljs-number">0</span>]   <span class="hljs-comment"># 截距</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;回归线方程为：Y = %.4fX + (%.4f)&#x27;</span> % (a, b))<br><span class="hljs-comment"># 可视化</span><br>prediction = reg.predict(y)                <span class="hljs-comment"># 根据高度，按照拟合的曲线预测温度值</span><br>plt.xlabel(<span class="hljs-string">&#x27;身高&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;体重&#x27;</span>)<br>plt.scatter(x,y);<br>y1 = a*x + b<br>plt.plot(x,y1,c=<span class="hljs-string">&#x27;r&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>前20组数据</p>
+<p><img src="/../images/excel/s_16.png" srcset="/img/loading.gif" lazyload></p>
+<p>前200组数据</p>
+<p><img src="/../images/excel/s_17.png" srcset="/img/loading.gif" lazyload></p>
+<p>前20000组数据</p>
+<p><img src="/../images/excel/s_18.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1><p>哪20000组数据做对比</p>
+<p><img src="/../images/excel/s_19.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/excel/s_20.png" srcset="/img/loading.gif" lazyload></p>
+<p>excel做线性回归和python借助skleran的分析和最小二乘法几乎是一致。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>初识线性回归(Excel-Python实现)</div>
+      <div>http://example.com/2023/03/14/asd/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 14, 2023</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/11/%E8%B7%B3%E4%B8%80%E8%B7%B3%E7%89%A9%E7%90%86%E5%A4%96%E6%8C%82%EF%BC%88%E9%87%8D%E5%88%B6%E7%89%88%EF%BC%89/" title="跳一跳物理外挂（重制版）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">跳一跳物理外挂（重制版）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/06/ROS%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" title="ROS环境安装与配置">
+                        <span class="hidden-mobile">ROS环境安装与配置</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
