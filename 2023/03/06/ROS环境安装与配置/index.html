@@ -16,16 +16,28 @@
   <meta name="author" content="秋衫霸霸">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.环境VMware Workstation 15Ubuntu:18.0.4.3Ros:ros-melodic-desktoppython:2.7.15+ 2.添加ROS源这一步添加官网的源的操作是这样的 1sudo sh -c &amp;#x27;echo &quot;deb http:&#x2F;&#x2F;packages.ros.org&#x2F;ros&#x2F;ubuntu $(lsb_release -sc) main&quot;">
+    <meta name="description" content="一、ROS安装1.环境VMware Workstation 15Ubuntu:18.0.4.3Ros:ros-melodic-desktoppython:2.7.15+ 2.添加ROS源这一步添加官网的源的操作是这样的 1sudo sh -c &amp;#x27;echo &quot;deb http:&#x2F;&#x2F;packages.ros.org&#x2F;ros&#x2F;ubuntu $(lsb_release -sc) mai">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ROS环境安装与配置">
 <meta property="og:url" content="http://example.com/2023/03/06/ROS%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="秋衫霸霸">
-<meta property="og:description" content="1.环境VMware Workstation 15Ubuntu:18.0.4.3Ros:ros-melodic-desktoppython:2.7.15+ 2.添加ROS源这一步添加官网的源的操作是这样的 1sudo sh -c &amp;#x27;echo &quot;deb http:&#x2F;&#x2F;packages.ros.org&#x2F;ros&#x2F;ubuntu $(lsb_release -sc) main&quot;">
+<meta property="og:description" content="一、ROS安装1.环境VMware Workstation 15Ubuntu:18.0.4.3Ros:ros-melodic-desktoppython:2.7.15+ 2.添加ROS源这一步添加官网的源的操作是这样的 1sudo sh -c &amp;#x27;echo &quot;deb http:&#x2F;&#x2F;packages.ros.org&#x2F;ros&#x2F;ubuntu $(lsb_release -sc) mai">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/ROS%E5%B0%8F%E6%B5%B7%E9%BE%9F/S_0.png">
+<meta property="og:image" content="http://example.com/images/ros/S.png">
+<meta property="og:image" content="http://example.com/images/ros/s_1.png">
+<meta property="og:image" content="http://example.com/images/ros/s_2.png">
+<meta property="og:image" content="http://example.com/images/ros/s_3.png">
+<meta property="og:image" content="http://example.com/images/ros/s_4.png">
+<meta property="og:image" content="http://example.com/images/ros/s_5.png">
+<meta property="og:image" content="http://example.com/images/ros/s_6.png">
+<meta property="og:image" content="http://example.com/images/ros/s_7.png">
+<meta property="og:image" content="http://example.com/images/ros/s_8.png">
+<meta property="og:image" content="http://example.com/images/ros/s_9.png">
+<meta property="og:image" content="http://example.com/images/ros/s_10.png">
+<meta property="og:image" content="http://example.com/images/ros/s_11.png">
 <meta property="article:published_time" content="2023-03-06T05:13:12.000Z">
-<meta property="article:modified_time" content="2023-03-06T07:19:26.772Z">
+<meta property="article:modified_time" content="2023-03-08T14:23:12.070Z">
 <meta property="article:author" content="秋衫霸霸">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/ROS%E5%B0%8F%E6%B5%B7%E9%BE%9F/S_0.png">
@@ -220,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          5.7k 字
         
       </span>
     
@@ -231,7 +243,7 @@
         
         
         
-          20 分钟
+          48 分钟
         
       </span>
     
@@ -274,20 +286,20 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-环境"><a href="#1-环境" class="headerlink" title="1.环境"></a>1.环境</h1><p>VMware Workstation 15<br><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Ubuntu&spm=1001.2101.3001.7020">Ubuntu</a>:18.0.4.3<br>Ros:ros-melodic-desktop<br>python:2.7.15+</p>
-<h1 id="2-添加ROS源"><a href="#2-添加ROS源" class="headerlink" title="2.添加ROS源"></a>2.添加ROS源</h1><p>这一步添加官网的源的操作是这样的</p>
+                <h1 id="一、ROS安装"><a href="#一、ROS安装" class="headerlink" title="一、ROS安装"></a>一、ROS安装</h1><h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1.环境"></a>1.环境</h2><p>VMware Workstation 15<br><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Ubuntu&spm=1001.2101.3001.7020">Ubuntu</a>:18.0.4.3<br>Ros:ros-melodic-desktop<br>python:2.7.15+</p>
+<h2 id="2-添加ROS源"><a href="#2-添加ROS源" class="headerlink" title="2.添加ROS源"></a>2.添加ROS源</h2><p>这一步添加官网的源的操作是这样的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo sh -c &#x27;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#x27;<br></code></pre></td></tr></table></figure>
 
 <p>但是官网的源比较慢，国内有中科大和清华的ROS源可以用。<br>如果要用清华的源用下面的命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo sh -c &#x27;. /etc/lsb-release &amp;&amp; echo &quot;deb http://mirrors.tuna.tsinghua.edu.cn/ros/ubuntu/ $DISTRIB_CODENAME main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#x27;<br></code></pre></td></tr></table></figure>
 
-<h1 id="3-添加秘钥"><a href="#3-添加秘钥" class="headerlink" title="3.添加秘钥"></a>3.添加秘钥</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt-key adv --keyserver &#x27;hkp://keyserver.ubuntu.com:80&#x27; --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654<br></code></pre></td></tr></table></figure>
+<h2 id="3-添加秘钥"><a href="#3-添加秘钥" class="headerlink" title="3.添加秘钥"></a>3.添加秘钥</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt-key adv --keyserver &#x27;hkp://keyserver.ubuntu.com:80&#x27; --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654<br></code></pre></td></tr></table></figure>
 
 <p>这一步一定要成功，不然后面更新的时候会报错，如果这一直无法下载可以试一下下面这个命令。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt-key adv --keyserver &#x27;hkp://pgp.mit.edu:80&#x27; --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654<br></code></pre></td></tr></table></figure>
 
 <p>两个命令效果是一样的选择一个执行就可以，唯一不一样的地方是下载秘钥的不一样，如果一个失败了多次尝试还不行就换另外一个命令试一下。</p>
-<h1 id="4-使系统软件处于最新版"><a href="#4-使系统软件处于最新版" class="headerlink" title="4.使系统软件处于最新版"></a>4.使系统软件处于最新版</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt-get update<br></code></pre></td></tr></table></figure>
+<h2 id="4-使系统软件处于最新版"><a href="#4-使系统软件处于最新版" class="headerlink" title="4.使系统软件处于最新版"></a>4.使系统软件处于最新版</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt-get update<br></code></pre></td></tr></table></figure>
 
 <ol>
 <li><p>Desktop-Full<br>包含了 : ROS, rqt, rviz, , 2D&#x2F;3D 仿真 and 2D&#x2F;3D 感知等，比较的全面，个人的PC、笔记本上一般就装这个，不然很多的库再在开发过程当中就会提示缺失。</p>
@@ -299,21 +311,22 @@
 <li><p>ROS-Base<br>这个版本就只包含了一些ROS的基本的东西，没有GUI工具，机载处理器推荐安装这个，比较省空间</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt install ros-melodic-ros-base<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h1 id="5-初始化rosdep"><a href="#5-初始化rosdep" class="headerlink" title="5.初始化rosdep"></a>5.初始化rosdep</h1><p>在正式的使用ROS之前还需要进行一些操作。</p>
+<h2 id="5-初始化rosdep"><a href="#5-初始化rosdep" class="headerlink" title="5.初始化rosdep"></a>5.初始化rosdep</h2><p>在正式的使用ROS之前还需要进行一些操作。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo rosdep init<br>rosdep update<br></code></pre></td></tr></table></figure>
 
-<h1 id="6-配置环境变量"><a href="#6-配置环境变量" class="headerlink" title="6.配置环境变量"></a>6.配置环境变量</h1><p>为了方便以后使用对环境变量进行一下配置。</p>
+<h2 id="6-配置环境变量"><a href="#6-配置环境变量" class="headerlink" title="6.配置环境变量"></a>6.配置环境变量</h2><p>为了方便以后使用对环境变量进行一下配置。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cobol">echo &quot;source /opt/ros/melodic/setup.bash&quot; &gt;&gt; ~/.bashrc<br>source ~/.bashrc<br></code></pre></td></tr></table></figure>
 
-<h1 id="7-安装rosinstall（阿里云镜像比较快）"><a href="#7-安装rosinstall（阿里云镜像比较快）" class="headerlink" title="7.安装rosinstall（阿里云镜像比较快）"></a>7.安装rosinstall（阿里云镜像比较快）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential<br></code></pre></td></tr></table></figure>
+<h2 id="7-安装rosinstall（阿里云镜像比较快）"><a href="#7-安装rosinstall（阿里云镜像比较快）" class="headerlink" title="7.安装rosinstall（阿里云镜像比较快）"></a>7.安装rosinstall（阿里云镜像比较快）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential<br></code></pre></td></tr></table></figure>
 
-<h1 id="8-测试"><a href="#8-测试" class="headerlink" title="8.测试"></a>8.测试</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">roscore<br></code></pre></td></tr></table></figure>
+<h2 id="8-测试"><a href="#8-测试" class="headerlink" title="8.测试"></a>8.测试</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">roscore<br></code></pre></td></tr></table></figure>
 
-<h1 id="9-小海龟测试"><a href="#9-小海龟测试" class="headerlink" title="9.小海龟测试"></a>9.小海龟测试</h1><p>新建三个终端，分别运行</p>
+<h2 id="9-小海龟测试"><a href="#9-小海龟测试" class="headerlink" title="9.小海龟测试"></a>9.小海龟测试</h2><p>新建三个终端，分别运行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cobol">roscore<br>rosrun turtlesim turtlesim_node<br>rosrun turtlesim turtle_teleop_key<br></code></pre></td></tr></table></figure>
 
 <p><img src="/../images/ROS%E5%B0%8F%E6%B5%B7%E9%BE%9F/S_0.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="10-常见问题"><a href="#10-常见问题" class="headerlink" title="10.常见问题"></a>10.常见问题</h2><ol>
+<p>10.常见问题</p>
+<ol>
 <li><h3 id="ROS报错备忘-IOError-Errno-13-Permission-denied-‘-x2F-home-x2F-lishuwei-x2F-ros-x2F-roscore-11311-pid’"><a href="#ROS报错备忘-IOError-Errno-13-Permission-denied-‘-x2F-home-x2F-lishuwei-x2F-ros-x2F-roscore-11311-pid’" class="headerlink" title="ROS报错备忘:IOError: [Errno 13] Permission denied: ‘&#x2F;home&#x2F;lishuwei&#x2F;.ros&#x2F;roscore-11311.pid’"></a>ROS报错备忘:IOError: [Errno 13] Permission denied: ‘&#x2F;home&#x2F;lishuwei&#x2F;.ros&#x2F;roscore-11311.pid’</h3><p>解决：</p>
 <p> 这个问题是由于该路径下ros文件权限造成的。</p>
 <p>输入以下命令修改权限：</p>
@@ -335,8 +348,114 @@
 
 
 </li>
-<li><h3 id="E-无法获得锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-open-11-资源暂时不可用-E-无法获取-dpkg-前端锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-，是否有其他进程正占用它？"><a href="#E-无法获得锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-open-11-资源暂时不可用-E-无法获取-dpkg-前端锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-，是否有其他进程正占用它？" class="headerlink" title="E: 无法获得锁 &#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend - open (11: 资源暂时不可用) E: 无法获取 dpkg 前端锁 (&#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend)，是否有其他进程正占用它？"></a>E: 无法获得锁 &#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend - open (11: 资源暂时不可用) E: 无法获取 dpkg 前端锁 (&#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend)，是否有其他进程正占用它？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo rm /var/lib/dpkg/lock-frontend<br></code></pre></td></tr></table></figure></li>
+<li><h3 id="E-无法获得锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-open-11-资源暂时不可用-E-无法获取-dpkg-前端锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-，是否有其他进程正占用它？"><a href="#E-无法获得锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-open-11-资源暂时不可用-E-无法获取-dpkg-前端锁-x2F-var-x2F-lib-x2F-dpkg-x2F-lock-frontend-，是否有其他进程正占用它？" class="headerlink" title="E: 无法获得锁 &#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend - open (11: 资源暂时不可用) E: 无法获取 dpkg 前端锁 (&#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend)，是否有其他进程正占用它？"></a>E: 无法获得锁 &#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend - open (11: 资源暂时不可用) E: 无法获取 dpkg 前端锁 (&#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend)，是否有其他进程正占用它？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">sudo rm /var/lib/dpkg/lock-frontend<br></code></pre></td></tr></table></figure>
+
+<h1 id><a href="#" class="headerlink" title></a></h1></li>
 </ol>
+<h1 id="二、用C-写一个程序，控制小海龟走一个圆形。"><a href="#二、用C-写一个程序，控制小海龟走一个圆形。" class="headerlink" title="二、用C++写一个程序，控制小海龟走一个圆形。"></a>二、用C++写一个程序，控制小海龟走一个圆形。</h1><h2 id="一、创建一个工作区"><a href="#一、创建一个工作区" class="headerlink" title="一、创建一个工作区"></a>一、创建一个工作区</h2><p>1）、创建名为ros的工作区</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">mkdir -p ~/ros/src<br></code></pre></td></tr></table></figure>
+
+<p>2)、进入创建工作区的src文件夹</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">cd ~/ros/src<br></code></pre></td></tr></table></figure>
+
+<p>3）、生成工作区</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">catkin_init_workspace<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/S.png" srcset="/img/loading.gif" lazyload></p>
+<p>3）、运行我们的接受实时位置的服务程序</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">rosrun comm callBackYuan<br></code></pre></td></tr></table></figure>
+
+<h3 id="1、这时候工作区是空的，但是我们依然可以进行编译"><a href="#1、这时候工作区是空的，但是我们依然可以进行编译" class="headerlink" title="1、这时候工作区是空的，但是我们依然可以进行编译"></a>1、这时候工作区是空的，但是我们依然可以进行编译</h3><p>1)、进入工作区</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">cd ~/ros/<br></code></pre></td></tr></table></figure>
+
+<p>2）、编译</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">catkin_make<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/s_1.png" srcset="/img/loading.gif" lazyload></p>
+<p>这时候，会在当前文件夹下生成devel，build这两个子文件夹，在devel文件夹下能看到几个setup.*sh文件<br>1）、当前文件夹下生成devel，build这两个子文件夹如下图</p>
+<p><img src="/../images/ros/s_2.png" srcset="/img/loading.gif" lazyload></p>
+<p>1）、bash注册</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">source devel/setup.bash<br></code></pre></td></tr></table></figure>
+
+<p>2）、验证是否已经在bash中注册可以使用如下命令：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">echo $ROS_PACKAGE_PATH<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/s_3.png" srcset="/img/loading.gif" lazyload></p>
+<p>二、创建一个ROS工程包<br>在一个工作区内，可能会包含多个ROS工程包。而最基本ROS工程包中会包括CmakeLists.txt和Package.xml这两个文件，其中Package.xml中主要包含本项目信息和各种依赖（depends），而CmakeLists.txt中包含了如何编译和安装代码的信息。</p>
+<p>1、切换到我们的工作区</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">cd ~/ros/src<br></code></pre></td></tr></table></figure>
+
+<p>2、使用catkin_create_pkg命令去创建一个叫comm(通信)的包，这个包依靠std_msgs、roscpp、rospy。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">catkin_create_pkg comm std_msgs rospy roscpp<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/s_4.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2、接下来在工作区编译这个工程包。"><a href="#2、接下来在工作区编译这个工程包。" class="headerlink" title="2、接下来在工作区编译这个工程包。"></a>2、接下来在工作区编译这个工程包。</h3><p>1)、进入工作区</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">cd ~/ros<br></code></pre></td></tr></table></figure>
+
+<p>2)、编译</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">catkin_make<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/s_5.png" srcset="/img/loading.gif" lazyload></p>
+<p>经过以上步骤，我们的ROS工程包就建立好了</p>
+<h3 id="3-进入我们的工程包，创建小乌龟画圆发送程序"><a href="#3-进入我们的工程包，创建小乌龟画圆发送程序" class="headerlink" title="3.进入我们的工程包，创建小乌龟画圆发送程序"></a>3.进入我们的工程包，创建小乌龟画圆发送程序</h3><h3 id="4、新建一个终端，命名为终端1，然后进入我们的工程文件包"><a href="#4、新建一个终端，命名为终端1，然后进入我们的工程文件包" class="headerlink" title="4、新建一个终端，命名为终端1，然后进入我们的工程文件包"></a>4、新建一个终端，命名为终端1，然后进入我们的工程文件包</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cd ~/ros/src/comm/src<br></code></pre></td></tr></table></figure>
+
+<h3 id="5、新建画圆程序名为yuan-cpp"><a href="#5、新建画圆程序名为yuan-cpp" class="headerlink" title="5、新建画圆程序名为yuan.cpp"></a>5、新建画圆程序名为yuan.cpp</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">touch yuan.cpp<br></code></pre></td></tr></table></figure>
+
+<h3 id="6、打开文件将如下代码写入yuan-cpp中："><a href="#6、打开文件将如下代码写入yuan-cpp中：" class="headerlink" title="6、打开文件将如下代码写入yuan.cpp中："></a>6、打开文件将如下代码写入yuan.cpp中：</h3><p>1）、打开文件如下命令</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">gedit yuan.cpp<br></code></pre></td></tr></table></figure>
+
+<p>2）、写入文件中的代码如下命令：</p>
+<p>#include “ros&#x2F;ros.h”<br>#include “std_msgs&#x2F;String.h”<br>#include&lt;geometry_msgs&#x2F;Twist.h&gt; &#x2F;&#x2F;运动速度结构体类型  geometry_msgs::Twist的定义文件</p>
+<p>int main(int argc, char *argv[])<br>{<br>    ros::init(argc, argv, “vel_ctrl”);  &#x2F;&#x2F;对该节点进行初始化操作<br>    ros::NodeHandle n;         &#x2F;&#x2F;申明一个NodeHandle对象n，并用n生成一个广播对象vel_pub<br>    ros::Publisher vel_pub &#x3D; n.advertise&lt;geometry_msgs::Twist&gt;(“&#x2F;turtle1&#x2F;cmd_vel”, 10);<br>    ros::Publisher chatter_pub &#x3D; n.advertise&lt;std_msgs::String&gt;(“chatter”, 1000);<br>    ros::Rate loop_rate(10);<br>    &#x2F;&#x2F;vel_pub会在主题”&#x2F;turtle1&#x2F;cmd_vel”(机器人速度控制主题)里广播geometry_msgs::Twist类型的数据<br>    &#x2F;&#x2F;ros::Rate loopRate(2);<br>    ROS_INFO(“draw_circle start…”);&#x2F;&#x2F;输出显示信息<br>    while(ros::ok())<br>    {<br>        geometry_msgs::Twist vel_cmd; &#x2F;&#x2F;声明一个geometry_msgs::Twist 类型的对象vel_cmd，并将速度的值赋值到这个对象里面</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c++">    vel_cmd.linear.x = <span class="hljs-number">2.0</span>;<span class="hljs-comment">//前后（+-） m/s</span><br>    vel_cmd.linear.y = <span class="hljs-number">0.0</span>;  <span class="hljs-comment">//左右（+-） m/s</span><br>    vel_cmd.linear.z = <span class="hljs-number">0.0</span>;<br> <br>    vel_cmd.angular.x = <span class="hljs-number">0</span>;<br>    vel_cmd.angular.y = <span class="hljs-number">0</span>;<br>    vel_cmd.angular.z = <span class="hljs-number">1.8</span>; <span class="hljs-comment">//机器人的自转速度，+左转，-右转，单位是rad/s</span><br><br>    vel_pub.<span class="hljs-built_in">publish</span>(vel_cmd); <span class="hljs-comment">//赋值完毕后，发送到主题&quot;/turtle1/cmd_vel&quot;。机器人的核心节点会从这个主题接受发送过去的速度值，并转发到硬件体上去执行</span><br>std_msgs::String msg;<br>    std::stringstream ss;<span class="hljs-comment">//定义输出流对象</span><br>    ss &lt;&lt;vel_cmd;<br>    msg.data = ss.<span class="hljs-built_in">str</span>();<br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment"> 	* The publish() function is how you send messages. The parameter</span><br><span class="hljs-comment"> 	* is the message object. The type of this object must agree with the type</span><br><span class="hljs-comment"> 	* given as a template parameter to the advertise&lt;&gt;() call, as was done</span><br><span class="hljs-comment"> 	* in the constructor above.</span><br><span class="hljs-comment"> 	*/</span><br>    chatter_pub.<span class="hljs-built_in">publish</span>(msg);<br>    ros::<span class="hljs-built_in">spinOnce</span>();<span class="hljs-comment">//调用此函数给其他回调函数得以执行(比例程未使用回调函数)</span><br>   <span class="hljs-comment">//loopRate.sleep();</span><br>&#125;<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+<p>}</p>
+<p><img src="/../images/ros/s_6.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="二、创建小乌龟画圆接收程序，用于实时更新位置信息"><a href="#二、创建小乌龟画圆接收程序，用于实时更新位置信息" class="headerlink" title="二、创建小乌龟画圆接收程序，用于实时更新位置信息"></a>二、创建小乌龟画圆接收程序，用于实时更新位置信息</h2><h3 id="1、当前目录不改变，新建小乌龟画圆接收程序，用于实时更新位置信息"><a href="#1、当前目录不改变，新建小乌龟画圆接收程序，用于实时更新位置信息" class="headerlink" title="1、当前目录不改变，新建小乌龟画圆接收程序，用于实时更新位置信息"></a>1、当前目录不改变，新建小乌龟画圆接收程序，用于实时更新位置信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">touch</span> callBackYuan.cpp<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、打开callBackYuan-cpp文件，输入如下代码："><a href="#2、打开callBackYuan-cpp文件，输入如下代码：" class="headerlink" title="2、打开callBackYuan.cpp文件，输入如下代码："></a>2、打开callBackYuan.cpp文件，输入如下代码：</h3><p>1）、打开callBackYuan.cpp文件</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">gedit callBackYuan.cpp<br></code></pre></td></tr></table></figure>
+
+<p>2)、将文件内容填入以下c++代码：</p>
+<h2 id="三、修改CMakeLists-txt"><a href="#三、修改CMakeLists-txt" class="headerlink" title="三、修改CMakeLists.txt"></a>三、修改CMakeLists.txt</h2><h3 id="1、进入工程包comm文件夹"><a href="#1、进入工程包comm文件夹" class="headerlink" title="1、进入工程包comm文件夹"></a>1、进入工程包comm文件夹</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cd ~/ros/src/comm<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、打开CMakeLists-txt文件"><a href="#2、打开CMakeLists-txt文件" class="headerlink" title="2、打开CMakeLists.txt文件"></a>2、打开CMakeLists.txt文件</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">gedit CMakeLists.txt<br></code></pre></td></tr></table></figure>
+
+<h3 id="3、在CMakeLists-txt文件末尾添加如下代码："><a href="#3、在CMakeLists-txt文件末尾添加如下代码：" class="headerlink" title="3、在CMakeLists.txt文件末尾添加如下代码："></a>3、在CMakeLists.txt文件末尾添加如下代码：</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_executable</span>(yuan src/yuan.cpp)<br><span class="hljs-keyword">target_link_libraries</span>(yuan <span class="hljs-variable">$&#123;catkin_LIBRARIES&#125;</span>)<br><span class="hljs-comment">#add_dependencies(yuan comm_generate_messages_cpp)</span><br><span class="hljs-keyword">add_executable</span>(callBackYuan src/callBackYuan.cpp)<br><span class="hljs-keyword">target_link_libraries</span>(callBackYuan <span class="hljs-variable">$&#123;catkin_LIBRARIES&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>如下图所示：</p>
+<p><img src="/../images/ros/s_7.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4、进入工作空间ros"><a href="#4、进入工作空间ros" class="headerlink" title="4、进入工作空间ros"></a>4、进入工作空间ros</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cd ~/ros<br></code></pre></td></tr></table></figure>
+
+<h3 id="5、编译我们创建好的程序"><a href="#5、编译我们创建好的程序" class="headerlink" title="5、编译我们创建好的程序"></a>5、编译我们创建好的程序</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">catkin_make<br></code></pre></td></tr></table></figure>
+
+<p>如下图所示即为成功：</p>
+<p><img src="/../images/ros/s_8.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="五、运行程序"><a href="#五、运行程序" class="headerlink" title="五、运行程序"></a>五、运行程序</h2><h3 id="1、程序注册"><a href="#1、程序注册" class="headerlink" title="1、程序注册"></a>1、程序注册</h3><p>1）、回到我们的工作空间</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cd ~/ros<br></code></pre></td></tr></table></figure>
+
+<p>2)、程序注册</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">source ./devel/setup.bash<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、新建一个终端，运行ros，我们命名为终端2"><a href="#2、新建一个终端，运行ros，我们命名为终端2" class="headerlink" title="2、新建一个终端，运行ros，我们命名为终端2"></a>2、新建一个终端，运行ros，我们命名为终端2</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">roscore<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/s_9.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3、在新建一个终端，进入我们的工作空间、运行我们的接收服务程序，我们命名为终端3"><a href="#3、在新建一个终端，进入我们的工作空间、运行我们的接收服务程序，我们命名为终端3" class="headerlink" title="3、在新建一个终端，进入我们的工作空间、运行我们的接收服务程序，我们命名为终端3"></a>3、在新建一个终端，进入我们的工作空间、运行我们的接收服务程序，我们命名为终端3</h3><p>1）、进入工作空间</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cd ~/ros<br></code></pre></td></tr></table></figure>
+
+<p>2)、程序注册</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">source ./devel/setup.bash<br></code></pre></td></tr></table></figure>
+
+<p>3）、运行我们的接受实时位置的服务程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">rosrun <span class="hljs-built_in">comm</span> callBackYuan<br></code></pre></td></tr></table></figure>
+
+<h3 id="4、再新建一个终端，启动我们的小海龟，海龟的窗口我们命名为窗口4"><a href="#4、再新建一个终端，启动我们的小海龟，海龟的窗口我们命名为窗口4" class="headerlink" title="4、再新建一个终端，启动我们的小海龟，海龟的窗口我们命名为窗口4"></a>4、再新建一个终端，启动我们的小海龟，海龟的窗口我们命名为窗口4</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">rosrun turtlesim turtlesim_node<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/s_10.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="5、在终端1运行我们的小海龟画圆程序，也就是我们最开始的终端！"><a href="#5、在终端1运行我们的小海龟画圆程序，也就是我们最开始的终端！" class="headerlink" title="5、在终端1运行我们的小海龟画圆程序，也就是我们最开始的终端！"></a>5、在终端1运行我们的小海龟画圆程序，也就是我们最开始的终端！</h3><p>1)、终端1运行画圆程序</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">rosrun comm yuan<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/ros/s_11.png" srcset="/img/loading.gif" lazyload></p>
+<p>小乌龟开始画圈，终端3—实时位置接收程序callBackYuan.cpp开始接收终端1–位置发送程序yuan.cpp发送的位置信息</p>
 
                 
               </div>
@@ -397,9 +516,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/08/11/%E8%B7%B3%E4%B8%80%E8%B7%B3%E7%89%A9%E7%90%86%E5%A4%96%E6%8C%82%EF%BC%88%E9%87%8D%E5%88%B6%E7%89%88%EF%BC%89/" title="跳一跳物理外挂（重制版）">
+                      <a href="/2023/03/14/asd/" title="初识线性回归(Excel-Python实现)">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">跳一跳物理外挂（重制版）</span>
+                        <span class="hidden-mobile">初识线性回归(Excel-Python实现)</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

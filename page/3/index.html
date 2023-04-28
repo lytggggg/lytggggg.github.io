@@ -223,6 +223,162 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/11/04/stm32RTC%E6%97%B6%E9%92%9F/" target="_self">
+          stm32RTC时钟
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/11/04/stm32RTC%E6%97%B6%E9%92%9F/" target="_self">
+        <div>
+          一，RTC简介RTC (Real Time Clock)  ：实时时钟 RTC是个独立的定时器。RTC模块拥有一个连续计数的计数器，在相应的软件配置下，可以提供时钟日历的功能。修改计数器的值可以重新设置当前时间和日期 RTC还包含用于管理低功耗模式的自动唤醒单元。 二、实时时钟RTC的原理实时时钟是一个独立的定时器。RTC模块拥有一组连续计数的计数器，在相应软件配置下，可提供时钟日历的功能。修改计
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/11/04/stm32%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_self">
+          stm32定时器
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/11/04/stm32%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_self">
+        <div>
+          之前作业中的延时功能都是通过循环、delay&#x2F;Hal_delay函数等实现，本次作业通过定时器Timer方式实现时间的精准控制，相当于给CPU上了一个闹钟，CPU平时处理其它任务，当定时时间到了以后，处理定时相关的任务。请设置一个5秒的定时器，每隔5秒从串口发送“hello windows！”；同时设置一个2秒的定时器，让LED等周期性地闪烁。 一，定时器TIM简介 TIM（Timer）
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/23/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E8%BF%9B%E9%98%B6/" target="_self">
+          串口通信进阶
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/23/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E8%BF%9B%E9%98%B6/" target="_self">
+        <div>
+          上篇谈到用串口给上位机发送信息，STM32串口通信小试牛刀，本篇介绍加入中断方式实现串口发送＋接受 一.发送与接受1.原理本次串口实验的中断名称为USART1，和之前一样，初始化GPIO，初始化NVIC，初始化串口USART。这里主要介绍一下中断函数 1234567891011&#x2F;* USART1中断函数 *&#x2F;void USART1_IRQHandler(void)&amp;#123;	unsigned c
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/23/stm32%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6LED%E7%81%AF/" target="_self">
+          stm32中断控制LED灯
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/23/stm32%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6LED%E7%81%AF/" target="_self">
+        <div>
+          本篇介绍用中断方式来控制led，由于没有开关按键，用导线模拟开关 一.实验原理本次实验主要使用了中断、GPIO输入和输出模式来进行实验。 CM3内核支持256个中断，其中包含了16个内核中断和240个外部中断，并且具有256级可编程中断设置。STM32并没有CM3的全部中断服务。STM32有84个中断，包括16个内核中断和68个可屏蔽中断，具有16级可编程的中断优先级（STM32F103系列有60
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/22/STM32%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80/" target="_self">
+          STM32串口通信小试牛刀
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/22/STM32%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80/" target="_self">
+        <div>
+          aasd 初试stm32CubeMX，使用HAL库流水灯实验用寄存器方式点亮在上次实验已经完成，参考stm32点亮流水灯 (qsbb.xyz)，本篇介绍使用HAL库实现流水灯。 一.STM32CubeMX简介STM32CubeMX是意法半导体推出的图形化配置工具，通过傻瓜化的操作便能实现相关配置，最终能够生成C语言代码，支持多种工具链，比如MDK、TrueStudio等。 二.STM32CubeM
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/13/stm32%E7%82%B9%E4%BA%AE%E6%B5%81%E6%B0%B4%E7%81%AF/" target="_self">
+          stm32点亮流水灯
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/13/stm32%E7%82%B9%E4%BA%AE%E6%B5%81%E6%B0%B4%E7%81%AF/" target="_self">
+        <div>
+          本文主要叙述用寄存器和库函数的方式点亮LED流水灯stm32f103c8t6开发板开发环境：keil μVision 5、stm32f103c8t6开发板 创建LED流水灯工程文件先下载固件库文件 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1ulVyBa8XbrBkDidSmVoMzw?pwd&#x3D;1111提取码：1111  新建文件夹LEDProject  新建工程，选择创建的LEDPr
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/09/21/linux%E4%B8%8Bopencv/" target="_self">
           linux下的opencv
         </a>
@@ -321,174 +477,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/31/javaWeb%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92/" target="_self">
-          javaWeb前后端数据交互
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/31/javaWeb%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92/" target="_self">
-        <div>
-          这个web大致长这样 增删改查工程师      前后端如何进行数据的交互的，用axios和servlet 创建一个servlet类 123456789101112131415161718192021import com.alibaba.fastjson.JSON;import javax.servlet.*;import javax.servlet.http.*;import javax.serv
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/31/%E7%99%BD%E5%AB%96copilot/" target="_self">
-          白嫖copilot
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/31/%E7%99%BD%E5%AB%96copilot/" target="_self">
-        <div>
-          asdcopilot专为菜鸡服务，现在一个月70，学生党可以白嫖，我嫖到了，  需要的就是学生认证 1.在学信网上去申请学籍在线验证报告，然后翻译成英文  2.用手机打开Github学生包申请网站，https:&#x2F;&#x2F;education.github.com&#x2F;pack&#x2F;，注意是用手机！，一直填一直填，填到证明那一栏用手机拍电脑上的学信网图，手机打开摄像头是黑色的，看不到实时画面，多拍几次找准位置。如果
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/31/%E5%AD%98%E7%A0%81/" target="_self">
-          存码
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/31/%E5%AD%98%E7%A0%81/" target="_self">
-        <div>
-          扫雷12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697import timeim
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/31/%E7%A2%8E%E7%A2%8E%E5%BF%B5/" target="_self">
-          碎碎念
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/31/%E7%A2%8E%E7%A2%8E%E5%BF%B5/" target="_self">
-        <div>
-          ​		凌晨5.00，碎碎念 ​		马上开学了，学校封了，于是上了家里蹲大学了。又回到了20年朋友们第一次上网课的时候，那时在高考，现在轮到我了。 ​		其实无论是能去学校上学还是在家里上网课，对我来说没什么大的区别，唯一的区别就是签到逃课的难度。在学校里，每天都是重复的生活，早上闹钟响了，给同学发消息喊他把二维码发来签到，然后继续睡，到中午吃饭了刷会儿抖音又继续睡午觉，下午同样的签到了然后开始打游
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/">#碎碎念</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/28/%E8%B7%B3%E4%B8%80%E8%B7%B3%E7%89%A9%E7%90%86%E5%A4%96%E6%8C%82/" target="_self">
-          跳一跳物理外挂
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/28/%E8%B7%B3%E4%B8%80%E8%B7%B3%E7%89%A9%E7%90%86%E5%A4%96%E6%8C%82/" target="_self">
-        <div>
-          先装一下 思路：这个脚本全部围绕着找到两个点的坐标（棋子中心点，目标中心点），找到这两个坐标，在计算距离d,在除以速度v，得到需要跳跃的时间t，在用python控制鼠标按下时间。整个过程其实是偏向纯数学的东西，是不是觉得很简单。接着看，找到两个点的坐标我想了3种方法，鄙人取名为（老实憨厚）（精准又优雅）（投机取巧） 进去正题。 准备东西1，用python写的，主要是C++的opencv太难写了，但
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/09/%E7%BB%93%E4%B8%9A%E6%8A%A5%E5%91%8A/" target="_self">
-          结业报告
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/09/%E7%BB%93%E4%B8%9A%E6%8A%A5%E5%91%8A/" target="_self">
-        <div>
-          本次web开发我是用的bootstrap的纯静态网页 1.开发过程这个静态界面是一层一层的进行网格的布局，依次添加轮播图，文字，圆形图像，可折叠图像，还有网页上部的导航栏，底部的返回到顶端等等，尾页是借鉴翁天信前辈的那一种图片切割排列的方式。 2.遇到的问题其中最大的问题有两个。 其一是轮播图，本次的轮播图是借用bootstrap的样式进行添加的，但是我刷视频看到过用纯js的方式实现轮播图的，所以
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
