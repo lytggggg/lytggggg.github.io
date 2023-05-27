@@ -275,6 +275,32 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/05/28/%E5%9F%BA%E4%BA%8EFPGA%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B3%A2%E6%B5%8B%E8%B7%9D/" target="_self">
+          基于FPGA的超声波测距
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/28/%E5%9F%BA%E4%BA%8EFPGA%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B3%A2%E6%B5%8B%E8%B7%9D/" target="_self">
+        <div>
+          一、项目框架distance超声波模块负责数据的采集，vga、uart、beep、数码管根据采集到的数据分别进行vga的屏幕打点、串口输出到上位机、蜂鸣器根据数据大小进行鸣叫以及数码管显示采集到的数据。  RTL视图  二、超声波测距模块  以上时序图表明只需要提供一个10uS 以上脉冲触发信号，该模块内部将发出8个40kHz 周期电平并检测回波。一旦检测到有回波信号则输出回响信号。回响信号的脉冲
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/04/13/Nios/" target="_self">
           Nios-II入门实践
         </a>
@@ -440,32 +466,6 @@
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/06/test2/" target="_self">
         <div>
           numpy例题1、创建一个8x8 的矩阵，并且设置成棋盘样式12345import numpy as npZ &#x3D; np.zeros((8,8),dtype&#x3D;int)Z[1::2,::2] &#x3D; 1Z[::2,1::2] &#x3D; 1Z     array([[0, 1, 0, 1, 0, 1, 0, 1],        [1, 0, 1, 0, 1, 0, 1, 0],        [0, 1, 0,
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/12/26/STM32%E5%9F%BA%E4%BA%8EModbus%E5%8D%8F%E8%AE%AE%E8%AF%BB%E5%8F%96%E6%B8%A9%E6%B9%BF%E5%BA%A6/" target="_self">
-          STM32基于Modbus协议读取温湿度
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/26/STM32%E5%9F%BA%E4%BA%8EModbus%E5%8D%8F%E8%AE%AE%E8%AF%BB%E5%8F%96%E6%B8%A9%E6%B9%BF%E5%BA%A6/" target="_self">
-        <div>
-          一、新建工程1.配置RCC  2.配置时钟  3.配置串口  4.配置串口二DMA  5.配置串口一  6.配置中断  2.修改代码stm32f1xx_it.c的串口2中断处理函数 1234567891011121314151617181920212223242526272829void USART2_IRQHandler(void)&amp;#123;  &#x2F;* USER CODE BEGIN USART
         </div>
       </a>
 
