@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、实验准备实验任务：1在win10或者Ubuntu系统下安装 Intel 或者 Xilinx 的支持HLS的FPGA编程开发软件，推荐Quartus18，或者Vivado18，设置好环境，完成一个入门级的HLS程序，并进行仿真或者实际开发板运行。  实验环境1Ubuntu 18.04  二、关于HLS1HLS是什么？  HLS(High-Level Synthesis)高层综合，就是将 C&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HLS环境编程入门">
+<meta property="og:url" content="http://example.com/2023/06/27/HLS%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、实验准备实验任务：1在win10或者Ubuntu系统下安装 Intel 或者 Xilinx 的支持HLS的FPGA编程开发软件，推荐Quartus18，或者Vivado18，设置好环境，完成一个入门级的HLS程序，并进行仿真或者实际开发板运行。  实验环境1Ubuntu 18.04  二、关于HLS1HLS是什么？  HLS(High-Level Synthesis)高层综合，就是将 C&amp;#x">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/hls/s.png">
+<meta property="og:image" content="http://example.com/images/hls/s_0.png">
+<meta property="og:image" content="http://example.com/images/hls/s_1.png">
+<meta property="og:image" content="http://example.com/images/hls/s_2.png">
+<meta property="og:image" content="http://example.com/images/hls/s_3.png">
+<meta property="og:image" content="http://example.com/images/hls/s_4.png">
+<meta property="og:image" content="http://example.com/images/hls/s_5.png">
+<meta property="og:image" content="http://example.com/images/hls/s_6.png">
+<meta property="og:image" content="http://example.com/images/hls/s_7.png">
+<meta property="og:image" content="http://example.com/images/hls/s_8.png">
+<meta property="og:image" content="http://example.com/images/hls/s_9.png">
+<meta property="og:image" content="http://example.com/images/hls/s_10.png">
+<meta property="og:image" content="http://example.com/images/hls/s_11.png">
+<meta property="og:image" content="http://example.com/images/hls/s_12.png">
+<meta property="og:image" content="http://example.com/images/hls/s_13.png">
+<meta property="og:image" content="http://example.com/images/hls/s_14.png">
+<meta property="og:image" content="http://example.com/images/hls/s_15.png">
+<meta property="og:image" content="http://example.com/images/hls/s_16.png">
+<meta property="og:image" content="http://example.com/images/hls/s_17.png">
+<meta property="article:published_time" content="2023-06-27T13:23:27.000Z">
+<meta property="article:modified_time" content="2023-06-27T13:40:33.864Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/hls/s.png">
+  
+  
+  
+  <title>HLS环境编程入门 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HLS环境编程入门"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-27 21:23" pubdate>
+          June 27, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HLS环境编程入门</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、实验准备"><a href="#一、实验准备" class="headerlink" title="一、实验准备"></a>一、实验准备</h1><h4 id="实验任务："><a href="#实验任务：" class="headerlink" title="实验任务："></a>实验任务：</h4><figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nsis">在<span class="hljs-literal">win10</span>或者Ubuntu系统下安装 Intel 或者 Xilinx 的支持HLS的FPGA编程开发软件，推荐Quartus18，或者Vivado18，设置好环境，完成一个入门级的HLS程序，并进行仿真或者实际开发板运行。<br></code></pre></td></tr></table></figure>
+
+<h4 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Ubuntu</span> <span class="hljs-number">18</span>.<span class="hljs-number">04</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="二、关于HLS"><a href="#二、关于HLS" class="headerlink" title="二、关于HLS"></a>二、关于HLS</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">HLS是什么？<br></code></pre></td></tr></table></figure>
+
+<p>HLS(High-Level Synthesis)高层综合，就是将 C&#x2F;C++的功能用 RTL 来实现，将 FPGA 的组件在一个软件环境中来开发，这个模块的功能验证在软件环境中来实现，无缝的将硬件仿真环境集合在一起，使用软件为中心的工具、报告以及优化设计，很容易的在 FPGA 传统的设计工具中生成 IP。<br>HLS高级综合能够实现软体代码的硬件加速，主要是因为其对代码中的循环体（for，while）等进行了并行性优化，采用流水，展开，合并，嵌套，数据流等方法，将软体中需要一步步执行的循环体，在硬件电路中实现并行化处理，从而大幅提高计算速度，正好应对当下这种高计算量的需求。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">与VHDL/Verilog有什么关系?<br></code></pre></td></tr></table></figure>
+
+<p>Verilog或VHDL与HLS相比，就好比是几十年前的汇编语言与C语言，HDL迟早会被HLS取代的。这些话已经讲了有一二十年了，还是没有看到HLS取代HDL。<br>高层综合（HLS）被视为提高设计抽象水平的下一步。但是，HLS工具的结果质量（QoR）往往落后于手动寄存器传输级别（RTL）流程的质量。<br>在结果质量(QoR)上，HLS 工具还落后于 RTL，但 HLS 的开发时间少、生产率高这些优点还是当前用于快速原型设计和较短上市时间的可行选择。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">HLS有哪些关键技术问题？<br></code></pre></td></tr></table></figure>
+
+<p>HLS协议的小切片方式会生成大量的文件，存储或处理这些文件会造成大量资源浪费。如果要实现数天的时移，索引量将会是个巨额数字，并明显影响请求速度。因此，HLS协议对存储I&#x2F;O要求相当苛刻。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">目前存在什么技术局限性？<br></code></pre></td></tr></table></figure>
+
+<p>比如采用HLS协议直播的视频延迟时间无法下到10秒以下，而RTMP协议的延迟最低可以到3、4秒左右。</p>
+<h1 id="三、安装vivado"><a href="#三、安装vivado" class="headerlink" title="三、安装vivado"></a>三、安装vivado</h1><h4 id="1、软件安装"><a href="#1、软件安装" class="headerlink" title="1、软件安装"></a>1、软件安装</h4><p>将安装文件放到Ubuntu中，解压</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo tar xvzf <span class="hljs-regexp">/mnt/</span>hgfs<span class="hljs-regexp">/ubuntshare/</span>Vivado_SDK_2018.<span class="hljs-number">3</span>_1207_2324.tar.gz<br></code></pre></td></tr></table></figure>
+
+
+<p>进入解压文件夹中，运行安装文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ./xsetup<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/hls/s.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/hls/s_0.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/hls/s_1.png" srcset="/img/loading.gif" lazyload></p>
+<p>勾选需要用到工具</p>
+<p><img src="/../images/hls/s_2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/hls/s_3.png" srcset="/img/loading.gif" lazyload></p>
+<p>安装成功后将license放到文件中</p>
+<p><img src="/../images/hls/s_4.png" srcset="/img/loading.gif" lazyload></p>
+<p>注册成功</p>
+<p><img src="/../images/hls/s_5.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="2、其他相关"><a href="#2、其他相关" class="headerlink" title="2、其他相关"></a>2、其他相关</h4><p>权限</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo chmod -R <span class="hljs-number">777</span> <span class="hljs-regexp">/tools/</span>Xilinx <br>sudo chmod -R <span class="hljs-number">777</span> ~<span class="hljs-regexp">/.Xilinx/</span><br></code></pre></td></tr></table></figure>
+
+
+<p>下载驱动</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/tools/</span>Xilinx<span class="hljs-regexp">/Vivado/</span><span class="hljs-number">2018.3</span><span class="hljs-regexp">/data/</span>xicom<br><span class="hljs-regexp">/cable_drivers/</span>lin64<span class="hljs-regexp">/install_script/i</span>nstall_drivers<br>sudo ./install_drivers <br></code></pre></td></tr></table></figure>
+
+
+<p>环境变量设置</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">sudo gedit <span class="hljs-string">.bashrc</span><br></code></pre></td></tr></table></figure>
+
+
+<p>打开.bashrc后写入</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">source</span> <span class="hljs-regexp">/tools/</span>Xilinx<span class="hljs-regexp">/Vivado/</span><span class="hljs-number">2018.3</span>/settings64.sh<br></code></pre></td></tr></table></figure>
+
+<h1 id="四、安装PetaLinux"><a href="#四、安装PetaLinux" class="headerlink" title="四、安装PetaLinux"></a>四、安装PetaLinux</h1><p>安装依赖库</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs q">sudo -s<br>sudo apt-<span class="hljs-built_in">get</span> install gcc git make net-tools libncurses5-<span class="hljs-built_in">dev</span> tftpd zlib1g-<span class="hljs-built_in">dev</span> libssl-<span class="hljs-built_in">dev</span> flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool <br>tar unzip texinfo zlib1g-<span class="hljs-built_in">dev</span> gcc-multilib build-essential libsdl1<span class="hljs-number">.2</span>-<span class="hljs-built_in">dev</span> libglib2<span class="hljs-number">.0</span>-<span class="hljs-built_in">dev</span> <br>zlib1g:i386 screen pax gzip gawk<br></code></pre></td></tr></table></figure>
+
+
+<p>tftp Server</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">apt-<span class="hljs-built_in">get</span> install tftpd-hpa<br></code></pre></td></tr></table></figure>
+
+
+<p>启动tft Serve</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs maxima">service tftpd-hpa <span class="hljs-built_in">restart</span><br>service tftpd-hpa <span class="hljs-built_in">status</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/hls/s_6.png" srcset="/img/loading.gif" lazyload></p>
+<p>校验 tftp</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">ps</span> ax | <span class="hljs-keyword">grep</span> tftpd<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/hls/s_7.png" srcset="/img/loading.gif" lazyload></p>
+<p>开始安装<br><your_user_name>填写用户名</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo –s<br>mkdir –p <span class="hljs-regexp">/opt/</span>pkg<span class="hljs-regexp">/petalinux/</span><span class="hljs-number">2018.3</span><br>chown &lt;your_user_name&gt; <span class="hljs-regexp">/opt/</span>pkg/<br>chown &lt;your_user_name&gt; <span class="hljs-regexp">/opt/</span>pkg<span class="hljs-regexp">/petalinux/</span><br>chown &lt;your_user_name&gt; <span class="hljs-regexp">/opt/</span>pkg<span class="hljs-regexp">/petalinux/</span><span class="hljs-number">2018.3</span>/<br>chgrp &lt;your_user_name&gt; <span class="hljs-regexp">/opt/</span>pkg/<br>chgrp &lt;your_user_name&gt; <span class="hljs-regexp">/opt/</span>pkg<span class="hljs-regexp">/petalinux/</span><br>chgrp &lt;your_user_name&gt; <span class="hljs-regexp">/opt/</span>pkg<span class="hljs-regexp">/petalinux/</span><span class="hljs-number">2018.3</span>/<br><span class="hljs-keyword">exit</span><br><br></code></pre></td></tr></table></figure>
+
+<p>添加运行权限</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">sudo chmod +x petalinux-v2018<span class="hljs-number">.3</span>-<span class="hljs-keyword">final</span>-installer.run<br></code></pre></td></tr></table></figure>
+
+<p>安装程序</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">.<span class="hljs-regexp">/petalinux-v2018.3-final-installer.run /</span>opt<span class="hljs-regexp">/pkg/</span>petalinux<span class="hljs-regexp">/2018.3/</span><br><br></code></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">source <span class="hljs-regexp">/opt/</span>pkg<span class="hljs-regexp">/petalinux/</span><span class="hljs-number">2018.3</span>/settings.sh<br>echo <span class="hljs-variable">$PETALINUX</span><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="五、灯闪烁实验"><a href="#五、灯闪烁实验" class="headerlink" title="五、灯闪烁实验"></a>五、灯闪烁实验</h1><h2 id="1、vivado-hls"><a href="#1、vivado-hls" class="headerlink" title="1、vivado hls"></a>1、vivado hls</h2><p>启动vivado hls</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> /tools/Xilinx/Vivado/2018.3/settings64.sh<br>vivado_hls<br></code></pre></td></tr></table></figure>
+
+<p>创建项目</p>
+<p><img src="/../images/hls/s_8.png" srcset="/img/loading.gif" lazyload></p>
+<p>根据实际情况选择器件</p>
+<p><img src="/../images/hls/s_9.png" srcset="/img/loading.gif" lazyload></p>
+<p>新建led.cpp，写入代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;led.h&quot;</span></span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">flash_led</span><span class="hljs-params">(<span class="hljs-type">led_t</span> *led_o , <span class="hljs-type">led_t</span> led_i)</span></span>&#123;<br>	<span class="hljs-meta">#<span class="hljs-keyword">pragma</span> HLS INTERFACE ap_vld port=led_i</span><br>	<span class="hljs-meta">#<span class="hljs-keyword">pragma</span> HLS INTERFACE ap_ovld port=led_o</span><br>	<span class="hljs-type">cnt_t</span> i;<br>	<span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;CNT_MAX;i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(i==FLASH_FLAG)<br>		&#123;<br>			*led_o = ~led_i;<br>		&#125;<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>新建led.h，写入代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> _SHIFT_LED_H_</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _SHIFT_LED_H_</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;ap_int.h&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> CNT_MAX 100000000</span><br><span class="hljs-comment">//#define CNT_MAX 100</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FLASH_FLAG CNT_MAX-2</span><br><span class="hljs-comment">// typedef int led_t;</span><br><span class="hljs-comment">// typedef int cnt_t;</span><br><br><span class="hljs-keyword">typedef</span> ap_int&lt;<span class="hljs-number">1</span>&gt; <span class="hljs-type">led_t</span>;<br><span class="hljs-keyword">typedef</span> ap_int&lt;<span class="hljs-number">32</span>&gt; <span class="hljs-type">cnt_t</span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">flash_led</span><span class="hljs-params">(<span class="hljs-type">led_t</span> *led_o , <span class="hljs-type">led_t</span> led_i)</span></span>;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br></code></pre></td></tr></table></figure>
+
+<p>添加C仿真文件，test Bench新建文件，写入代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;led.h&quot;</span></span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">flash_led</span><span class="hljs-params">(<span class="hljs-type">led_t</span> *led_o , <span class="hljs-type">led_t</span> led_i)</span></span>&#123;<br>	<span class="hljs-type">cnt_t</span> i;<br>	<span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;CNT_MAX;i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(i==FLASH_FLAG)<br>		&#123;<br>			*led_o = ~led_i;<br>		&#125;<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/hls/s_10.png" srcset="/img/loading.gif" lazyload></p>
+<p>仿真</p>
+<p><img src="/../images/hls/s_11.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2、vivado"><a href="#2、vivado" class="headerlink" title="2、vivado"></a>2、vivado</h2><p>新建项目后导入ip核</p>
+<p><img src="/../images/hls/s_12.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看ip，点击ok</p>
+<p><img src="/../images/hls/s_13.png" srcset="/img/loading.gif" lazyload></p>
+<p>完成</p>
+<p><img src="/../images/hls/s_14.png" srcset="/img/loading.gif" lazyload></p>
+<p>写入代码</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-meta">`<span class="hljs-keyword">timescale</span> 1ns / 1ps</span><br><span class="hljs-keyword">module</span> flash_led(<br><span class="hljs-keyword">input</span> <span class="hljs-keyword">wire</span> clk ,<br><span class="hljs-keyword">input</span> <span class="hljs-keyword">wire</span> rst_n ,<br><span class="hljs-keyword">output</span> <span class="hljs-keyword">wire</span> led_o<br>);<br> <br><span class="hljs-keyword">wire</span> rst ;<span class="hljs-comment">//同步复位</span><br><span class="hljs-keyword">wire</span> ap_ready ;<span class="hljs-comment">//当前可以接收下一次数据</span><br><span class="hljs-keyword">reg</span> ap_start ;<span class="hljs-comment">//IP 开始工作</span><br><span class="hljs-keyword">reg</span> led_i_vld ;<span class="hljs-comment">//输入数据有效</span><br><span class="hljs-keyword">wire</span> led_o_vld ;<br><span class="hljs-keyword">reg</span> led_i ;<span class="hljs-comment">//输入的 led 信号</span><br><span class="hljs-keyword">wire</span> led_o_r ;<br><span class="hljs-keyword">wire</span> ap_done ;<br><span class="hljs-keyword">wire</span> ap_idle ;<br><span class="hljs-keyword">reg</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] delay_cnt ;<br><span class="hljs-keyword">assign</span> rst = ~rst_n ;<br><span class="hljs-keyword">assign</span> led_o = led_o_r ;<br> <br><span class="hljs-comment">//----------------delay_cnt------------------</span><br><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk) <span class="hljs-keyword">begin</span><br><span class="hljs-keyword">if</span> (rst==<span class="hljs-number">1&#x27;b1</span>) <span class="hljs-keyword">begin</span><br>delay_cnt &lt;= <span class="hljs-number">&#x27;d0</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(delay_cnt[<span class="hljs-number">1</span>]==<span class="hljs-number">1&#x27;b0</span>) <span class="hljs-keyword">begin</span><br>delay_cnt &lt;= delay_cnt + <span class="hljs-number">1&#x27;b1</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br> <br><span class="hljs-comment">//----------------ap_start------------------</span><br><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk) <span class="hljs-keyword">begin</span><br><span class="hljs-keyword">if</span> (rst==<span class="hljs-number">1&#x27;b1</span>) <span class="hljs-keyword">begin</span><br>ap_start &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(delay_cnt[<span class="hljs-number">1</span>]==<span class="hljs-number">1&#x27;b1</span>)<span class="hljs-keyword">begin</span><br>ap_start &lt;= <span class="hljs-number">1&#x27;b1</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br> <br><span class="hljs-comment">//----------------led_i_vld------------------</span><br><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk) <span class="hljs-keyword">begin</span><br><span class="hljs-keyword">if</span> (rst==<span class="hljs-number">1&#x27;b1</span>) <span class="hljs-keyword">begin</span><br>led_i_vld &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(delay_cnt[<span class="hljs-number">1</span>]==<span class="hljs-number">1&#x27;b1</span>)<span class="hljs-keyword">begin</span><br>led_i_vld &lt;= <span class="hljs-number">1&#x27;b1</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br> <br><span class="hljs-comment">//----------------ap_i------------------</span><br><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk) <span class="hljs-keyword">begin</span><br><span class="hljs-keyword">if</span> (rst==<span class="hljs-number">1&#x27;b1</span>) <span class="hljs-keyword">begin</span><br>led_i &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(led_o_vld==<span class="hljs-number">1&#x27;b1</span>)<span class="hljs-keyword">begin</span><br>led_i &lt;= led_o_r ;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br> <br> <br>flash_led_0 inst_flash_led (<br><span class="hljs-variable">.led_o_V_ap_vld</span>(led_o_vld), <span class="hljs-comment">// output wire led_o_V_ap_vld</span><br><span class="hljs-variable">.led_i_V_ap_vld</span>(led_i_vld), <span class="hljs-comment">// input wire led_i_V_ap_vld</span><br><span class="hljs-variable">.ap_clk</span>(clk), <span class="hljs-comment">// input wire ap_clk</span><br><span class="hljs-variable">.ap_rst</span>(rst), <span class="hljs-comment">// input wire ap_rst</span><br><span class="hljs-variable">.ap_start</span>(ap_start), <span class="hljs-comment">// input wire ap_start</span><br><span class="hljs-variable">.ap_done</span>(ap_done), <span class="hljs-comment">// output wire ap_done</span><br><span class="hljs-variable">.ap_idle</span>(ap_idle), <span class="hljs-comment">// output wire ap_idle</span><br><span class="hljs-variable">.ap_ready</span>(ap_ready), <span class="hljs-comment">// output wire ap_ready</span><br><span class="hljs-variable">.led_o_V</span>(led_o_r), <span class="hljs-comment">// output wire [0 : 0] led_o_V</span><br><span class="hljs-variable">.led_i_V</span>(led_i) <span class="hljs-comment">// input wire [0 : 0] led_i_V</span><br>); <br><span class="hljs-keyword">endmodule</span><br><br></code></pre></td></tr></table></figure>
+
+<p>创建约束文件</p>
+<p><img src="/../images/hls/s_15.png" srcset="/img/loading.gif" lazyload></p>
+<p>文件内容</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs clean">##############LED define################## <br>set_property PACKAGE_PIN P15 [get_ports &#123;led_o&#125;]<br>set_property IOSTANDARD LVCMOS33 [get_ports &#123;led_o&#125;]<br>##############Reset define################## <br>set_property PACKAGE_PIN P16 [get_ports &#123;rst_n&#125;]<br>set_property IOSTANDARD LVCMOS33 [get_ports &#123;rst_n&#125;]<br>##############<span class="hljs-number">50</span>M CLK define################## <br>create_clock -period <span class="hljs-number">20.000</span> -name clk -waveform &#123;<span class="hljs-number">0.000</span> <span class="hljs-number">10.000</span>&#125; [get_ports clk]<br>set_property PACKAGE_PIN N18 [get_ports &#123;clk&#125;]<br>set_property IOSTANDARD LVCMOS33 [get_ports &#123;clk&#125;]<br><br></code></pre></td></tr></table></figure>
+
+<p>编译</p>
+<p><img src="/../images/hls/s_16.png" srcset="/img/loading.gif" lazyload></p>
+<p>下载到开发板</p>
+<p><img src="/../images/hls/s_17.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HLS环境编程入门</div>
+      <div>http://example.com/2023/06/27/HLS环境编程入门/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 27, 2023</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/11/%E8%B7%B3%E4%B8%80%E8%B7%B3%E7%89%A9%E7%90%86%E5%A4%96%E6%8C%82%EF%BC%88%E9%87%8D%E5%88%B6%E7%89%88%EF%BC%89/" title="跳一跳物理外挂（重制版）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">跳一跳物理外挂（重制版）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/28/%E5%9F%BA%E4%BA%8EFPGA%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B3%A2%E6%B5%8B%E8%B7%9D/" title="基于FPGA的超声波测距">
+                        <span class="hidden-mobile">基于FPGA的超声波测距</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
