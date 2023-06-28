@@ -1,0 +1,736 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、VGA介绍VGA(Video Graphics Array)是IBM在1987年随PS&#x2F;2机⼀起推出的⼀种视频，具有分辨率⾼、显⽰速率快、颜⾊丰富等优点，在彩 ⾊显⽰器领域得到了⼴泛的应⽤。不⽀持热插拔，不⽀持⾳频传输。对于⼀些嵌⼊式VGA显⽰系统，可以在不使⽤VGA显⽰卡和计算机的 情况下，实现VGA图像的显⽰和控制。VGA显⽰器具有成本低、结构简单、应⽤灵活的优点。对于⼀名FPG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VGA协议实践">
+<meta property="og:url" content="http://example.com/2023/04/28/VGA%E5%8D%8F%E8%AE%AE%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、VGA介绍VGA(Video Graphics Array)是IBM在1987年随PS&#x2F;2机⼀起推出的⼀种视频，具有分辨率⾼、显⽰速率快、颜⾊丰富等优点，在彩 ⾊显⽰器领域得到了⼴泛的应⽤。不⽀持热插拔，不⽀持⾳频传输。对于⼀些嵌⼊式VGA显⽰系统，可以在不使⽤VGA显⽰卡和计算机的 情况下，实现VGA图像的显⽰和控制。VGA显⽰器具有成本低、结构简单、应⽤灵活的优点。对于⼀名FPG">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/vga/s_0.png">
+<meta property="og:image" content="http://example.com/images/vga/s_1.png">
+<meta property="og:image" content="http://example.com/images/vga/s_2.png">
+<meta property="og:image" content="http://example.com/images/vga/s_3.png">
+<meta property="og:image" content="http://example.com/images/vga/s_4.png">
+<meta property="og:image" content="http://example.com/images/vga/s_5.png">
+<meta property="og:image" content="http://example.com/images/vga/s_6.png">
+<meta property="og:image" content="http://example.com/images/vga/s_7.png">
+<meta property="og:image" content="http://example.com/images/vga/s_8.png">
+<meta property="og:image" content="http://example.com/images/vga/s_9.png">
+<meta property="og:image" content="http://example.com/images/vga/s_10.png">
+<meta property="og:image" content="http://example.com/images/vga/s_11.png">
+<meta property="og:image" content="http://example.com/images/vga/s_12.png">
+<meta property="article:published_time" content="2023-04-27T23:44:48.000Z">
+<meta property="article:modified_time" content="2023-04-28T11:50:30.041Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/vga/s_0.png">
+  
+  
+  
+  <title>VGA协议实践 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="VGA协议实践"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-28 07:44" pubdate>
+          April 28, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          121 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">VGA协议实践</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、VGA介绍"><a href="#一、VGA介绍" class="headerlink" title="一、VGA介绍"></a>一、VGA介绍</h1><p>VGA(Video Graphics Array)是IBM在1987年随PS&#x2F;2机⼀起推出的⼀种视频，具有分辨率⾼、显⽰速率快、颜⾊丰富等优点，在彩 ⾊显⽰器领域得到了⼴泛的应⽤。不⽀持热插拔，不⽀持⾳频传输。对于⼀些嵌⼊式VGA显⽰系统，可以在不使⽤VGA显⽰卡和计算机的 情况下，实现VGA图像的显⽰和控制。VGA显⽰器具有成本低、结构简单、应⽤灵活的优点。对于⼀名FPGA⼯程师，尤其是视频图像的 ⽅向的学习者，VGA协议是必须要掌握的。</p>
+<ol>
+<li><p>外部接口</p>
+<p><img src="/../images/vga/s_0.png" srcset="/img/loading.gif" lazyload>VGA并没有特殊的外部芯⽚，我们需要关注的其实只有5个信号：HS⾏同步信号，VS场同步信号，R红基⾊，G 绿基⾊，B蓝基⾊。</p>
+</li>
+<li><p>色彩原理<br>设计RGB信号时，既可以R信号、G信号和B信号独⽴的赋值，最后连到端⼝上，也可以直接⽤RGB当做⼀个整体信号，RGB信号在使 ⽤时的位宽有三种常见格式，以你的VGA解码芯⽚的配置有关。<br>1.RGB_8，R：G：B &#x3D; 3： 3：2，即RGB332<br>2.RGB_16，R：G：B &#x3D; 5：6：5，即RGB565<br>3.RGB_24，R：G：B &#x3D; 8：8：8，即RGB888</p>
+</li>
+<li><p>扫描方式<br>VGA显⽰器扫描⽅式分为逐⾏扫描和隔⾏扫描：逐⾏扫描是扫描从屏幕左上⾓⼀点开始，从左像右逐点扫描，每扫描完⼀⾏,电⼦束回 到屏幕的左边下⼀⾏的起始位置，在这期间，CRT对电⼦束进⾏消隐，每⾏结束时，⽤⾏同步信号进⾏同步；当扫描完所有的⾏，形成⼀ 帧，⽤场同步信号进⾏场同步，并使扫描回到屏幕左上⽅，同时进⾏场消隐,开始下⼀帧。隔⾏扫描是指电⼦束扫描时每隔⼀⾏扫⼀线，完成 ⼀屏后在返回来扫描剩下的线，隔⾏扫描的显⽰器闪烁的厉害，会让使⽤者的眼睛疲劳。因此我们⼀般都采⽤逐⾏扫描的⽅式。</p>
+<p><img src="/../images/vga/s_1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../images/vga/s_2.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>⾏场信号</p>
+<p><img src="/../images/vga/s_3.png" srcset="/img/loading.gif" lazyload></p>
+<p>SYNC是“信号同步”<br>Back proch和Left border常常加在⼀起称为“显⽰后沿”，Addressable video为“显⽰区域”，<br>Right porder和Front porch常常加在⼀起称为“显⽰前沿”，<br>⼀个时序其实就是先拉⾼⼀段较短的“信号同 步”时间，然后拉低⼀段很长的时间，这就是⼀个回合。同时需要注意，其实也可以完全相反。即先拉低⼀段时间“信号同步”时间，然后 拉⾼⼀段很长的时间。<br><img src="/../images/vga/s_4.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h1 id="二、实验准备"><a href="#二、实验准备" class="headerlink" title="二、实验准备"></a>二、实验准备</h1><ol>
+<li><p>任务要求<br>1）屏幕上显示彩色条纹；<br>2）显示自定义的汉字字符（姓名-学号）；<br>3）输出一幅彩色图像</p>
+</li>
+<li><p>查找对应分辨率相关数据</p>
+<p><img src="/../images/vga/s_5.png" srcset="/img/loading.gif" lazyload></p>
+<p>像素时钟频率以640x480p&#x2F;60hz为例<br>total pixel&#x3D;active video+front porch+sync pulse +back porch &#x3D;800;<br>total line&#x3D;active video+front porch+sync pulse +back porc&#x3D;525，<br>filed rate&#x3D;60Hz，<br>那么：PCLK &#x3D;80052560 &#x3D; 25.175MHz；</p>
+</li>
+<li><p>查看对应开发板vga 原理图</p>
+<p><img src="/../images/vga/s_6.png" srcset="/img/loading.gif" lazyload></p>
+<table>
+<thead>
+<tr>
+<th><strong>同步信号</strong></th>
+<th><strong>引脚</strong></th>
+<th><strong>B</strong></th>
+<th>引脚</th>
+<th>G</th>
+<th>引脚</th>
+<th>R</th>
+<th>引脚</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VGA_HSYNC</td>
+<td>C16</td>
+<td>B[0]</td>
+<td>C15</td>
+<td>G[0]</td>
+<td>B13</td>
+<td>R[0]</td>
+<td>B10</td>
+</tr>
+<tr>
+<td>VGA_VSYNC</td>
+<td>D15</td>
+<td>B[1]</td>
+<td>B16</td>
+<td>G[1]</td>
+<td>A13</td>
+<td>R[1]</td>
+<td>A10</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>B[2]</td>
+<td>A15</td>
+<td>G[2]</td>
+<td>B12</td>
+<td>R[2]</td>
+<td>B9</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>B[3]</td>
+<td>B14</td>
+<td>G[3]</td>
+<td>A12</td>
+<td>R[3]</td>
+<td>A9</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>B[4]</td>
+<td>A14</td>
+<td>G[4]</td>
+<td>B11</td>
+<td>R[4]</td>
+<td>C8</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+<li><p>需要用到时钟的分频或倍频，调用ip核PLL实现<br>以640*480 分辨率为例 像素时钟为25MHZ,开发板是50MKHZ，需要分频到25MHZ.如图：<img src="/../images/vga/s_7.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>模块设计</p>
+<p><img src="/../images/vga/s_8.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>VGA 相关参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs fpga">`define vga_640_480 //根据需要自行选择<br><br>`ifdef  vga_640_480<br> <br>    `define H_Right_Border 8<br>    `define H_Front_Proch  8<br>    `define H_Sync_Time    96<br>    `define H_Back_Proch   40<br>    `define H_Left_Border  8<br>    `define H_Data_Time    640<br>    `define H_Total_Time   800<br><br>    `define V_Bottom_Border 8<br>    `define V_Front_Proch   2<br>    `define V_Sync_Time     2<br>    `define V_Back_Proch    25<br>    `define V_Top_Border    8<br>    `define V_Data_Time     480<br>    `define V_Total_Time    525<br>`elsif   vga_1024_768_75  //75MHz<br>	 `define H_Right_Border 0<br>    `define H_Front_Proch  16<br>    `define H_Sync_Time    96<br>    `define H_Back_Proch   176<br>    `define H_Left_Border  0<br>    `define H_Data_Time    1024<br>    `define H_Total_Time   1312<br><br>    `define V_Bottom_Border 0<br>    `define V_Front_Proch   1<br>    `define V_Sync_Time     3<br>    `define V_Back_Proch    28<br>    `define V_Top_Border    0<br>    `define V_Data_Time     768<br>    `define V_Total_Time    800<br>`elsif   vga_1024_768_60  //60MHz<br>	 `define H_Right_Border 0<br>    `define H_Front_Proch  24<br>    `define H_Sync_Time    136<br>    `define H_Back_Proch   160<br>    `define H_Left_Border  0<br>    `define H_Data_Time    1024<br>    `define H_Total_Time   1244<br><br>    `define V_Bottom_Border 0<br>    `define V_Front_Proch   3<br>    `define V_Sync_Time     6<br>    `define V_Back_Proch    29<br>    `define V_Top_Border    0<br>    `define V_Data_Time     768<br>    `define V_Total_Time    806<br>    <br>/**根据需要自行添加修改**/<br>`endif<br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>顶层文件</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">module vg<span class="hljs-built_in">a_top</span> (<br>    input      clk    ,<br>    input      rst_n  ,<br><br>    output wire        VG<span class="hljs-built_in">A_HSYNC</span>  ,<br>    output wire        VG<span class="hljs-built_in">A_VSYNC</span>  ,<br><span class="hljs-title">    output wire  [4:</span><span class="hljs-number">0</span>] VG<span class="hljs-built_in">A_R</span>   ,<br><span class="hljs-title">    output wire  [5:</span><span class="hljs-number">0</span>] VG<span class="hljs-built_in">A_G</span>  ,<br><span class="hljs-title">    output wire  [4:</span><span class="hljs-number">0</span>] VG<span class="hljs-built_in">A_B</span>  ,<br>    output wire       VG<span class="hljs-built_in">A_CLK</span> <br>)<span class="hljs-comment">;  </span><br><span class="hljs-title">    wire [15:</span><span class="hljs-number">0</span>] dat<span class="hljs-built_in">a_dis</span><span class="hljs-comment">;</span><br><span class="hljs-title">    wire [10:</span><span class="hljs-number">0</span>] v_addr<span class="hljs-comment">; </span><br><span class="hljs-title">    wire [10:</span><span class="hljs-number">0</span>] h_addr<span class="hljs-comment">;</span><br><br>    dat<span class="hljs-built_in">a_gen</span>    dat<span class="hljs-built_in">a_gen</span>(<br>        .vg<span class="hljs-built_in">a_clk</span>     (VG<span class="hljs-built_in">A_CLK</span>     ),<br>        .rst_n   (rst_n   ),<br>        .h_addr (h_addr  ),<br>        .v_addr (v_addr  ),<br><br>        .dat<span class="hljs-built_in">a_dis</span>(dat<span class="hljs-built_in">a_dis</span>)<br>    )<span class="hljs-comment">;</span><br><br>    vg<span class="hljs-built_in">a_ctrl</span>    vg<span class="hljs-built_in">a_ctrl</span>(<br>        .clk     (clk     ),<br>        .rst_n   (rst_n   ),<br>		  <br>        .dat<span class="hljs-built_in">a_dis</span>(dat<span class="hljs-built_in">a_dis</span>),<br>        .h_addr (h_addr  ),<br>        .v_addr (v_addr  ),<br>        .vsync  (VG<span class="hljs-built_in">A_VSYNC</span> ),<br>        .hsync  (VG<span class="hljs-built_in">A_HSYNC</span> ),<br>        .vg<span class="hljs-built_in">a_r</span>   (VG<span class="hljs-built_in">A_R</span>   ),<br>        .vg<span class="hljs-built_in">a_g</span>   (VG<span class="hljs-built_in">A_G</span>   ),<br>        .vg<span class="hljs-built_in">a_b</span>   (VG<span class="hljs-built_in">A_B</span>   ),<br>        .vg<span class="hljs-built_in">a_clk</span> (VG<span class="hljs-built_in">A_CLK</span> )<br>    )<span class="hljs-comment">;</span><br>endmodule<br><br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>vga_ctrl</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><br><span class="hljs-meta">`<span class="hljs-keyword">include</span> &quot;vga_param.v&quot;</span><br><br><span class="hljs-keyword">module</span> vga_ctrl(<br>	<span class="hljs-keyword">input</span> 	clk,<br>	<span class="hljs-keyword">input</span> 	rst_n,<br>	<span class="hljs-keyword">input</span>    		[<span class="hljs-number">15</span>:<span class="hljs-number">0</span>] data_dis,<br>	<br>	<span class="hljs-keyword">output</span>	<span class="hljs-keyword">reg</span>	[<span class="hljs-number">10</span>:<span class="hljs-number">0</span>] h_addr,<span class="hljs-comment">//数据有效显示区域行地址</span><br>	<span class="hljs-keyword">output</span>	<span class="hljs-keyword">reg</span>	[<span class="hljs-number">10</span>:<span class="hljs-number">0</span>] v_addr,<br>	<span class="hljs-keyword">output</span>   <span class="hljs-keyword">reg</span>          hsync,<br>	<span class="hljs-keyword">output</span>   <span class="hljs-keyword">reg</span>          vsync,<br>	<span class="hljs-keyword">output</span>	<span class="hljs-keyword">reg</span> 	[<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]  vga_r,<br>	<span class="hljs-keyword">output</span>	<span class="hljs-keyword">reg</span> 	[<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]  vga_g,<br>	<span class="hljs-keyword">output</span>	<span class="hljs-keyword">reg</span>	[<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]  vga_b,<br>	<span class="hljs-keyword">output</span>                vga_clk<br><br>);<br><span class="hljs-keyword">reg</span> [<span class="hljs-number">11</span>:<span class="hljs-number">0</span>] cnt_h_adder;<span class="hljs-comment">//行地址计数器</span><br><span class="hljs-keyword">wire</span>       add_h_adder;<br><span class="hljs-keyword">wire</span>       end_h_adder;<br><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">11</span>:<span class="hljs-number">0</span>] cnt_v_adder;<span class="hljs-comment">//场地址计数器</span><br><span class="hljs-keyword">wire</span>       add_v_adder;<br><span class="hljs-keyword">wire</span>       end_v_adder;<br><span class="hljs-keyword">reg</span>        clk_25;<br><span class="hljs-keyword">parameter</span> 	H_SYNC_STA=`H_Sync_Time,<br>				H_SYNC_STO=`H_Total_Time,<br>				H_DATA_STA=`H_Sync_Time+`H_Back_Proch+`H_Left_Border,<br>				H_DATA_STO=`H_Sync_Time+`H_Back_Proch+`H_Left_Border+`H_Data_Time,<br>				<br>				V_SYNC_STA =`V_Sync_Time,<br>				V_SYNC_STO =`V_Total_Time,<br>				V_DATA_STA =`V_Sync_Time+`V_Back_Proch+`V_Top_Border,<br>				V_DATA_STO =`V_Sync_Time+`V_Back_Proch+`V_Top_Border+`V_Data_Time;<br><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk,<span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		cnt_h_adder&lt;=<span class="hljs-number">12&#x27;b0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(add_h_adder)<br>		<span class="hljs-keyword">if</span>(end_h_adder)<br>			cnt_h_adder&lt;=<span class="hljs-number">12&#x27;b0</span>;<br>		<span class="hljs-keyword">else</span><br>			cnt_h_adder&lt;=cnt_h_adder+<span class="hljs-number">12&#x27;b1</span>;<br>	<span class="hljs-keyword">else</span><br>		cnt_h_adder&lt;=cnt_h_adder;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">assign</span> add_h_adder=<span class="hljs-number">1&#x27;b1</span>;<br><span class="hljs-keyword">assign</span> end_h_adder=add_h_adder&amp;&amp;cnt_h_adder&gt;=`H_Total_Time-<span class="hljs-number">1</span>;<br><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk,<span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		cnt_v_adder&lt;=<span class="hljs-number">12&#x27;b0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(add_v_adder)<br>		<span class="hljs-keyword">if</span>(end_v_adder)<br>			cnt_v_adder&lt;=<span class="hljs-number">12&#x27;b0</span>;<br>		<span class="hljs-keyword">else</span><br>			cnt_v_adder&lt;=cnt_v_adder+<span class="hljs-number">12&#x27;b1</span>;<br>	<span class="hljs-keyword">else</span><br>		cnt_v_adder&lt;=cnt_v_adder;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">assign</span> add_v_adder=end_h_adder;<br><span class="hljs-keyword">assign</span> end_v_adder=add_v_adder&amp;&amp;cnt_v_adder&gt;=`V_Total_Time-<span class="hljs-number">1</span>;<br><br><br><span class="hljs-comment">//行场同步信号</span><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk, <span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		hsync&lt;=<span class="hljs-number">1&#x27;b1</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_h_adder==H_SYNC_STA-<span class="hljs-number">1</span>)<br>		hsync&lt;=<span class="hljs-number">1&#x27;b0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_h_adder==H_SYNC_STO-<span class="hljs-number">1</span>)<br>		hsync&lt;=<span class="hljs-number">1&#x27;b1</span>;<br>	<span class="hljs-keyword">else</span><br>		hsync&lt;=hsync;<br><br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk, <span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		vsync&lt;=<span class="hljs-number">1&#x27;b1</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_v_adder==V_SYNC_STA-<span class="hljs-number">1</span>)<br>		vsync&lt;=<span class="hljs-number">1&#x27;b0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_h_adder==V_SYNC_STO-<span class="hljs-number">1</span>)<br>		vsync&lt;=<span class="hljs-number">1&#x27;b1</span>;<br>	<span class="hljs-keyword">else</span><br>		vsync&lt;=vsync;<br><br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">//数据有效显示区域定义</span><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk, <span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		h_addr&lt;=<span class="hljs-number">11&#x27;d0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_h_adder&gt;=H_DATA_STO)<br>		h_addr&lt;=<span class="hljs-number">11&#x27;d0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_h_adder&gt;=H_DATA_STA)<br>		h_addr&lt;=cnt_h_adder-H_DATA_STA;<br>	<span class="hljs-keyword">else</span> <br>		h_addr&lt;=<span class="hljs-number">11&#x27;d0</span>;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk, <span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		v_addr&lt;=<span class="hljs-number">11&#x27;d0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_v_adder&gt;=V_DATA_STO)<br>		v_addr&lt;=<span class="hljs-number">11&#x27;d0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cnt_v_adder&gt;=V_DATA_STA)<br>		v_addr&lt;=cnt_v_adder-V_DATA_STA;<br>	<span class="hljs-keyword">else</span> <br>		v_addr&lt;=<span class="hljs-number">11&#x27;d0</span>;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk,<span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<span class="hljs-keyword">begin</span><br>		vga_r&lt;=<span class="hljs-number">5&#x27;b0</span>;<br>		vga_g&lt;=<span class="hljs-number">6&#x27;b0</span>;<br>		vga_b&lt;=<span class="hljs-number">5&#x27;b0</span>;<br>	<span class="hljs-keyword">end</span><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>((cnt_h_adder&gt;=H_DATA_STA-<span class="hljs-number">1</span>)&amp;&amp;(cnt_h_adder&lt;=H_DATA_STO-<span class="hljs-number">1</span>)&amp;&amp;(cnt_v_adder&gt;=V_DATA_STA-<span class="hljs-number">1</span>)&amp;&amp;(cnt_v_adder&lt;=V_DATA_STO-<span class="hljs-number">1</span>))<span class="hljs-keyword">begin</span><br>		vga_r&lt;=data_dis[<span class="hljs-number">15</span>:<span class="hljs-number">11</span>];<br>		vga_g&lt;=data_dis[<span class="hljs-number">10</span>:<span class="hljs-number">5</span>];<br>		vga_b&lt;=data_dis[<span class="hljs-number">4</span>:<span class="hljs-number">0</span>];<br>	<span class="hljs-keyword">end</span><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span><br>	   vga_r&lt;=<span class="hljs-number">5&#x27;b0</span>;<br>		vga_g&lt;=<span class="hljs-number">6&#x27;b0</span>;<br>		vga_b&lt;=<span class="hljs-number">5&#x27;b0</span>;<br>	<span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">wire</span> c1_sig;<br>PLL	PLL_inst (<br>	<span class="hljs-variable">.areset</span> ( ~rst_n ),<br>	<span class="hljs-variable">.inclk0</span> ( clk ),<br>	<span class="hljs-variable">.c0</span> (  vga_clk  ),<br>	<span class="hljs-variable">.c1</span> ( c1_sig )<br>	);<br><span class="hljs-keyword">endmodule</span><br><br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>我们的不同任务将会在data_gen.v 模块中进行修改，然后复用前面的模块完成</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> data_gen(<br>	<span class="hljs-keyword">input</span>  vga_clk,<br>	<span class="hljs-keyword">input</span>  rst_n,<br>	<br>	<span class="hljs-keyword">input</span>  [<span class="hljs-number">10</span>:<span class="hljs-number">0</span>] h_addr,<br>	<span class="hljs-keyword">input</span>  [<span class="hljs-number">10</span>:<span class="hljs-number">0</span>] v_addr,<br>	<br>	<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">15</span>:<span class="hljs-number">0</span>] data_dis<br><br>);<br><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">14</span>:<span class="hljs-number">0</span>] address;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">15</span>:<span class="hljs-number">0</span>] q;<br><span class="hljs-keyword">parameter</span>	BLACK		=<span class="hljs-number">15&#x27;h0000</span>,<br>				RED 		=<span class="hljs-number">15&#x27;hf800</span>,<br>				GREEN		=<span class="hljs-number">15&#x27;h320</span>,<br>				BLUE  	=<span class="hljs-number">15&#x27;hf7ff</span>,<br>				YELLOW	=<span class="hljs-number">15&#x27;hffe0</span>,<br>				SKY_BLUE	=<span class="hljs-number">15&#x27;h867d</span>,<br>				PURPLE	=<span class="hljs-number">15&#x27;h939b</span>,<br>				GRAY  	=<span class="hljs-number">15&#x27;h8410</span>,<br>				WHITE    =<span class="hljs-number">15&#x27;hffff</span>;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> 显示彩带块</span><br><span class="hljs-comment">*/</span>	<br> <br><span class="hljs-comment">/*</span><br><span class="hljs-comment">  显示汉字字符块</span><br><span class="hljs-comment">*/</span>	<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">  显示一张图片块</span><br><span class="hljs-comment">*/</span>		<br>	<br><span class="hljs-keyword">endmodule</span><br><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="三、显示彩色条纹"><a href="#三、显示彩色条纹" class="headerlink" title="三、显示彩色条纹"></a>三、显示彩色条纹</h1><p>data_gen.v 模块</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs elixir">//显示彩带<br>always@(posedge vga_clk,negedge rst_n)begin<br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		data_dis&lt;=<span class="hljs-title class_">BLACK</span>;<br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-keyword">case</span>(h_addr)<br>			<span class="hljs-number">1</span>  <span class="hljs-symbol">:data_dis&lt;=WHITE</span>		;<br>			<span class="hljs-number">80</span> <span class="hljs-symbol">:data_dis&lt;=RED</span> 		;<br>			<span class="hljs-number">160</span><span class="hljs-symbol">:data_dis&lt;=GREEN</span>		;<br>			<span class="hljs-number">240</span><span class="hljs-symbol">:data_dis&lt;=BLUE</span>  		;<br>			<span class="hljs-number">320</span><span class="hljs-symbol">:data_dis&lt;=YELLOW</span>		;<br>			<span class="hljs-number">400</span><span class="hljs-symbol">:data_dis&lt;=SKY_BLUE</span>	;<br>			<span class="hljs-number">480</span><span class="hljs-symbol">:data_dis&lt;=PURPLE</span>		;<br>			<span class="hljs-number">560</span><span class="hljs-symbol">:data_dis&lt;=BLACK</span>  		;<br>			<span class="hljs-symbol">default:</span>data_dis&lt;=data_dis;<br>		endcase<br><br><span class="hljs-keyword">end</span>		<br><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="四、显示自定义汉字字符"><a href="#四、显示自定义汉字字符" class="headerlink" title="四、显示自定义汉字字符"></a>四、显示自定义汉字字符</h1><ol>
+<li><p>汉字点阵提取</p>
+<p><img src="/../images/vga/s_9.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>data_gen.v 模块</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-comment">//显示汉字字符块</span><br> parameter  <br>			char_line00=<span class="hljs-number">320</span>&#x27;h001E<span class="hljs-number">00000000007800</span><span class="hljs-number">0001</span>E<span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span>0,<br>			char_line01=320&#x27;h007E00000F1FF87800001FF800000000000000000000000000000000000000000000000000000000,<br>			char_line02=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">00780000</span>0F1FF<span class="hljs-number">87800001</span>FF<span class="hljs-number">80000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span>0,<br>			char_line03=320&#x27;h01F81F000FFFF87800FFFFF800000000000000000000000000000000000000000000000000000000,<br>			char_line04=<span class="hljs-number">320</span>&#x27;h01E01F<span class="hljs-number">0003</span>E<span class="hljs-number">078780</span>0FFF<span class="hljs-number">80000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span>000,<br>			char_line05=320&#x27;h07E01FC003E0787800FFF8000000001F807FF003E01FE003F01FFF80FC007E007F03FFF80780FFFC,<br>			char_line06=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">078003</span>C003E<span class="hljs-number">078780</span>0F<span class="hljs-number">000000000001</span>F807FF003E01FE003F01FFF80FC007E007F03FFF<span class="hljs-number">8078</span>0FFFC,<br>			char_line07=320&#x27;h1FFFFFF0F3E0787800F000000000007FE1FFFC3FE07FF80FFC1FFF83FF03FF81FFC3FFF87F80FFFC,<br>			char_line08=<span class="hljs-number">320</span>&#x27;h1FFFFFF0F<span class="hljs-number">00078780</span>0F<span class="hljs-number">000000000007</span>9E1E03C3FE<span class="hljs-number">078780</span>F3C1E<span class="hljs-number">0783</span>CF03E781E3C3C<span class="hljs-number">0007</span>F80F03C,<br>			char_line09=320&#x27;h1FFFFFF0FC1FF87800FFFFFE000003F9E1E03C3FE0787F3F3F1E1F9FCFCFE787E3F3C0007F80F0FC,<br>			char_line0a=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">000000</span>F03C1FF<span class="hljs-number">8780</span>0FFFFFE<span class="hljs-number">000003</span>E001E03C03E<span class="hljs-number">0781</span>F3C0F001E1F03CF<span class="hljs-number">000780</span>F3C<span class="hljs-number">00007800</span>0F0,<br>			char_line0b=320&#x27;h000780F03C1FF87800FFFFFE000003E001E03C03E0781F3C0F001E1F03CF000780F3C000078000F0,<br>			char_line0c=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">00078000</span>3C1E<span class="hljs-number">007800</span>F01E<span class="hljs-number">00000003</span>E<span class="hljs-number">000003</span>C03E<span class="hljs-number">0781</span>F3C0F001E1F03CF<span class="hljs-number">000780</span>F3C<span class="hljs-number">00007800</span>0F0,<br>			char_line0d=320&#x27;h078780003FFE01F800F01E00000003FFE000FC03E0781F3C0F007E1F03CF7F8780F3FF00078003F0,<br>			char_line0e=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">0787800003</span>FE01E000F01E<span class="hljs-number">00000003</span>FFE000F003E<span class="hljs-number">0781</span>F3C0F<span class="hljs-number">0078</span>1F03CF7F<span class="hljs-number">8780</span>F3FF<span class="hljs-number">00078003</span>C0,<br>			char_line0f=320&#x27;h07FFFFF003FE01E000F01E0003FFF3FFF81FF003E0787F3C0F00781F03CFFFE780F3FFE0078003C0,<br>			char_line10=<span class="hljs-number">320</span>&#x27;h07FFFFF003FE01E000F01E<span class="hljs-number">0003</span>FFF3F<span class="hljs-number">8781</span>FC003E<span class="hljs-number">0787</span>F3C0F<span class="hljs-number">0078</span>1F03CFE1E780F3C3E<span class="hljs-number">007800</span>3C0,<br>			char_line11=320&#x27;h1FFFFFF00FFFF9E000F01E0003FFF3F8781FF003E07FFF3C0F01F81F03CFE1E780F3C3F807800FC0,<br>			char_line12=<span class="hljs-number">320</span>&#x27;h1E<span class="hljs-number">078000</span>0F1FF9E000F01E<span class="hljs-number">00000003</span>E<span class="hljs-number">0780</span>0F003E01FFF3C0F01E01F03CF01E780F<span class="hljs-number">0007807800</span>F00,<br>			char_line13=320&#x27;h1E078000FF1FF9FF3FFFFFFFE00003E07800FC03E01FFF3C0F01E01F03CF01E780F0007807800F00,<br>			char_line14=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">00078000</span>FF<span class="hljs-number">0079</span>FF3FFFFFFFE<span class="hljs-number">0000</span>3E<span class="hljs-number">078003</span>C03E<span class="hljs-number">0001</span>F3C0F01E01F03CF01E780F<span class="hljs-number">0007807800</span>F00,<br>			char_line15=320&#x27;hFFFFFFFFFF007FFF3FFFFFFFE00003E079E03C03E0001F3C0F01E01F03CF01E780F3C07807800F00,<br>			char_line16=<span class="hljs-number">320</span>&#x27;hFFFFFFFF0F007F9F<span class="hljs-number">00000000000003</span>E079E03C03E<span class="hljs-number">0001</span>F3C0F01E01F03CF01E780F3C<span class="hljs-number">07807800</span>F00,<br>			char_line17=320&#x27;hFFFFFFFF0F007F9FC03C0780000003F879E03C03E01E7F3F3F01E01FCFCFE1E7E3F3C3F807800F00,<br>			char_line18=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">00078000</span>0F007F83C03C<span class="hljs-number">07800000007879</span>E03C03E01E780F3C01E003CF03E1E1E3C3C3E<span class="hljs-number">007800</span>F00,<br>			char_line19=320&#x27;h000780000F007FFFC0FC07E00000007FF9FFFC3FFE1FF80FFC01E003FF03FFE1FFC3FFE07FF80F00,<br>			char_line1a=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">00078000</span>0F007FFFC0F001E<span class="hljs-number">00000001</span>FE07FF03FFE07E003F001E000FC007F807F00FF007FF80F00,<br>			char_line1b=320&#x27;h000780000F1FFFFFC3F001F80000001FE07FF03FFE07E003F001E000FC007F807F00FF007FF80F00,<br>			char_line1c=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">00078000</span>0F1FE003C3C<span class="hljs-number">00078000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">0000</span>0,<br>			char_line1d=320&#x27;h000780000F1FE003CFC0007E00000000000000000000000000000000000000000000000000000000,<br>			char_line1e=<span class="hljs-number">320</span>&#x27;h<span class="hljs-number">00078000000780</span>000F<span class="hljs-number">0000</span>1E<span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span><span class="hljs-number">00000000000000</span>,<br>			char_line1f=320&#x27;h00078000000780000F00001E00000000000000000000000000000000000000000000000000000000;<br><br>			<br>	  reg[<span class="hljs-number">8</span>:<span class="hljs-number">0</span>] char_bit;<br>    always@(posedge vga_clk)<br>        if(h_addr==<span class="hljs-number">10</span>&#x27;d144)char_bit&lt;=9&#x27;d320;   <span class="hljs-comment">//当显示到144像素时准备开始输出图像数据</span><br>        else if(h_addr&gt;<span class="hljs-number">10</span>&#x27;d144&amp;&amp;h_addr&lt;10&#x27;d464)     <span class="hljs-comment">//左边距屏幕144像素到464像素时   464=144+320（图像宽度）</span><br>            char_bit&lt;=char_bit-<span class="hljs-number">1</span>&#x27;b1;       //倒着输出图像信息 <br>						<br>    always@(posedge vga_clk) <br>        if(h_addr&gt;10&#x27;d144<span class="hljs-meta">&amp;&amp;h_addr&lt;10&#x27;d464)    <span class="hljs-comment">//X控制图像的横向显示边界：左边距屏幕左边144像素  右边界距屏幕左边界464像素</span></span><br>            begin case(v_addr)            <span class="hljs-comment">//Y控制图像的纵向显示边界：从距离屏幕顶部160像素开始显示第一行数据</span><br>                <span class="hljs-number">10</span>&#x27;d160:<br>                if(char_line00[char_bit])data_dis&lt;=RED;  //如果该行有数据 则颜色为红色<br>                else data_dis&lt;=BLUE;                      //否则为黑色<br>                10&#x27;d162:<br>                if(char_line01[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d163:<br>                if(char_line02[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d164:<br>                if(char_line03[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d165:<br>                if(char_line04[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d166:<br>                if(char_line05[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d167:<br>                if(char_line06[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d168:<br>                if(char_line07[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d169:<br>                if(char_line08[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d170:<br>                if(char_line09[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d171:<br>                if(char_line0a[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d172:<br>                if(char_line0b[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d173:<br>                if(char_line0c[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d174:<br>                if(char_line0d[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d175:<br>                if(char_line0e[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d176:<br>                if(char_line0f[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d177:<br>                if(char_line10[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d178:<br>                if(char_line11[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d179:<br>                if(char_line12[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d180:<br>                if(char_line13[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d181:<br>                if(char_line14[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d182:<br>                if(char_line15[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d183:<br>                if(char_line16[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d184:<br>                if(char_line17[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d185:<br>                if(char_line18[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d186:<br>                if(char_line19[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d187:<br>                if(char_line1a[char_bit])data_dis&lt;=RED;<br>                else data_dis&lt;=BLUE;<br>                10&#x27;d188:<br>                if(char_line1b[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d189:<br>                if(char_line1c[char_bit])data_dis&lt;=RED;<br>                else data_dis&lt;=BLUE;<br>                10&#x27;d190:<br>                if(char_line1d[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                <span class="hljs-number">10</span>&#x27;d191:<br>                if(char_line1e[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                10&#x27;d192:<br>                if(char_line1f[char_bit])data_dis&lt;=RED;<br>                else  data_dis&lt;=BLUE;<br>                default:data_dis&lt;=BLUE;   <span class="hljs-comment">//默认颜色蓝色</span><br>            endcase <br>        end<br><br>	 else<br>			data_dis&lt;=BLUE;		<br><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="五、输出一幅彩色图像"><a href="#五、输出一幅彩色图像" class="headerlink" title="五、输出一幅彩色图像"></a>五、输出一幅彩色图像</h1><ol>
+<li><p>存储图片信息<br>我们需要用到ROM,由于ROM 容量有限，我这选择了一张较小的100*100像素的位图<br>转换位图生成对应文件</p>
+<p><img src="/../images/vga/s_10.png" srcset="/img/loading.gif" lazyload></p>
+<p>调用ROM的ip核。<br>RGB565 16位宽，所以选择16位宽，100*100像素所以是10000数据。</p>
+<p><img src="/../images/vga/s_11.png" srcset="/img/loading.gif" lazyload></p>
+<p>将位图转换生成文件添加进去即可</p>
+<p><img src="/../images/vga/s_12.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>data_gen.v 模块</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs verilog">显示图片<br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk, <span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span>		<br>	<span class="hljs-keyword">if</span>(!rst_n)<span class="hljs-keyword">begin</span><br>		data_dis=BLUE;<br>	<span class="hljs-keyword">end</span><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(add_cnt_address)<br>		data_dis=q;<br>   <span class="hljs-keyword">else</span><br>		data_dis=BLUE;<br>	<br><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> vga_clk,<span class="hljs-keyword">negedge</span> rst_n)<span class="hljs-keyword">begin</span><br>	<span class="hljs-keyword">if</span>(!rst_n)<br>		address&lt;=<span class="hljs-number">1&#x27;b0</span>;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(add_cnt_address)<br>		<span class="hljs-keyword">if</span>(end_cnt_address)<br>			address&lt;=<span class="hljs-number">1&#x27;b0</span>;<br>		<span class="hljs-keyword">else</span><br>			address&lt;=address+<span class="hljs-number">1&#x27;b1</span>;<br>   <span class="hljs-keyword">else</span>	<br>		address&lt;=address;<br><br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">assign</span> add_cnt_address=h_addr&lt;<span class="hljs-number">200</span>&amp;&amp;h_addr&gt;=<span class="hljs-number">100</span>&amp;&amp;v_addr&lt;<span class="hljs-number">200</span>&amp;&amp;v_addr&gt;=<span class="hljs-number">100</span>;<br><span class="hljs-keyword">assign</span> end_cnt_address=address==<span class="hljs-number">9999</span>;<br><br><span class="hljs-comment">//例化ROM</span><br>ROM	ROM_inst (<br>	<span class="hljs-variable">.address</span> ( address),<br>	<span class="hljs-variable">.clock</span> ( vga_clk),<br>	<span class="hljs-variable">.q</span> ( q)<br>	);<br>		<br><br></code></pre></td></tr></table></figure></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>VGA协议实践</div>
+      <div>http://example.com/2023/04/28/VGA协议实践/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 28, 2023</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/28/%E5%9F%BA%E4%BA%8EFPGA%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B3%A2%E6%B5%8B%E8%B7%9D/" title="基于FPGA的超声波测距">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于FPGA的超声波测距</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/13/Nios/" title="Nios-II入门实践">
+                        <span class="hidden-mobile">Nios-II入门实践</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
