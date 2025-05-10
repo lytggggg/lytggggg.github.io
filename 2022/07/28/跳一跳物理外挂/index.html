@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="秋衫霸霸">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="先装一下 思路：这个脚本全部围绕着找到两个点的坐标（棋子中心点，目标中心点），找到这两个坐标，在计算距离d,在除以速度v，得到需要跳跃的时间t，在用python控制鼠标按下时间。整个过程其实是偏向纯数学的东西，是不是觉得很简单。接着看，找到两个点的坐标我想了3种方法，鄙人取名为（老实憨厚）（精准又优雅）（投机取巧） 进去正题。 准备东西1，用python写的，主要是C++的opencv太难写了，但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跳一跳物理外挂">
+<meta property="og:url" content="http://example.com/2022/07/28/%E8%B7%B3%E4%B8%80%E8%B7%B3%E7%89%A9%E7%90%86%E5%A4%96%E6%8C%82/index.html">
+<meta property="og:site_name" content="秋衫霸霸">
+<meta property="og:description" content="先装一下 思路：这个脚本全部围绕着找到两个点的坐标（棋子中心点，目标中心点），找到这两个坐标，在计算距离d,在除以速度v，得到需要跳跃的时间t，在用python控制鼠标按下时间。整个过程其实是偏向纯数学的东西，是不是觉得很简单。接着看，找到两个点的坐标我想了3种方法，鄙人取名为（老实憨厚）（精准又优雅）（投机取巧） 进去正题。 准备东西1，用python写的，主要是C++的opencv太难写了，但">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_22.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022.png">
+<meta property="og:image" content="http://example.com/images/跳一跳/Snipaste_2022.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_0.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_1.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_2.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_4.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_5.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_6.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_7.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_8.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_9.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_11.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_12.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_13.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_14.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_15.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_16.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_17.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_18.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_19.png">
+<meta property="og:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_21.png">
+<meta property="article:published_time" content="2022-07-27T20:49:09.000Z">
+<meta property="article:modified_time" content="2022-08-11T00:23:23.900Z">
+<meta property="article:author" content="秋衫霸霸">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_22.png">
+  
+  
+  
+  <title>跳一跳物理外挂 - 秋衫霸霸</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="跳一跳物理外挂"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-28 04:49" pubdate>
+          2022年7月28日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          172 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">跳一跳物理外挂</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>先装一下<img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_22.png" srcset="/img/loading.gif" lazyload></p>
+<p>思路：这个脚本全部围绕着找到两个点的坐标（棋子中心点，目标中心点），找到这两个坐标，在计算距离<strong>d</strong>,在除以速度v，得到需要跳跃的时间<strong>t</strong>，在用python控制鼠标按下时间。<strong>整个过程其实是偏向纯数学的东西</strong><em>，</em><strong>是不是觉得很简单</strong>。接着看，找到两个点的坐标我想了3种方法，鄙人取名为（老实憨厚<strong>）（</strong>精准又优雅<strong>）（</strong>投机取巧）</p>
+<p>进去正题。</p>
+<h1 id="准备东西"><a href="#准备东西" class="headerlink" title="准备东西"></a>准备东西</h1><p>1，用python写的，主要是C++的opencv太难写了，但是如果追求速度，害得是C++，python有点慢</p>
+<p>2，安利两个实用工具，也是要用到的工具</p>
+<p><a target="_blank" rel="noopener" href="https://www.snipaste.com/">Snipaste</a>,截图贴图工具，截的图可以贴在旁边，非常方便。</p>
+<p><a target="_blank" rel="noopener" href="https://onequick.org/?f=app">OneQuick</a>,窗口置顶工具，想让某个窗口置顶就鼠标移上去按Win+G,默认的好像是Win+G。</p>
+<p>都是微软的。</p>
+<p>3，微信电脑版，要用跳一跳。</p>
+<p>over。</p>
+<h1 id="1，老实憨厚版"><a href="#1，老实憨厚版" class="headerlink" title="1，老实憨厚版"></a>1，老实憨厚版</h1><h2 id="找棋子坐标"><a href="#找棋子坐标" class="headerlink" title="找棋子坐标"></a>找棋子坐标</h2><p>看下面的图，分析特点。</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022.png" srcset="/img/loading.gif" lazyload></p>
+<img src="/images/跳一跳/Snipaste_2022.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;">
+
+
+
+<p>棋子桌标就是棋子的脚底下的中心点，找到他其实很简单，用opencv库的模板匹配。</p>
+<p>我们首先要准备一张棋子的模板，如图</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_0.png" srcset="/img/loading.gif" lazyload></p>
+<p>距离把它包裹住并且贴紧，然后用它来匹配原图像，</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br>img = cv2.imread(<span class="hljs-string">&quot;f:\Snipaste_2022.png&quot;</span>)<br>template = cv2.imread(<span class="hljs-string">&#x27;f:\Snipaste_2022_0.png&#x27;</span>)<br>res = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)<br>min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)<br>h, w = template.shape[:<span class="hljs-number">2</span>]<br>top_left = max_loc<br>center_loc = ((<span class="hljs-built_in">int</span>)(max_loc[<span class="hljs-number">0</span>] + w ), <span class="hljs-built_in">int</span>(max_loc[<span class="hljs-number">1</span>] + h ) )<br>cv2.rectangle(img, max_loc, center_loc, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), <span class="hljs-number">1</span>, <span class="hljs-number">8</span>)<br>cv2.imshow(<span class="hljs-string">&quot;sad&quot;</span>,img)<br>cv2.waitKey(<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<p>结果像这样：</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_1.png" srcset="/img/loading.gif" lazyload></p>
+<p>这个矩形的坐标是知道的，找到脚底下的坐标不言而喻了吧。</p>
+<h2 id="找目标点坐标"><a href="#找目标点坐标" class="headerlink" title="找目标点坐标"></a>找目标点坐标</h2><p>首先我们要知道，为了找到目标点坐标，哪些东西有用哪些东西没用。</p>
+<p>看图：</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_2.png" srcset="/img/loading.gif" lazyload></p>
+<p>棋子一下的部分不需要吧，记分数字上面的东西不需要吧，当然棋子的右半身也不需要吧，需要的部分只有棋子的右上部分，所以我们需要把一整张图剪切成那样，</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_4.png" srcset="/img/loading.gif" lazyload></p>
+<p>接下来的工作就是用到opencv的边缘检测了</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_5.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以发现，这一次目标点是在右边的，所以我们只要找到最上方的点和最右方的点，如果目标点是在左边，那么我们只要找到最左边点和最上方的点，就可以简单得出目标点中心的坐标。</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_6.png" srcset="/img/loading.gif" lazyload></p>
+<p>这样两个点的坐标就找到了，在计算两点的位置，大致就完成了。</p>
+<p>完整代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> ImageGrab<br><span class="hljs-keyword">from</span> pynput.mouse <span class="hljs-keyword">import</span> Button, Controller<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br>pt1 = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)<br>pt2 = (<span class="hljs-number">291</span>, <span class="hljs-number">0</span>)<br>pt3 = (<span class="hljs-number">291</span>, <span class="hljs-number">428</span>)<br>pt4 = (<span class="hljs-number">140</span>, <span class="hljs-number">516</span>)<br>pt5 = (<span class="hljs-number">0</span>, <span class="hljs-number">516</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_center</span>(<span class="hljs-params">img_rgb, template</span>):<br>    res = cv2.matchTemplate(img_rgb, template, cv2.TM_CCOEFF_NORMED)<br>    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)<br>    h, w = template.shape[:<span class="hljs-number">2</span>]<br>    top_left = max_loc<br>    center_loc = ((<span class="hljs-built_in">int</span>)(max_loc[<span class="hljs-number">0</span>] + w / <span class="hljs-number">2</span>), <span class="hljs-built_in">int</span>(max_loc[<span class="hljs-number">1</span>] + h / <span class="hljs-number">2</span>) + <span class="hljs-number">36</span>)<br>    a = cv2.circle(img_rgb, center_loc, <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br><br>    <span class="hljs-keyword">return</span> max_loc, h, w, center_loc<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">math_point</span>(<span class="hljs-params">p, center_loc, k</span>):<br>    <span class="hljs-comment"># y=-0.58*x+a*0.58+b</span><br>    y1 = k * center_loc[<span class="hljs-number">0</span>] + p[<span class="hljs-number">0</span>] * (-k) + p[<span class="hljs-number">1</span>]<br>    y1 = <span class="hljs-built_in">int</span>(y1)<br>    x2 = (p[<span class="hljs-number">0</span>] * (-k) + p[<span class="hljs-number">1</span>] - center_loc[<span class="hljs-number">1</span>]) / (-k)<br>    x2 = <span class="hljs-built_in">int</span>(x2)<br><br>    p1 = (center_loc[<span class="hljs-number">0</span>], y1)<br>    p2 = (x2, center_loc[<span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">return</span> p1, p2<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_img1</span>(<span class="hljs-params">img, max_loc, center_loc, k</span>):<br>    pt_1 = ()<br>    pt_2 = ()<br>    pt_3 = ()<br>    pt_4 = ()<br>    pt_5 = ()<br>    <span class="hljs-keyword">if</span> k &lt; <span class="hljs-number">0</span>:<br>        pt_1 = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)<br>        pt_2 = (center_loc[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>)<br>        pt_3, pt_4 = math_point(max_loc, center_loc, k)<br>        pt_5 = (<span class="hljs-number">0</span>, center_loc[<span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">else</span>:<br>        pt_1 = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)<br>        pt_2 = (img.shape[<span class="hljs-number">1</span>], <span class="hljs-number">0</span>)<br>        pt_3 = (img.shape[<span class="hljs-number">1</span>], img.shape[<span class="hljs-number">0</span>])<br>        p = (max_loc[<span class="hljs-number">0</span>] + <span class="hljs-number">40</span>, max_loc[<span class="hljs-number">1</span>])<br>        pt_5, pt_4 = math_point(p, center_loc, k)<br><br>    blank = np.zeros(img.shape[:<span class="hljs-number">2</span>], dtype=<span class="hljs-string">&#x27;uint8&#x27;</span>)<br>    cv2.circle(blank, pt_1, <span class="hljs-number">1</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), -<span class="hljs-number">1</span>)<br>    cv2.circle(blank, pt_2, <span class="hljs-number">1</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), -<span class="hljs-number">1</span>)<br>    cv2.circle(blank, pt_3, <span class="hljs-number">1</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), -<span class="hljs-number">1</span>)<br>    cv2.circle(blank, pt_4, <span class="hljs-number">1</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), -<span class="hljs-number">1</span>)<br>    cv2.circle(blank, pt_5, <span class="hljs-number">1</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), -<span class="hljs-number">1</span>)<br>    triangle_cnt = np.array([pt_1, pt_2, pt_3, pt_4, pt_5])<br><br>    mask = cv2.drawContours(blank, [triangle_cnt], <span class="hljs-number">0</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), -<span class="hljs-number">1</span>)<br>    m = cv2.bitwise_and(img, img, mask=mask)<br>    <span class="hljs-keyword">return</span> m<br><br><br>lowThreshold = <span class="hljs-number">0</span><br>max_lowThreshold = <span class="hljs-number">255</span><br>ratio = <span class="hljs-number">3</span><br>kernel_size = <span class="hljs-number">3</span><br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">find_left</span>(<span class="hljs-params">masked, gray</span>):<br>    <span class="hljs-comment"># detected_edges = cv2.GaussianBlur(gray, (3, 3), 0)</span><br>    detected_edges = cv2.Canny(masked, <span class="hljs-number">30</span>, <span class="hljs-number">30</span> * ratio, apertureSize=kernel_size)<br>    dst = cv2.bitwise_and(masked, masked, mask=detected_edges)  <span class="hljs-comment"># just add some colours to edges from original image.</span><br><br>    lap = masked.copy()<br>    contours, hierarchy = cv2.findContours(image=detected_edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)<br>    <span class="hljs-built_in">max</span> = <span class="hljs-number">50000</span><br>    <span class="hljs-built_in">min</span> = <span class="hljs-number">50000</span><br>    a = []<br>    b = []<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] &lt; <span class="hljs-built_in">min</span>:<br>                    <span class="hljs-built_in">min</span> = contours[i][j][k][<span class="hljs-number">1</span>]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &lt; <span class="hljs-built_in">max</span>:<br>                    <span class="hljs-built_in">max</span> = contours[i][j][k][<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] == <span class="hljs-built_in">min</span>:<br>                    a = contours[i][j][k]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == <span class="hljs-built_in">max</span>:<br>                    b.append(contours[i][j][k])<br><br>    Min = <span class="hljs-number">50000</span><br>    c = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(b)):<br>        <span class="hljs-keyword">if</span> b[i][<span class="hljs-number">1</span>] &lt; Min:<br>            c = b[i]<br><br>    c = [c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>] + <span class="hljs-number">5</span>]<br>    d = [a[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]]<br><br>    center = (a[<span class="hljs-number">0</span>], <span class="hljs-built_in">int</span>((a[<span class="hljs-number">1</span>] + d[<span class="hljs-number">1</span>]) / <span class="hljs-number">2</span>))<br>    <span class="hljs-built_in">print</span>(center)<br>    cv2.circle(lap, (center[<span class="hljs-number">0</span>], center[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (a[<span class="hljs-number">0</span>], a[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (d[<span class="hljs-number">0</span>], d[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.drawContours(image=lap, contours=contours, contourIdx=-<span class="hljs-number">1</span>, color=(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), thickness=<span class="hljs-number">1</span>,<br>                     lineType=cv2.LINE_AA)<br>    cv2.imshow(<span class="hljs-string">&#x27;canny demo&#x27;</span>, lap)<br>    <span class="hljs-keyword">return</span> center<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">find_right</span>(<span class="hljs-params">masked, gray</span>):<br>    <span class="hljs-comment"># detected_edges = cv2.GaussianBlur(gray, (3, 3), 0)</span><br>    detected_edges = cv2.Canny(masked, <span class="hljs-number">45</span>, <span class="hljs-number">40</span> * ratio, apertureSize=kernel_size)<br>    dst = cv2.bitwise_and(masked, masked, mask=detected_edges)  <span class="hljs-comment"># just add some colours to edges from original image.</span><br>    lap = masked.copy()<br>    contours, hierarchy = cv2.findContours(image=detected_edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)<br>    <span class="hljs-built_in">max</span> = <span class="hljs-number">0</span><br>    <span class="hljs-built_in">min</span> = <span class="hljs-number">50000</span><br>    a = []<br>    b = []<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] &lt; <span class="hljs-built_in">min</span>:<br>                    <span class="hljs-built_in">min</span> = contours[i][j][k][<span class="hljs-number">1</span>]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &gt; <span class="hljs-built_in">max</span>:<br>                    <span class="hljs-built_in">max</span> = contours[i][j][k][<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] == <span class="hljs-built_in">min</span>:<br>                    a = contours[i][j][k]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == <span class="hljs-built_in">max</span>:<br>                    b.append(contours[i][j][k])<br><br>    Min = <span class="hljs-number">50000</span><br>    c = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(b)):<br>        <span class="hljs-keyword">if</span> b[i][<span class="hljs-number">1</span>] &lt; Min:<br>            c = b[i]<br><br>    d = (a[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>])<br><br>    cv2.circle(lap, (a[<span class="hljs-number">0</span>], a[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (d[<span class="hljs-number">0</span>], d[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.drawContours(image=lap, contours=contours, contourIdx=-<span class="hljs-number">1</span>, color=(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), thickness=<span class="hljs-number">1</span>,<br>                     lineType=cv2.LINE_AA)<br>    cv2.imshow(<span class="hljs-string">&#x27;canny demo&#x27;</span>, lap)<br>    <span class="hljs-keyword">return</span> d<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">distance</span>(<span class="hljs-params">a, b</span>):<br>    p1 = np.array(a)<br>    p2 = np.array(b)<br>    p3 = p1 - p2<br>    <span class="hljs-built_in">print</span>(p3)<br>    p4 = math.hypot(p3[<span class="hljs-number">0</span>], p3[<span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">return</span> p4<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_time</span>(<span class="hljs-params">length</span>):<br>    time = length / <span class="hljs-number">306.001158116</span><br>    <span class="hljs-keyword">return</span> time<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dian_ji</span>(<span class="hljs-params">time1</span>):<br>    mouse = Controller()<br>    mouse.press(Button.left)<br>    time.sleep(time1)<br>    mouse.release(Button.left)<br><br><br>a = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:<br>    <span class="hljs-comment">#把你的跳一跳放在左上角位置，对齐。</span><br>    ss_region = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">450</span>, <span class="hljs-number">855</span>)  <span class="hljs-comment"># 距离左上右下的像素</span><br>    ss_img = ImageGrab.grab(ss_region)<br>    <span class="hljs-comment">#f盘自己创建一个img文件夹，可以换其他盘</span><br>    p = <span class="hljs-string">&quot;F:\\img\\&quot;</span><br>    a = a + <span class="hljs-number">1</span><br>    path = p + <span class="hljs-string">&quot;PILImage&quot;</span> + <span class="hljs-built_in">str</span>(a) + <span class="hljs-string">&quot;.jpg&quot;</span><br><br>    ss_img.save(path)<br>    img = cv2.imread(path)<br><br>    img_rgb = img.copy()<br>    template = cv2.imread(<span class="hljs-string">&#x27;F:\Snipaste_2022-07-21_03-20-01.png&#x27;</span>)<span class="hljs-comment">#这是棋子的图片</span><br>    max_loc, h, w, center_loc = get_center(img, template)<br><br>    img = cv2.resize(img, (<span class="hljs-number">450</span>, <span class="hljs-number">855</span>), interpolation=cv2.INTER_CUBIC)<span class="hljs-comment">#这个（450，855）是跳一跳图片的大小，把截图按住就可以显示大小</span><br><br>    center = ()<br>    length = <span class="hljs-number">0</span><br>    <span class="hljs-comment"># 左</span><br>    <span class="hljs-keyword">if</span> center_loc[<span class="hljs-number">0</span>] &gt; img.shape[<span class="hljs-number">1</span>] / <span class="hljs-number">2</span>:<br>        masked = get_img1(img, max_loc, center_loc, -<span class="hljs-number">1</span>)<br>        masked = masked[<span class="hljs-number">200</span>:center_loc[<span class="hljs-number">1</span>], <span class="hljs-number">0</span>:center_loc[<span class="hljs-number">0</span>] - <span class="hljs-number">15</span>]<br>        gray = cv2.cvtColor(masked, cv2.COLOR_BGR2GRAY)<br>        masked = cv2.GaussianBlur(masked, (<span class="hljs-number">3</span>, <span class="hljs-number">3</span>), <span class="hljs-number">0</span>)<br>        center = find_left(masked, gray)<br>        length = distance((masked.shape[<span class="hljs-number">1</span>] + <span class="hljs-number">15</span>, masked.shape[<span class="hljs-number">0</span>]), center)<br>        time1 = get_time(length)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;时间&quot;</span>, time1)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;距离&quot;</span>, length)<br>        dian_ji(time1)<br>    <span class="hljs-keyword">else</span>:<br>        masked = get_img1(img, max_loc, center_loc, <span class="hljs-number">1</span>)<br>        masked = masked[<span class="hljs-number">200</span>:center_loc[<span class="hljs-number">1</span>], center_loc[<span class="hljs-number">0</span>] + <span class="hljs-number">15</span>:img.shape[<span class="hljs-number">1</span>]]<br>        gray = cv2.cvtColor(masked, cv2.COLOR_BGR2GRAY)<br>        masked = cv2.GaussianBlur(masked, (<span class="hljs-number">3</span>, <span class="hljs-number">3</span>), <span class="hljs-number">0</span>)<br>        center = find_right(masked, gray)<br>        length = distance((<span class="hljs-number">0</span> - <span class="hljs-number">15</span>, masked.shape[<span class="hljs-number">0</span>]), center)<br>        time1 = get_time(length)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;时间&quot;</span>, time1)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;距离&quot;</span>, length)<br>        dian_ji(time1)<br><br>    cv2.imshow(<span class="hljs-string">&quot;mask&quot;</span>, masked)<br>    cv2.waitKey(<span class="hljs-number">500</span>)<br>    time.sleep(<span class="hljs-number">1</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>具体怎么操作末尾再说，这个方法可以用，但不推荐，所以注释就没写，玩玩就彳亍。</strong></p>
+<h1 id="2，精准又优雅版"><a href="#2，精准又优雅版" class="headerlink" title="2，精准又优雅版"></a>2，精准又优雅版</h1><p>找棋子坐标都是一样的，不用多说了。</p>
+<p>重点是找目标点。</p>
+<h2 id="目标点坐标"><a href="#目标点坐标" class="headerlink" title="目标点坐标"></a>目标点坐标</h2><p>随便拿个图：</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_7.png" srcset="/img/loading.gif" lazyload></p>
+<p>仔细看目标方块，它的表面是有颜色的，这张图是绿色，表示为（R，G，B）,比如黑色（0，0，0），白色（255，255，255），每个颜色都有个颜色值，所以从这里入手。</p>
+<p>一张图片是有很多像素点组成的，一个像素点就代表一个颜色，一张大小为（50x50）的图片有50*50&#x3D;2500个像素点，我们可以从图片的有效区域（经过裁剪后的区域），从上往下扫描，找到第一个颜色变化最大的点，那么这个点就是目标方块表面的颜色（比如这张图第一个颜色变化最大的点是直角那个点，是绿色（100，149，105）），然后我们 把整张图不是（100，149，105）的像素点全部设置为（0，0，0）也就是涂黑</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_8.png" srcset="/img/loading.gif" lazyload></p>
+<p>涂黑后</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_9.png" srcset="/img/loading.gif" lazyload></p>
+<p>当然，这个情况就属于特殊情况，因为棋子的地面也是相同的颜色，所以需要进行特殊处理，整篇代码有80%都是在处理特殊情况，因为跳一跳每一次都是不确定的，所以需要考虑全面。</p>
+<p>我换一张正常的，</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_11.png" srcset="/img/loading.gif" lazyload></p>
+<p>涂黑后</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_12.png" srcset="/img/loading.gif" lazyload></p>
+<p>这张图就比较明显了，只有两个颜色区域，有的小伙伴就发动大脑了，找到中点坐标现在很简单啊，找到绿色的最左边和最后边，在求个中点不就行了？</p>
+<p>可以，想法很好，但是如果是上面那种情况呢，左下角存在影响因素，这样最左边的坐标就是（0，y）,显然算出来的是错的，</p>
+<p>所以我们依然得用边缘检测，然后再用特殊处理把明显不是我们需要的信息过滤掉，最后边沿检测算出来的结果如下：</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_13.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_14.png" srcset="/img/loading.gif" lazyload></p>
+<p>给大家看一种典型的特殊情况吧，</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_15.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_16.png" srcset="/img/loading.gif" lazyload></p>
+<p>算出来依然是准确的，特殊情况不止这一种类型，你永远不知道下一步方块是<strong>什么tm奇葩形状，什么tm奇葩位置</strong></p>
+<p>也永远不知道下一步会出现<strong>什么tm奇葩特殊情况</strong>，我遇到过最奇葩的：</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_17.png" srcset="/img/loading.gif" lazyload></p>
+<p>这俩大小完全粘在一起了。</p>
+<p>处理这些情况需要大量的算法，所以我说有80%的代码都在处理这些。</p>
+<p>完整代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> shutil<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> win32con<br><span class="hljs-keyword">import</span> win32gui<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> ImageGrab<br><span class="hljs-keyword">from</span> pynput.mouse <span class="hljs-keyword">import</span> Button, Controller<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> pyscreenshot<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pyautogui<br><span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> *<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">math_point</span>(<span class="hljs-params">p, center_loc, k</span>):<br>    <span class="hljs-comment"># y=-0.58*x+a*0.58+b</span><br>    y1 = k * center_loc[<span class="hljs-number">0</span>] + p[<span class="hljs-number">0</span>] * (-k) + p[<span class="hljs-number">1</span>]<br>    y1 = <span class="hljs-built_in">int</span>(y1)<br>    x2 = (p[<span class="hljs-number">0</span>] * (-k) + p[<span class="hljs-number">1</span>] - center_loc[<span class="hljs-number">1</span>]) / (-k)<br>    x2 = <span class="hljs-built_in">int</span>(x2)<br><br>    p1 = (center_loc[<span class="hljs-number">0</span>], y1)<br>    p2 = (x2, center_loc[<span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">return</span> p1, p2<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_img1</span>(<span class="hljs-params">img, k</span>):<br>    pt_1 = ()<br>    pt_2 = ()<br>    pt_3 = ()<br>    pt_4 = ()<br>    pt_5 = ()<br>    <span class="hljs-keyword">if</span> k &lt; <span class="hljs-number">0</span>:<br>        pt_1 = (img.shape[<span class="hljs-number">1</span>], img.shape[<span class="hljs-number">0</span>])<br>        pt_2 = (img.shape[<span class="hljs-number">1</span>], img.shape[<span class="hljs-number">0</span>] - <span class="hljs-number">30</span>)<br>        pt_3 = (img.shape[<span class="hljs-number">1</span>] - <span class="hljs-number">50</span>, img.shape[<span class="hljs-number">0</span>])<br>    <span class="hljs-keyword">else</span>:<br>        pt_1 = (<span class="hljs-number">0</span>, img.shape[<span class="hljs-number">0</span>] - <span class="hljs-number">30</span>)<br>        pt_2 = (<span class="hljs-number">0</span>, img.shape[<span class="hljs-number">0</span>])<br>        pt_3 = (<span class="hljs-number">50</span>, img.shape[<span class="hljs-number">0</span>])<br><br>    blank = np.ones(img.shape[:<span class="hljs-number">2</span>], dtype=<span class="hljs-string">&#x27;uint8&#x27;</span>)<br>    cv2.circle(blank, pt_1, <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), -<span class="hljs-number">1</span>)<br>    cv2.circle(blank, pt_2, <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), -<span class="hljs-number">1</span>)<br>    cv2.circle(blank, pt_3, <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), -<span class="hljs-number">1</span>)<br><br>    triangle_cnt = np.array([pt_1, pt_2, pt_3])<br><br>    mask = cv2.drawContours(blank, [triangle_cnt], <span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), -<span class="hljs-number">1</span>)<br>    m = cv2.bitwise_and(img, img, mask=mask)<br>    cv2.imshow(<span class="hljs-string">&quot;m&quot;</span>, m)<br>    hwnd = win32gui.FindWindow(<span class="hljs-literal">None</span>, <span class="hljs-string">&quot;m&quot;</span>)  <span class="hljs-comment"># 获取句柄，然后置顶</span><br>    CVRECT = cv2.getWindowImageRect(<span class="hljs-string">&quot;m&quot;</span>)<br>    win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, <span class="hljs-number">610</span>, <span class="hljs-number">125</span>, m.shape[<span class="hljs-number">1</span>] + <span class="hljs-number">10</span>, m.shape[<span class="hljs-number">0</span>] + <span class="hljs-number">40</span>,<br>                          win32con.SWP_SHOWWINDOW)<br>    <span class="hljs-keyword">return</span> m<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">distance</span>(<span class="hljs-params">a, b</span>):<br>    p1 = np.array(a)<br>    p2 = np.array(b)<br>    p3 = p1 - p2<br>    <span class="hljs-built_in">print</span>(p3)<br>    p4 = math.hypot(p3[<span class="hljs-number">0</span>], p3[<span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">return</span> p4<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_time</span>(<span class="hljs-params">length</span>):<br>    time = length / <span class="hljs-number">306.001158116</span><br>    <span class="hljs-keyword">return</span> time<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dian_ji</span>(<span class="hljs-params">time1</span>):<br>    mouse = Controller()<br>    mouse.press(Button.left)<br>    time.sleep(time1)<br>    mouse.release(Button.left)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_center</span>(<span class="hljs-params">img_rgb, template</span>):<br>    res = cv2.matchTemplate(img_rgb, template, cv2.TM_CCOEFF_NORMED)<br>    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)<br>    h, w = template.shape[:<span class="hljs-number">2</span>]<br>    top_left = max_loc<br>    center_loc = ((<span class="hljs-built_in">int</span>)(max_loc[<span class="hljs-number">0</span>] + w / <span class="hljs-number">2</span>), <span class="hljs-built_in">int</span>(max_loc[<span class="hljs-number">1</span>] + h / <span class="hljs-number">2</span>) + <span class="hljs-number">36</span>)<br>    a = cv2.circle(img_rgb, center_loc, <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br><br>    <span class="hljs-keyword">return</span> max_loc, h, w, center_loc<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">find_area</span>(<span class="hljs-params">p1, p2</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(p1[<span class="hljs-number">0</span>] - p2[<span class="hljs-number">0</span>]) * <span class="hljs-built_in">abs</span>(p1[<span class="hljs-number">1</span>] - p2[<span class="hljs-number">1</span>])<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pd_is_max</span>(<span class="hljs-params">contours</span>):<br>    Max = <span class="hljs-number">0</span><br>    Min = <span class="hljs-number">50000</span><br>    a = []<br>    b = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &lt; Min:<br>                    Min = contours[i][j][k][<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &gt; Max:<br>                    Max = contours[i][j][k][<span class="hljs-number">0</span>]<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == Min:<br>                    a = contours[i][j][k]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == Max:<br>                    b.append(contours[i][j][k])<br>    M_in = <span class="hljs-number">50000</span><br>    c = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(b)):<br>        <span class="hljs-keyword">if</span> b[i][<span class="hljs-number">1</span>] &lt; M_in:<br>            c = b[i]<br>    <span class="hljs-keyword">return</span> a, c<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">find_left</span>(<span class="hljs-params">masked</span>):<br>    <span class="hljs-comment"># detected_edges = cv2.GaussianBlur(gray, (3, 3), 0)</span><br>    detected_edges = cv2.Canny(masked, <span class="hljs-number">30</span>, <span class="hljs-number">30</span> * <span class="hljs-number">3</span>, apertureSize=<span class="hljs-number">3</span>)<br>    dst = cv2.bitwise_and(masked, masked, mask=detected_edges)  <span class="hljs-comment"># just add some colours to edges from original image.</span><br><br>    lap = masked.copy()<br>    contours, hierarchy = cv2.findContours(image=detected_edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)<br>    <span class="hljs-built_in">max</span> = <span class="hljs-number">50000</span><br>    <span class="hljs-built_in">min</span> = <span class="hljs-number">50000</span><br>    a = []<br>    b = []<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] &lt; <span class="hljs-built_in">min</span>:<br>                    <span class="hljs-built_in">min</span> = contours[i][j][k][<span class="hljs-number">1</span>]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &lt; <span class="hljs-built_in">max</span>:<br>                    <span class="hljs-built_in">max</span> = contours[i][j][k][<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] == <span class="hljs-built_in">min</span>:<br>                    a = contours[i][j][k]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == <span class="hljs-built_in">max</span>:<br>                    b.append(contours[i][j][k])<br><br>    Min = <span class="hljs-number">50000</span><br>    c = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(b)):<br>        <span class="hljs-keyword">if</span> b[i][<span class="hljs-number">1</span>] &lt; Min:<br>            c = b[i]<br><br>    c = [c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>] + <span class="hljs-number">5</span>]<br>    d = [a[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]]<br><br>    center = (a[<span class="hljs-number">0</span>], <span class="hljs-built_in">int</span>((a[<span class="hljs-number">1</span>] + d[<span class="hljs-number">1</span>]) / <span class="hljs-number">2</span>))<br><br>    cv2.circle(lap, (center[<span class="hljs-number">0</span>], center[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (a[<span class="hljs-number">0</span>], a[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (d[<span class="hljs-number">0</span>], d[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.drawContours(image=lap, contours=contours, contourIdx=-<span class="hljs-number">1</span>, color=(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), thickness=<span class="hljs-number">1</span>,<br>                     lineType=cv2.LINE_AA)<br>    cv2.imshow(<span class="hljs-string">&#x27;canny demo&#x27;</span>, lap)<br>    <span class="hljs-keyword">return</span> center<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">find_right</span>(<span class="hljs-params">masked</span>):<br>    <span class="hljs-comment"># detected_edges = cv2.GaussianBlur(gray, (3, 3), 0)</span><br>    detected_edges = cv2.Canny(masked, <span class="hljs-number">45</span>, <span class="hljs-number">40</span> * <span class="hljs-number">3</span>, apertureSize=<span class="hljs-number">3</span>)<br>    dst = cv2.bitwise_and(masked, masked, mask=detected_edges)  <span class="hljs-comment"># just add some colours to edges from original image.</span><br>    lap = masked.copy()<br>    contours, hierarchy = cv2.findContours(image=detected_edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)<br>    <span class="hljs-built_in">max</span> = <span class="hljs-number">0</span><br>    <span class="hljs-built_in">min</span> = <span class="hljs-number">50000</span><br>    a = []<br>    b = []<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] &lt; <span class="hljs-built_in">min</span>:<br>                    <span class="hljs-built_in">min</span> = contours[i][j][k][<span class="hljs-number">1</span>]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &gt; <span class="hljs-built_in">max</span>:<br>                    <span class="hljs-built_in">max</span> = contours[i][j][k][<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">1</span>] == <span class="hljs-built_in">min</span>:<br>                    a = contours[i][j][k]<br>                <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == <span class="hljs-built_in">max</span>:<br>                    b.append(contours[i][j][k])<br><br>    Min = <span class="hljs-number">50000</span><br>    c = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(b)):<br>        <span class="hljs-keyword">if</span> b[i][<span class="hljs-number">1</span>] &lt; Min:<br>            c = b[i]<br><br>    d = (a[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>])<br><br>    cv2.circle(lap, (a[<span class="hljs-number">0</span>], a[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.circle(lap, (d[<span class="hljs-number">0</span>], d[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>    cv2.drawContours(image=lap, contours=contours, contourIdx=-<span class="hljs-number">1</span>, color=(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), thickness=<span class="hljs-number">1</span>,<br>                     lineType=cv2.LINE_AA)<br>    cv2.imshow(<span class="hljs-string">&#x27;canny demo&#x27;</span>, lap)<br>    <span class="hljs-keyword">return</span> d<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">RemoveDir</span>(<span class="hljs-params">filepath</span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    如果文件夹不存在就创建，如果文件存在就清空！</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(filepath):<br>        os.mkdir(filepath)<br>    <span class="hljs-keyword">else</span>:<br>        shutil.rmtree(filepath)<br>        os.mkdir(filepath)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_tol</span>(<span class="hljs-params">img</span>):<br>    img_copy = img.copy()<br>    arr = []<br>    A = <span class="hljs-built_in">int</span>(img.shape[<span class="hljs-number">0</span>])<br>    B = <span class="hljs-built_in">int</span>(img.shape[<span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(A):<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(B):<br>            <span class="hljs-keyword">if</span> x != <span class="hljs-number">0</span>:<br>                temp1 = <span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">0</span>]) - <span class="hljs-built_in">int</span>(img[y][x - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>])<br>                temp2 = <span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">1</span>]) - <span class="hljs-built_in">int</span>(img[y][x - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>])<br>                temp3 = <span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">2</span>]) - <span class="hljs-built_in">int</span>(img[y][x - <span class="hljs-number">1</span>][<span class="hljs-number">2</span>])<br>                <span class="hljs-keyword">if</span> <span class="hljs-built_in">abs</span>(temp1) &gt; <span class="hljs-number">5</span> <span class="hljs-keyword">or</span> <span class="hljs-built_in">abs</span>(temp2) &gt; <span class="hljs-number">5</span> <span class="hljs-keyword">or</span> <span class="hljs-built_in">abs</span>(temp3) &gt; <span class="hljs-number">5</span>:<br>                    a = (x, y)<br>                    arr.append(a)<br><br>                    <span class="hljs-comment"># cv2.circle(img, (x, y), 1, (0, 0, 255), thickness=3, lineType=cv2.LINE_AA)</span><br><br>    co = img[arr[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] + <span class="hljs-number">3</span>][arr[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>]<br>    <span class="hljs-comment"># for i in arr:</span><br>    <span class="hljs-comment">#     cv2.circle(img_copy, (i[0], i[1]), 1, (255, 0, 255), thickness=3, lineType=cv2.LINE_AA)</span><br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(co))<br>    arr1 = []<br>    <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(A):<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(B):<br>            <span class="hljs-comment"># not (img[y][x] == co).all():</span><br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">abs</span>((<span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">0</span>]) - <span class="hljs-built_in">int</span>(co[<span class="hljs-number">0</span>]))) &gt;= <span class="hljs-number">6</span> <span class="hljs-keyword">or</span> <span class="hljs-built_in">abs</span>(<span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">1</span>]) - <span class="hljs-built_in">int</span>(co[<span class="hljs-number">1</span>])) &gt;= <span class="hljs-number">6</span> <span class="hljs-keyword">or</span> <span class="hljs-built_in">abs</span>(<br>                    <span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">2</span>]) - <span class="hljs-built_in">int</span>(co[<span class="hljs-number">2</span>])) &gt;= <span class="hljs-number">6</span>:<br>                b = (x, y)<br>                arr1.append(b)<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> arr1:<br>        cv2.circle(img_copy, (i[<span class="hljs-number">0</span>], i[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), thickness=<span class="hljs-number">1</span>, lineType=cv2.LINE_AA)<br>    arry = []<br>    <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(A):<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(B):<br>            <span class="hljs-comment"># not (img[y][x] == co).all():</span><br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">abs</span>(<span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">0</span>]) - <span class="hljs-number">200</span>) &lt;= <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">abs</span>(<span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">1</span>]) - <span class="hljs-number">220</span>) &lt;= <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">abs</span>(<br>                    <span class="hljs-built_in">int</span>(img[y][x][<span class="hljs-number">2</span>]) - <span class="hljs-number">240</span>) &lt;= <span class="hljs-number">2</span>:<br>                b = (x, y)<br>                arry.append(b)<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(arry) &gt; <span class="hljs-number">8</span>:<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> arry:<br>            cv2.circle(img_copy, (i[<span class="hljs-number">0</span>], i[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">1</span>, lineType=cv2.LINE_AA)<br>    a = img_copy<br><br>    <span class="hljs-keyword">return</span> a<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_c</span>(<span class="hljs-params">img, place, img_fuzhi</span>):<br>    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)<br>    img = cv2.GaussianBlur(img, (<span class="hljs-number">3</span>, <span class="hljs-number">3</span>), cv2.BORDER_DEFAULT)<br>    img = cv2.Canny(img, <span class="hljs-number">50</span>, <span class="hljs-number">50</span>)<br>    img = cv2.dilate(img, (<span class="hljs-number">10</span>, <span class="hljs-number">10</span>), iterations=<span class="hljs-number">2</span>)<br>    img = cv2.erode(img, (<span class="hljs-number">10</span>, <span class="hljs-number">10</span>), iterations=<span class="hljs-number">1</span>)<br><br>    contours1, hierarchy = cv2.findContours(image=img, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)<br>    cv2.drawContours(image=img_copy2, contours=contours1, contourIdx=-<span class="hljs-number">1</span>, color=(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), thickness=<span class="hljs-number">1</span>,<br>                     lineType=cv2.LINE_AA)<br>    p1, p2 = pd_is_max(contours1)<br>    <span class="hljs-comment"># cv2.circle(img, (200, 157), 1, (255, 255, 255), thickness=5, lineType=cv2.LINE_AA)</span><br><br>    area = []<br>    contours = []<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;length&quot;</span>, <span class="hljs-built_in">len</span>(contours1))<br>    <span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> contours1:<br>        <span class="hljs-keyword">if</span> cv2.contourArea(obj) != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(cv2.contourArea(obj))<br>            area.append(cv2.contourArea(obj))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;area&quot;</span>, <span class="hljs-built_in">len</span>(area))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Variance of array : &quot;</span>, np.std(area))<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(area) != <span class="hljs-number">0</span>:<br><br>        zui_da = <span class="hljs-built_in">max</span>(area)<br>        zui_xiao = <span class="hljs-built_in">min</span>(area)<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(area) == <span class="hljs-number">2</span>:<br>            <span class="hljs-comment"># contours.append(contours1[1])</span><br><br>            <span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> contours1:<br>                max_dimension1 = np.amax(obj, axis=<span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">if</span> img.shape[<span class="hljs-number">1</span>] - max_dimension1[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] &gt; <span class="hljs-number">3</span>:<br>                    contours.append(obj)<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> &lt;= <span class="hljs-built_in">len</span>(area) &lt; <span class="hljs-number">2</span> <span class="hljs-keyword">or</span> <span class="hljs-number">2</span> &lt; <span class="hljs-built_in">len</span>(area) &lt;= <span class="hljs-number">4</span>:<br>            <span class="hljs-keyword">if</span> np.std(area) &lt; <span class="hljs-number">50</span>:<br>                <span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> contours1:<br>                    <span class="hljs-keyword">if</span> cv2.contourArea(obj) != <span class="hljs-number">0</span>:<br>                        contours.append(obj)<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> contours1:<br>                    <span class="hljs-keyword">if</span> cv2.contourArea(obj) == <span class="hljs-built_in">max</span>(area):<br>                        contours.append(obj)<br><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">if</span> np.std(area) &lt; <span class="hljs-number">160</span>:<br>                <span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> contours1:<br>                    <span class="hljs-keyword">if</span> cv2.contourArea(obj) != <span class="hljs-number">0</span>:<br>                        contours.append(obj)<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> contours1:<br>                    <span class="hljs-keyword">if</span> cv2.contourArea(obj) == zui_da:<br>                        contours.append(obj)<br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;len&quot;</span>, <span class="hljs-built_in">len</span>(contours))<br>        Max = <span class="hljs-number">0</span><br>        Min = <span class="hljs-number">50000</span><br>        a = []<br>        b = []<br><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                    <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &lt; Min:<br>                        Min = contours[i][j][k][<span class="hljs-number">0</span>]<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                    <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] &gt; Max:<br>                        Max = contours[i][j][k][<span class="hljs-number">0</span>]<br><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours)):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i])):<br>                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(contours[i][j])):<br>                    <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == Min:<br>                        a = contours[i][j][k]<br>                    <span class="hljs-keyword">if</span> contours[i][j][k][<span class="hljs-number">0</span>] == Max:<br>                        b.append(contours[i][j][k])<br>        M_in = <span class="hljs-number">50000</span><br>        c = []<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(b)):<br>            <span class="hljs-keyword">if</span> b[i][<span class="hljs-number">1</span>] &lt; M_in:<br>                c = b[i]<br>        <span class="hljs-built_in">print</span>(a)<br>        <span class="hljs-built_in">print</span>(c)<br>        d1 = <span class="hljs-built_in">int</span>((a[<span class="hljs-number">0</span>] + c[<span class="hljs-number">0</span>]) / <span class="hljs-number">2</span>)<br>        d2 = <span class="hljs-built_in">int</span>((a[<span class="hljs-number">1</span>] + c[<span class="hljs-number">1</span>]) / <span class="hljs-number">2</span>)<br>        d = [d1, d2]<br><br>        cv2.circle(img_copy2, (a[<span class="hljs-number">0</span>], a[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>        cv2.circle(img_copy2, (c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br>        cv2.circle(img_copy2, (d[<span class="hljs-number">0</span>], d[<span class="hljs-number">1</span>]), <span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>), thickness=<span class="hljs-number">3</span>, lineType=cv2.LINE_AA)<br><br>        cv2.imshow(<span class="hljs-string">&quot;csa&quot;</span>, img_copy2)<br>        hwnd1 = win32gui.FindWindow(<span class="hljs-literal">None</span>, <span class="hljs-string">&quot;csa&quot;</span>)  <span class="hljs-comment"># 获取句柄，然后置顶</span><br>        CVRECT = cv2.getWindowImageRect(<span class="hljs-string">&quot;csa&quot;</span>)<br>        win32gui.SetWindowPos(hwnd1, win32con.HWND_TOPMOST, <span class="hljs-number">900</span>, <span class="hljs-number">120</span>, img_copy2.shape[<span class="hljs-number">1</span>] + <span class="hljs-number">10</span>, img_copy2.shape[<span class="hljs-number">0</span>] + <span class="hljs-number">40</span>,<br>                              win32con.SWP_SHOWWINDOW)<br>        cv2.imshow(<span class="hljs-string">&quot;img&quot;</span>, img)<br>        hwnd2 = win32gui.FindWindow(<span class="hljs-literal">None</span>, <span class="hljs-string">&quot;img&quot;</span>)  <span class="hljs-comment"># 获取句柄，然后置顶</span><br>        CVRECT1 = cv2.getWindowImageRect(<span class="hljs-string">&quot;img&quot;</span>)<br>        win32gui.SetWindowPos(hwnd2, win32con.HWND_TOPMOST, <span class="hljs-number">1200</span>, <span class="hljs-number">120</span>, img.shape[<span class="hljs-number">1</span>] + <span class="hljs-number">10</span>, img.shape[<span class="hljs-number">0</span>] + <span class="hljs-number">40</span>,<br>                              win32con.SWP_SHOWWINDOW)<br>        <span class="hljs-keyword">return</span> d<br>    <span class="hljs-keyword">else</span>:<br>        img_fuzhi = cv2.cvtColor(img_fuzhi, cv2.COLOR_BGR2GRAY)<br>        img_fuzhi = cv2.GaussianBlur(img_fuzhi, (<span class="hljs-number">3</span>, <span class="hljs-number">3</span>), cv2.BORDER_DEFAULT)<br>        <span class="hljs-keyword">if</span> place == <span class="hljs-string">&quot;left&quot;</span>:<br>            d = find_left(img_fuzhi)<br>            <span class="hljs-keyword">return</span> d<br>        <span class="hljs-keyword">else</span>:<br>            d = find_right(img_fuzhi)<br>            <span class="hljs-keyword">return</span> d<br><br><br>a = -<span class="hljs-number">1</span><br>p = <span class="hljs-string">&quot;F:\\img\\&quot;</span><br>RemoveDir(p)<br>image = pyscreenshot.grab(bbox=(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">450</span>, <span class="hljs-number">855</span>))<br>image.save(<span class="hljs-string">&quot;f:\\img\\Snipaste_2022.png&quot;</span>)<br><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:<br>    pyautogui.press(<span class="hljs-string">&#x27;F1&#x27;</span>)<br>    pyautogui.hotkey(<span class="hljs-string">&#x27;Ctrl&#x27;</span>, <span class="hljs-string">&#x27;Shift&#x27;</span>, <span class="hljs-string">&#x27;s&#x27;</span>)<br>    a = a + <span class="hljs-number">1</span><br>    path = p + <span class="hljs-string">&quot;Snipaste_2022_&quot;</span> + <span class="hljs-built_in">str</span>(a) + <span class="hljs-string">&quot;.png&quot;</span><br>    img = cv2.imread(path)<br>    img_rgb = img.copy()<br>    template = cv2.imread(<span class="hljs-string">&#x27;F:\Snipaste_2022_0.png&#x27;</span>)<br>    max_loc, h, w, center_loc = get_center(img, template)<br>    img = cv2.resize(img, (<span class="hljs-number">450</span>, <span class="hljs-number">855</span>), interpolation=cv2.INTER_CUBIC)<br>    center = ()<br>    length = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">if</span> center_loc[<span class="hljs-number">0</span>] &gt; img.shape[<span class="hljs-number">1</span>] / <span class="hljs-number">2</span>:<br>        img = img[<span class="hljs-number">300</span>:center_loc[<span class="hljs-number">1</span>], <span class="hljs-number">0</span>:center_loc[<span class="hljs-number">0</span>] - <span class="hljs-number">15</span>]<br>        img_copy2 = img.copy()<br>        img_fuzhi = img.copy()<br>        place = <span class="hljs-string">&quot;left&quot;</span><br>        getimg = get_tol(img)<br>        get_img = get_img1(getimg, -<span class="hljs-number">1</span>)<br><br>        center1 = get_c(get_img, place, img_fuzhi)<br>        center2 = [img.shape[<span class="hljs-number">1</span>] + <span class="hljs-number">15</span>, img.shape[<span class="hljs-number">0</span>]]<br>        length = distance(center1, center2)<br>        time1 = get_time(length)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;时间&quot;</span>, time1)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;距离&quot;</span>, length)<br>        dian_ji(time1)<br><br>    <span class="hljs-keyword">else</span>:<br><br>        img = img[<span class="hljs-number">300</span>:center_loc[<span class="hljs-number">1</span>], center_loc[<span class="hljs-number">0</span>] + <span class="hljs-number">15</span>:img.shape[<span class="hljs-number">1</span>]]<br>        img_copy2 = img.copy()<br>        img_fuzhi = img.copy()<br>        place = <span class="hljs-string">&quot;r&quot;</span><br>        getimg = get_tol(img)<br>        get_img = get_img1(getimg, <span class="hljs-number">1</span>)<br>        center1 = get_c(get_img, place, img_fuzhi)<br>        center2 = [<span class="hljs-number">0</span> - <span class="hljs-number">15</span>, img.shape[<span class="hljs-number">0</span>]]<br>        length = distance(center1, center2)<br>        time1 = get_time(length)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;时间&quot;</span>, time1)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;距离&quot;</span>, length)<br>        dian_ji(time1)<br><br>    cv2.waitKey(<span class="hljs-number">600</span>)<br>    time.sleep(<span class="hljs-number">0.8</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>这个代码其实是最终版本，整个跳一跳有一个形状这个方法不能处理，但是老实憨厚版可以处理（目前我没截到那个形状，截到了我再补上。）所以我直接把这俩整合到一起了，一个跳一跳跑两个程序。</p>
+<p><strong>怎么操作最后再说</strong></p>
+<h1 id="3，投机取巧版"><a href="#3，投机取巧版" class="headerlink" title="3，投机取巧版"></a>3，投机取巧版</h1><p>这个方法我只说说思路</p>
+<p>跳一跳有个规律，<strong>当你这次跳跃刚好命中中心，那么下一次跳跃的目标点中心就会显示有个白点</strong>：</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_18.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们同样可以用扫描像素点的方法，找到第一个像素点是白色的位置，那么这个点的位置就直接是中心的位置，两个点直接就找出来了，But,如果你下次跳的不是正中心呢，直接G。所以我说这是投机取巧版。</p>
+<h1 id="得到速度"><a href="#得到速度" class="headerlink" title="得到速度"></a>得到速度</h1><p>如果不是拯救者的电脑（因为我是）：</p>
+<p>我直接明说，跳一跳的开局两个方块的距离的固定的</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_19.png" srcset="/img/loading.gif" lazyload></p>
+<p>打开你们的windows自带的画图工具，手动找到两个点的坐标，手动算距离，再用下面的代码测试</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> pynput.mouse <span class="hljs-keyword">import</span> Button, Controller<br>mouse = Controller()<br>mouse.press(Button.left)<span class="hljs-comment">#模拟按压</span><br>time.sleep()<span class="hljs-comment">#模拟按下时间。从0.5开始测试，直到跳到正中心的位置</span><br>mouse.release(Button.left)<span class="hljs-comment">#模拟松开</span><br><br></code></pre></td></tr></table></figure>
+
+<p>再用手动算出来的距离除以时间，得到速度，这个速度就是之后要用的速度。</p>
+<p>拯救者的就不用了，直接copy</p>
+<h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><p>右键之前提到的Snipaste的首选项，</p>
+<p><img src="/images/%E8%B7%B3%E4%B8%80%E8%B7%B3/Snipaste_2022_21.png" srcset="/img/loading.gif" lazyload>，改成这样。</p>
+<p>把跳一跳放在一个合适的位置，用之前提到的OneQuick工具，Win+G将跳一跳窗口置顶，防止点其他地方窗口没了。</p>
+<p>把鼠标放在跳一跳窗口内，然后别动了，按shift+f10启动程序。开始跑。</p>
+<p>几千上万分不成问题。</p>
+<p>在没改源码的情况下这个外挂算是比较nb了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>跳一跳物理外挂</div>
+      <div>http://example.com/2022/07/28/跳一跳物理外挂/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>秋衫霸霸</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月28日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/03/%E5%88%AB%E8%B8%A9%E7%99%BD%E5%9D%97%E5%84%BF%E7%89%A9%E7%90%86%E5%A4%96%E6%8C%82/" title="别踩白块儿物理外挂">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">别踩白块儿物理外挂</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
